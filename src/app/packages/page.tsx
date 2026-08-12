@@ -89,10 +89,10 @@ export default function Packages() {
                   </li>
                 </ul>
 
-                <button className="w-full py-4 rounded-xl bg-white/10 text-white font-bold hover:bg-cyan-500 hover:text-black transition-all duration-300 flex items-center justify-center gap-2 group-hover:shadow-[0_0_20px_rgba(34,211,238,0.4)]">
+                <a href="https://buy.stripe.com/fZu6oH1vrfkm5nB2ZQ6Zy0c" target="_blank" rel="noopener noreferrer" className="w-full py-4 rounded-xl bg-white/10 text-white font-bold hover:bg-cyan-500 hover:text-black transition-all duration-300 flex items-center justify-center gap-2 group-hover:shadow-[0_0_20px_rgba(34,211,238,0.4)]">
                   Enroll Now
                   <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                </button>
+                </a>
               </div>
             </div>
 
@@ -165,10 +165,10 @@ export default function Packages() {
                     </div>
                   </div>
 
-                  <button className="w-full py-4 rounded-xl bg-cyan-400 text-black font-bold hover:bg-white hover:text-black transition-all duration-300 shadow-[0_0_30px_rgba(34,211,238,0.3)] hover:shadow-[0_0_40px_rgba(255,255,255,0.5)] flex items-center justify-center gap-2 transform hover:-translate-y-1">
+                  <a href="https://buy.stripe.com/bJefZhgqlc8acQ357Y6Zy00" target="_blank" rel="noopener noreferrer" className="w-full py-4 rounded-xl bg-cyan-400 text-black font-bold hover:bg-white hover:text-black transition-all duration-300 shadow-[0_0_30px_rgba(34,211,238,0.3)] hover:shadow-[0_0_40px_rgba(255,255,255,0.5)] flex items-center justify-center gap-2 transform hover:-translate-y-1">
                     Enroll Now
                     <ArrowRight className="w-4 h-4" />
-                  </button>
+                  </a>
                 </div>
               </div>
             </div>
@@ -211,10 +211,10 @@ export default function Packages() {
                   </li>
                 </ul>
 
-                <button className="w-full py-4 rounded-xl bg-white/10 text-white font-bold hover:bg-blue-500 hover:text-white transition-all duration-300 flex items-center justify-center gap-2 group-hover:shadow-[0_0_20px_rgba(59,130,246,0.4)]">
+                <a href="https://buy.stripe.com/7sY6oHeid3BEg2f7g66Zy06" target="_blank" rel="noopener noreferrer" className="w-full py-4 rounded-xl bg-white/10 text-white font-bold hover:bg-blue-500 hover:text-white transition-all duration-300 flex items-center justify-center gap-2 group-hover:shadow-[0_0_20px_rgba(59,130,246,0.4)]">
                   Enroll Now
                   <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                </button>
+                </a>
               </div>
             </div>
 

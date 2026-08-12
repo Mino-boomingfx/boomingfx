@@ -3,8 +3,14 @@ import React, { useState } from 'react';
 
 const navLinks = [
   { name: "Home", href: "/" },
-  { name: "About Us", href: "/about-me" },
+  { name: "About Me", href: "/about-me" },
+  { name: "Why Boomingfx", href: "/why-boomingfx" },
+  { name: "Packages", href: "/packages" },
   { name: "Our Team", href: "/our-team" },
+  { name: "Media", href: "/media" },
+  { name: "Testimonial", href: "/testimonial" },
+  { name: "FAQ", href: "/faq" },
+  { name: "Contact Us", href: "/contact-us" },
 ];
 
 export default function Header() {
