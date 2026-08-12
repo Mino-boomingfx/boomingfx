@@ -1,8 +1,43 @@
-import React from 'react';
-import { Star, ArrowRight } from 'lucide-react';
+"use client";
+import React, { useRef, useEffect } from 'react';
+import { Star, ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react';
 
 export default function Testimonial() {
   const testimonials = Array.from({ length: 12 }, (_, i) => `/testimonial${i + 1}.png`);
+  const sliderRef = useRef<HTMLDivElement>(null);
+
+  // Auto-scroll logic
+  useEffect(() => {
+    const slider = sliderRef.current;
+    if (!slider) return;
+
+    let scrollAmount = 0;
+    const scrollStep = 1; // Pixels to move per frame
+    const scrollInterval = setInterval(() => {
+      if (slider) {
+        slider.scrollLeft += scrollStep;
+        
+        // Reset to start if reached the end
+        if (slider.scrollLeft >= (slider.scrollWidth - slider.clientWidth - 1)) {
+          slider.scrollLeft = 0;
+        }
+      }
+    }, 30); // Speed of auto-scroll
+
+    return () => clearInterval(scrollInterval);
+  }, []);
+
+  const scrollLeft = () => {
+    if (sliderRef.current) {
+      sliderRef.current.scrollBy({ left: -400, behavior: 'smooth' });
+    }
+  };
+
+  const scrollRight = () => {
+    if (sliderRef.current) {
+      sliderRef.current.scrollBy({ left: 400, behavior: 'smooth' });
+    }
+  };
 
   return (
     <div className="bg-[#001f3f] min-h-screen selection:bg-[#004185] selection:text-white font-sans text-white overflow-hidden">
@@ -54,22 +89,44 @@ export default function Testimonial() {
               </h2>
               <p className="text-blue-100/70 mt-2">100% Recommended: Authentic Feedback from Real Mentees</p>
             </div>
+            {/* Slider Controls */}
+            <div className="flex items-center gap-4 hidden md:flex">
+              <button onClick={scrollLeft} className="p-3 rounded-full bg-white/10 hover:bg-white/20 border border-white/20 transition-all text-white backdrop-blur-md">
+                <ChevronLeft className="w-6 h-6" />
+              </button>
+              <button onClick={scrollRight} className="p-3 rounded-full bg-white/10 hover:bg-white/20 border border-white/20 transition-all text-white backdrop-blur-md">
+                <ChevronRight className="w-6 h-6" />
+              </button>
+            </div>
           </div>
 
-          <div className="relative">
+          <div className="relative group/slider">
             {/* Fade edges */}
-            <div className="absolute top-0 bottom-0 left-0 w-8 md:w-24 bg-gradient-to-r from-[#001f3f] to-transparent z-10 pointer-events-none"></div>
-            <div className="absolute top-0 bottom-0 right-0 w-8 md:w-24 bg-gradient-to-l from-[#001f3f] to-transparent z-10 pointer-events-none"></div>
+            <div className="absolute top-0 bottom-0 left-0 w-12 md:w-32 bg-gradient-to-r from-[#001f3f] to-transparent z-10 pointer-events-none"></div>
+            <div className="absolute top-0 bottom-0 right-0 w-12 md:w-32 bg-gradient-to-l from-[#001f3f] to-transparent z-10 pointer-events-none"></div>
             
-            <div className="flex overflow-x-auto pb-8 gap-6 snap-x snap-mandatory hide-scrollbar relative z-0 pl-4 md:pl-8 pr-4 md:pr-8">
-              {testimonials.map((image, index) => (
-                <div key={index} className="shrink-0 w-[280px] sm:w-[380px] md:w-[480px] snap-center group">
-                  <div className="bg-white/5 backdrop-blur-md rounded-2xl overflow-hidden border border-white/10 group-hover:border-yellow-400/50 transition-colors duration-500 shadow-[0_4px_30px_rgba(0,0,0,0.1)] p-2">
+            {/* Mobile Controls Overlay */}
+            <button onClick={scrollLeft} className="absolute left-2 top-1/2 -translate-y-1/2 z-20 p-2 rounded-full bg-black/50 text-white md:hidden backdrop-blur-md">
+              <ChevronLeft className="w-6 h-6" />
+            </button>
+            <button onClick={scrollRight} className="absolute right-2 top-1/2 -translate-y-1/2 z-20 p-2 rounded-full bg-black/50 text-white md:hidden backdrop-blur-md">
+              <ChevronRight className="w-6 h-6" />
+            </button>
+
+            <div 
+              ref={sliderRef}
+              className="flex overflow-x-auto pb-8 gap-6 hide-scrollbar relative z-0 pl-4 md:pl-8 pr-4 md:pr-8 cursor-grab active:cursor-grabbing"
+              style={{ scrollBehavior: 'smooth' }}
+            >
+              {/* Double the array for seamless infinite feel */}
+              {[...testimonials, ...testimonials].map((image, index) => (
+                <div key={index} className="shrink-0 w-[280px] sm:w-[380px] md:w-[480px] group">
+                  <div className="bg-white/5 backdrop-blur-md rounded-2xl overflow-hidden border border-white/10 hover:border-yellow-400/50 transition-colors duration-500 shadow-[0_4px_30px_rgba(0,0,0,0.1)] p-2">
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img 
                       src={image} 
                       alt={`Testimonial ${index + 1}`} 
-                      className="w-full h-auto rounded-xl filter brightness-90 group-hover:brightness-100 transition-all duration-500" 
+                      className="w-full h-auto rounded-xl filter brightness-90 hover:brightness-100 transition-all duration-500" 
                     />
                   </div>
                 </div>
@@ -79,7 +136,7 @@ export default function Testimonial() {
 
         </div>
       </section>
-      
+
       {/* 
         ========================================================================
         ENROLL CALL TO ACTION
