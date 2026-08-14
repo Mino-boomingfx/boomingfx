@@ -6,7 +6,9 @@ import { ChevronDown, HelpCircle, ArrowRight } from 'lucide-react';
 export default function FAQ() {
   const [openIndex, setOpenIndex] = useState<number | null>(0);
   const { content } = useSiteContent();
-  const faqs = content.faqs || [];
+  const faqData = content.faqs;
+  const items = faqData?.items || [];
+  const cta = faqData?.cta;
 
   return (
     <div className="bg-[#001f3f] min-h-screen text-white selection:bg-[#004185] selection:text-white font-sans overflow-hidden">
@@ -20,14 +22,14 @@ export default function FAQ() {
         
         <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 backdrop-blur-md mb-8">
           <HelpCircle className="w-4 h-4 text-cyan-400" />
-          <span className="text-cyan-100 text-sm font-medium tracking-wide uppercase">Got Questions?</span>
+          <span className="text-cyan-100 text-sm font-medium tracking-wide uppercase">{faqData?.badge || "Got Questions?"}</span>
         </div>
         
         <h1 className="text-5xl md:text-7xl font-black text-transparent bg-clip-text bg-gradient-to-b from-white via-white to-white/70 mb-6 tracking-tight leading-[1.1] drop-shadow-2xl">
-          Frequently Asked <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500">Questions</span>
+          {faqData?.title || "Frequently Asked Questions"}
         </h1>
         <p className="text-blue-100/80 text-lg md:text-xl max-w-3xl mx-auto font-light leading-relaxed">
-          Welcome to BoomingFX! We understand that starting your trading journey can feel overwhelming, so we&apos;ve put together answers to the most common questions beginners ask.
+          {faqData?.subtitle || "Welcome to BoomingFX! We understand that starting your trading journey can feel overwhelming, so we've put together answers to the most common questions beginners ask."}
         </p>
       </section>
 
@@ -38,7 +40,7 @@ export default function FAQ() {
       */}
       <section className="pb-32 px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto relative z-10">
         <div className="flex flex-col gap-4">
-          {faqs.map((faq, index) => {
+          {items.map((faq, index) => {
             const isOpen = openIndex === index;
             return (
               <div 
@@ -99,21 +101,21 @@ export default function FAQ() {
             
             <div className="relative z-10 text-center md:text-left max-w-xl">
               <h2 className="text-3xl md:text-5xl font-black text-white mb-6 tracking-tight leading-tight">
-                Ready to Join <br/>the <span className="text-cyan-400">Success Stories?</span>
+                {cta?.title || "Ready to Join the Success Stories?"}
               </h2>
               <p className="text-blue-100 text-lg">
-                <strong className="text-white font-bold">BoomingFX.</strong> Where transparency meets expertise. Get mentorship, signals, and community support to trade with confidence.
+                {cta?.subtitle || "Where transparency meets expertise. Get mentorship, signals, and community support to trade with confidence."}
               </p>
             </div>
             
             <div className="relative z-10 shrink-0">
               <a 
-                href="/packages" 
+                href={cta?.btnLink || "/packages"} 
                 className="group relative inline-flex items-center justify-center px-10 py-5 bg-white text-[#004185] font-black text-lg rounded-2xl overflow-hidden transition-transform hover:scale-105 shadow-[0_0_30px_rgba(255,255,255,0.3)]"
               >
                 <div className="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white to-transparent -translate-x-full group-hover:animate-[shimmer_1.5s_infinite]"></div>
                 <span className="relative flex items-center gap-2">
-                  Enroll Now!
+                  {cta?.btnText || "Enroll Now!"}
                   <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                 </span>
               </a>

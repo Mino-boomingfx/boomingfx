@@ -9,14 +9,50 @@
     "youtubeUrl": "https://youtube.com/@boomingfx",
     "telegramUrl": "https://t.me/boomingfx"
   },
-  "hero": {
-    "badge": "Real Mentorship • Not Just Another Course",
-    "title": "Master The Markets With Elite Traders",
-    "subtitle": "Stop gambling and start executing with precision. Master technical analysis, manage risk like an institutional trader, and access our exclusive mentorship community.",
-    "ctaText": "Join Mentorship",
-    "ctaLink": "/packages",
-    "googleReviewsBadge": "5.0 Star Rated on Google",
-    "googleReviewsLink": "https://share.google/5j5FnhQiRYB3qbo0o"
+  "home": {
+    "hero": {
+      "badge": "Real Mentorship • Not Just Another Course",
+      "title": "Master The Markets With Elite Traders",
+      "subtitle": "Stop gambling and start executing with precision. Master technical analysis, manage risk like an institutional trader, and access our exclusive mentorship community.",
+      "ctaText": "Join Mentorship",
+      "ctaLink": "/packages",
+      "googleReviewsBadge": "5.0 Star Rated on Google",
+      "googleReviewsLink": "https://share.google/5j5FnhQiRYB3qbo0o"
+    },
+    "bento": {
+      "badge": "The BoomingFX Advantage",
+      "title": "Not just another trading course.",
+      "subtitle": "We leverage modern technology, unmatched transparency, and a deeply connected community to ensure your success.",
+      "cards": [
+        {
+          "title": "Edmonton's Largest Community",
+          "description": "Join a dynamic network of elite traders worldwide. We don't just trade together; we evolve together, sharing insights in real-time."
+        },
+        {
+          "title": "Beginner Friendly",
+          "description": "No prior knowledge necessary. We build your foundation from the ground up."
+        },
+        {
+          "title": "Full Transparency",
+          "description": "No hidden fees, no complex jargon. Just an honest, straightforward approach."
+        },
+        {
+          "title": "Instant Access",
+          "description": "Instant access to mentorship, signals & resources the second you enroll."
+        },
+        {
+          "title": "Lifelong Learning",
+          "description": "Weekly calls, in-office sessions, and continuous mentorship that never stops."
+        }
+      ]
+    },
+    "cta": {
+      "badge": "Take Action",
+      "title": "Ready to transform your trading?",
+      "subtitle": "Join hundreds of successful traders inside BoomingFX. Your journey to financial independence starts here.",
+      "btnText": "Join The Community",
+      "btnLink": "/packages"
+    }
   },
   "aboutMe": {
     "badge": "The Story Behind BoomingFX",
@@ -45,45 +81,67 @@
         "title": "The Vision for BoomingFX",
         "text": "I founded BoomingFX not to sell generic courses, but to build a real physical mentorship framework in downtown Edmonton. An actual community where traders don't trade alone, but learn institutional discipline, risk management, and capital scaling together."
       }
-    ]
+    ],
+    "realityTitle": "The Reality",
+    "realityText": "I don't sell dreams — I teach reality. Trading is not for everyone. If you're looking for a shortcut or a get-rich-quick fix, this isn't it. We are fully transparent, sharing both wins and losses.",
+    "quote": "\"All we ask in return is that you take it seriously. Let's get to work.\"",
+    "cta": {
+      "title": "Trade Smarter. Grow Faster.",
+      "subtitle": "Where transparency meets expertise. Get mentorship, signals, and community support to trade with confidence.",
+      "btnText": "Join the Community",
+      "btnLink": "/packages"
+    }
   },
   "whyBoomingFx": {
     "badge": "The Difference",
     "title": "Why BoomingFX?",
-    "headline": "Not just numbers and charts. Find a place where you truly belong.",
+    "sectionSub": "Not just numbers and charts",
+    "headline": "Find a place where you truly belong.",
     "subtitle": "We haven't just built a platform; we've cultivated a vibrant ecosystem where every individual is welcomed into something bigger than themselves.",
     "advantages": [
       {
         "title": "Edmonton's Largest Community",
-        "description": "Join a dynamic network of elite traders worldwide. We don't just trade together; we evolve together, sharing insights in real-time.",
-        "icon": "Users"
-      },
-      {
-        "title": "Beginner Friendly",
-        "description": "No prior knowledge necessary. We build your foundation from the ground up with structured step-by-step roadmaps.",
-        "icon": "BookOpen"
+        "description": "True success isn't achieved in isolation. When you join BoomingFX, you're stepping into a dynamic circle of fellow traders in Edmonton and across Alberta. Questions are answered, insights are shared, and victories are celebrated together."
       },
       {
         "title": "Full Transparency",
-        "description": "No hidden fees, no complex jargon. Just an honest, straightforward approach backed by verified live trades and Google reviews.",
-        "icon": "ShieldCheck"
+        "description": "In a financial world that can feel opaque, we stand as a beacon of clarity. No hidden complexities, no unforeseen charges — just an honest approach that empowers you to trade with confidence."
       },
       {
-        "title": "Physical Trading Office",
-        "description": "Located in downtown Edmonton, providing an actual trading desk environment with live mentorship and real-time screen sharing.",
-        "icon": "Building2"
+        "title": "Continuous Discovery",
+        "description": "The path of a trader is a journey of continuous discovery. We cultivate a space rich with shared knowledge, where every challenge becomes an opportunity for collective advancement."
       },
       {
-        "title": "Lifelong Mentorship",
-        "description": "Weekly live market breakdowns, daily Telegram trade ideas, in-office workshops, and continuous guidance that never expires.",
-        "icon": "Sparkles"
+        "title": "A Commitment to You",
+        "description": "Come, be a part of something truly significant. Join BoomingFX, and discover the power of trading with full transparency, unwavering support, and the collective strength of Edmonton's most dedicated trading community."
       }
-    ]
+    ],
+    "cta": {
+      "title": "Trade Smarter. Grow Faster.",
+      "subtitle": "Where transparency meets expertise. Get mentorship, signals, and community support to trade with confidence.",
+      "btnText": "Join the Community",
+      "btnLink": "/packages"
+    }
   },
   "packages": {
+    "badge": "Real Mentorship • Not Just Another Course",
     "overviewTitle": "Mentorship Packages",
     "overviewSubtitle": "What You're Stepping Into",
     "overviewText": "BoomingFX operates out of a professional trading office in downtown Edmonton — structured, disciplined, and built to mirror the environment of an actual trading firm. This isn't a course you watch alone and forget. From day one, you are placed inside a framework designed to develop serious traders.",
+    "pillars": [
+      {
+        "title": "Trading Firm Environment",
+        "description": "Dedicated instructors for technical & fundamental analysis, plus a dedicated risk management assessor."
+      },
+      {
+        "title": "Prop Firm Capital Scaling",
+        "description": "We start you from scratch and guide you through acquiring trading capital via prop firm evaluations."
+      },
+      {
+        "title": "Selective Mentorship",
+        "description": "The structure and mentorship are here. The only variable is you. We'll see you on the inside."
+      }
+    ],
     "currencyNote": "All prices are listed in USD (United States Dollars). As a trading education program with mentees across the globe, we price in USD because it is the world's reserve currency and the standard across international financial markets. This ensures consistency and transparency for every member, regardless of where they are joining us from.",
     "plans": [
       {
@@ -140,7 +198,13 @@
         ],
         "stripeUrl": "https://buy.stripe.com/7sY6oHeid3BEg2f7g66Zy06"
       }
-    ]
+    ],
+    "cta": {
+      "title": "Ready to Join the Mentorship?",
+      "subtitle": "Where transparency meets expertise. Get mentorship, signals, and community support to trade with confidence.",
+      "btnText": "Get Started Today",
+      "btnLink": "/packages"
+    }
   },
   "ourTeam": {
     "badge": "BoomingFx Experts",
@@ -177,7 +241,13 @@
         "role": "Risk Management Expert",
         "image": "/Ronald Reece.jpeg"
       }
-    ]
+    ],
+    "cta": {
+      "title": "Ready to Trade With the Pros?",
+      "subtitle": "Where transparency meets expertise. Get mentorship, signals, and community support to trade with confidence.",
+      "btnText": "Enroll Now!",
+      "btnLink": "/packages"
+    }
   },
   "media": {
     "badge": "Global Community",
@@ -204,12 +274,22 @@
         "description": "Hosting massive events and building community in Toronto.",
         "image": "/The Toronto Team.jpeg"
       }
-    ]
+    ],
+    "cta": {
+      "title": "Be Part of Our Next Chapter.",
+      "subtitle": "Where transparency meets expertise. Get mentorship, signals, and community support to trade with confidence.",
+      "btnText": "Enroll Now!",
+      "btnLink": "/packages"
+    }
   },
   "testimonials": {
+    "badge": "Real Results",
+    "heroTitle": "Student Success",
+    "heroSubtitle": "Transparency is our foundation. Our testimonials are 100% genuine, coming from real mentees who've experienced our mentorship firsthand.",
     "title": "Client Testimonials",
     "subtitle": "100% Recommended: Authentic Feedback from Real Mentees",
     "googleReviewUrl": "https://share.google/5j5FnhQiRYB3qbo0o",
+    "googleBtnText": "View 5.0 Star Google Reviews",
     "sliderImages": [
       "/testimonial1.png",
       "/testimonial2.png",
@@ -223,38 +303,68 @@
       "/testimonial10.png",
       "/testimonial11.png",
       "/testimonial12.png"
-    ]
-  },
-  "faqs": [
-    {
-      "id": 1,
-      "question": "HOW MUCH TIME DO I NEED PER DAY TO TRADE?",
-      "answer": "Trading doesn't have to take over your whole day. Many successful members trade part-time around their full-time jobs, school, or other commitments. On average, you may only need 30 to 60 minutes a day to analyze charts, set up trades, and review the market."
-    },
-    {
-      "id": 2,
-      "question": "IS THIS BEGINNER-FRIENDLY?",
-      "answer": "Yes, 100%! We start you from scratch — no prior trading experience required. Our comprehensive mentorship breaks down technical analysis, fundamental analysis, and risk management into step-by-step actionable lessons."
-    },
-    {
-      "id": 3,
-      "question": "HOW MUCH MONEY DO I NEED TO START TRADING?",
-      "answer": "You can start learning and practicing with zero capital using a free demo account. Once you're ready to trade with real funds, you can start with a modest balance, or we can guide you through acquiring $50k-$200k+ in funding via prop firm evaluation challenges."
-    },
-    {
-      "id": 4,
-      "question": "WHAT MAKES BOOMINGFX DIFFERENT FROM OTHER SERVICES?",
-      "answer": "We operate out of a real physical office in downtown Edmonton and don't just sell recorded courses. We offer daily live mentorship, continuous risk management guidance, in-person workshops, and transparent live trade ideas."
-    },
-    {
-      "id": 5,
-      "question": "HOW DO YOUR TRADING SIGNALS WORK?",
-      "answer": "Our expert team analyzes market opportunities daily and delivers verified signals with exact entries, stop-losses, and profit targets directly through Telegram, complete with full technical rationale."
+    ],
+    "cta": {
+      "title": "Ready to Join the Success Stories?",
+      "subtitle": "Where transparency meets expertise. Get mentorship, signals, and community support to trade with confidence.",
+      "btnText": "Enroll Now!",
+      "btnLink": "/packages"
     }
-  ],
+  },
+  "faqs": {
+    "badge": "Got Questions?",
+    "title": "Frequently Asked Questions",
+    "subtitle": "Welcome to BoomingFX! We understand that starting your trading journey can feel overwhelming, so we've put together answers to the most common questions beginners ask.",
+    "items": [
+      {
+        "id": 1,
+        "question": "HOW MUCH TIME DO I NEED PER DAY TO TRADE?",
+        "answer": "Trading doesn't have to take over your whole day. Many successful members trade part-time around their full-time jobs, school, or other commitments. On average, you may only need 30 to 60 minutes a day to analyze charts, set up trades, and review the market."
+      },
+      {
+        "id": 2,
+        "question": "IS THIS BEGINNER-FRIENDLY?",
+        "answer": "Yes, 100%! We start you from scratch — no prior trading experience required. Our comprehensive mentorship breaks down technical analysis, fundamental analysis, and risk management into step-by-step actionable lessons."
+      },
+      {
+        "id": 3,
+        "question": "HOW MUCH MONEY DO I NEED TO START TRADING?",
+        "answer": "You can start learning and practicing with zero capital using a free demo account. Once you're ready to trade with real funds, you can start with a modest balance, or we can guide you through acquiring $50k-$200k+ in funding via prop firm evaluation challenges."
+      },
+      {
+        "id": 4,
+        "question": "WHAT MAKES BOOMINGFX DIFFERENT FROM OTHER SERVICES?",
+        "answer": "We operate out of a real physical office in downtown Edmonton and don't just sell recorded courses. We offer daily live mentorship, continuous risk management guidance, in-person workshops, and transparent live trade ideas."
+      },
+      {
+        "id": 5,
+        "question": "HOW DO YOUR TRADING SIGNALS WORK?",
+        "answer": "Our expert team analyzes market opportunities daily and delivers verified signals with exact entries, stop-losses, and profit targets directly through Telegram, complete with full technical rationale."
+      }
+    ],
+    "cta": {
+      "title": "Ready to Join the Success Stories?",
+      "subtitle": "Where transparency meets expertise. Get mentorship, signals, and community support to trade with confidence.",
+      "btnText": "Enroll Now!",
+      "btnLink": "/packages"
+    }
+  },
+  "contact": {
+    "badge": "Get In Touch",
+    "title": "Contact Us",
+    "headline": "Let's start a conversation.",
+    "subtitle": "We'd love to hear from you. Whether you have a question about our mentorship programs, need help with your trading strategy, or just want to connect, our team is ready to answer all your questions.",
+    "cta": {
+      "title": "Ready to Join the Success Stories?",
+      "subtitle": "Where transparency meets expertise. Get mentorship, signals, and community support to trade with confidence.",
+      "btnText": "Enroll Now!",
+      "btnLink": "/packages"
+    }
+  },
   "refundPolicy": {
     "badge": "Official Policy • Transparent Terms",
     "title": "Refund & Cancellation Policy",
+    "subtitle": "At BoomingFX, we prioritize transparency, clarity, and professionalism in all our interactions with members.",
     "effectiveDate": "August 2025",
     "p1": "At BoomingFX, we prioritize transparency, clarity, and professionalism in all our interactions with members. When you subscribe to BoomingFX, you gain instant access to a range of premium services including daily trading signals, market analysis, educational resources, mentorship, and membership within our exclusive trading community. Because of the immediate delivery of digital content and access to proprietary trading tools and strategies, all subscription payments made to BoomingFX are final and strictly non-refundable.",
     "p2": "We do not offer refunds or partial reimbursements under any circumstances once a payment has been processed. This includes but is not limited to situations where the subscriber has not utilized the services, was unsatisfied with the results, or forgot to cancel prior to the next billing cycle. By subscribing, you acknowledge and agree that BoomingFX is not obligated to provide refunds for any reason.",
@@ -265,6 +375,7 @@
   "disclaimer": {
     "badge": "Legal & Compliance Notice",
     "title": "Disclaimer & Risk Disclosure",
+    "subtitle": "Important legal notice regarding our educational scope, trading risks, and market analytics services.",
     "effectiveDate": "August 2025",
     "p1": "All content, trading signals, educational materials, live sessions, and market commentary provided by BoomingFX are strictly for educational and informational purposes only. BoomingFX is not a registered investment advisor, broker-dealer, or financial analyst.",
     "p2": "Trading foreign exchange (Forex), commodities, equities, and CFDs carries a high level of risk and may not be suitable for all investors. The high degree of leverage that is often obtainable in commodity trading can work against you as well as for you. You must be aware of the risks and be willing to accept them in order to trade in these markets.",

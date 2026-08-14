@@ -5,7 +5,10 @@ import TradingViewTicker from '@/components/TradingViewTicker';
 
 export default function Home() {
   const { content } = useSiteContent();
-  const { hero } = content;
+  const hero = content.home.hero;
+  const bento = content.home.bento;
+  const cta = content.home.cta;
+  const bentoCards = bento?.cards || [];
 
   return (
     <div className="bg-white overflow-hidden selection:bg-[#004185] selection:text-white">
@@ -17,6 +20,7 @@ export default function Home() {
       <section className="relative min-h-[90vh] flex items-center justify-center pt-32 md:pt-40 pb-32">
         {/* Dynamic Background Elements */}
         <div className="absolute inset-0 z-0 bg-black">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
           <img 
             src="/hero background.jpeg" 
             alt="Trading Background" 
@@ -130,13 +134,15 @@ export default function Home() {
           
           <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-8">
             <div className="max-w-3xl">
-              <h2 className="text-sm font-black tracking-widest text-[#004185] uppercase mb-3">The BoomingFX Advantage</h2>
+              <h2 className="text-sm font-black tracking-widest text-[#004185] uppercase mb-3">
+                {bento?.badge || "The BoomingFX Advantage"}
+              </h2>
               <h3 className="text-4xl md:text-6xl font-black text-black tracking-tighter leading-[1.1]">
-                Not just another <br/>trading course.
+                {bento?.title || "Not just another trading course."}
               </h3>
             </div>
             <p className="text-black/60 text-lg font-medium max-w-md pb-2">
-              We leverage modern technology, unmatched transparency, and a deeply connected community to ensure your success.
+              {bento?.subtitle || "We leverage modern technology, unmatched transparency, and a deeply connected community to ensure your success."}
             </p>
           </div>
 
@@ -153,9 +159,9 @@ export default function Home() {
                   <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
                 </div>
                 <div>
-                  <h4 className="text-3xl font-bold text-white mb-4">Edmonton&apos;s Largest Community</h4>
+                  <h4 className="text-3xl font-bold text-white mb-4">{bentoCards[0]?.title || "Edmonton's Largest Community"}</h4>
                   <p className="text-white/70 text-lg max-w-xl font-medium leading-relaxed">
-                    Join a dynamic network of elite traders worldwide. We don&apos;t just trade together; we evolve together, sharing insights in real-time.
+                    {bentoCards[0]?.description || "Join a dynamic network of elite traders worldwide. We don't just trade together; we evolve together, sharing insights in real-time."}
                   </p>
                 </div>
               </div>
@@ -168,8 +174,8 @@ export default function Home() {
                 <div className="w-12 h-12 rounded-full bg-black flex items-center justify-center mb-8">
                   <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253"></path></svg>
                 </div>
-                <h4 className="text-xl font-black text-black mb-3">Beginner Friendly</h4>
-                <p className="text-gray-600 font-medium">No prior knowledge necessary. We build your foundation from the ground up.</p>
+                <h4 className="text-xl font-black text-black mb-3">{bentoCards[1]?.title || "Beginner Friendly"}</h4>
+                <p className="text-gray-600 font-medium">{bentoCards[1]?.description || "No prior knowledge necessary. We build your foundation from the ground up."}</p>
               </div>
             </div>
 
@@ -180,8 +186,8 @@ export default function Home() {
                 <div className="w-12 h-12 rounded-full bg-black flex items-center justify-center mb-8">
                   <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg>
                 </div>
-                <h4 className="text-xl font-black text-black mb-3">Full Transparency</h4>
-                <p className="text-gray-600 font-medium">No hidden fees, no complex jargon. Just an honest, straightforward approach.</p>
+                <h4 className="text-xl font-black text-black mb-3">{bentoCards[2]?.title || "Full Transparency"}</h4>
+                <p className="text-gray-600 font-medium">{bentoCards[2]?.description || "No hidden fees, no complex jargon. Just an honest, straightforward approach."}</p>
               </div>
             </div>
 
@@ -192,8 +198,8 @@ export default function Home() {
                 <div className="w-12 h-12 rounded-full bg-white flex items-center justify-center mb-8">
                   <svg className="w-6 h-6 text-[#004185]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 11V7a4 4 0 118 0m-4 8v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2z"></path></svg>
                 </div>
-                <h4 className="text-xl font-black text-white mb-3">Instant Access</h4>
-                <p className="text-white/80 font-medium">Instant access to mentorship, signals &amp; resources the second you enroll.</p>
+                <h4 className="text-xl font-black text-white mb-3">{bentoCards[3]?.title || "Instant Access"}</h4>
+                <p className="text-white/80 font-medium">{bentoCards[3]?.description || "Instant access to mentorship, signals & resources the second you enroll."}</p>
               </div>
             </div>
 
@@ -204,8 +210,8 @@ export default function Home() {
                 <div className="w-12 h-12 rounded-full bg-black flex items-center justify-center mb-8">
                   <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192l-3.536 3.536M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-5 0a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
                 </div>
-                <h4 className="text-xl font-black text-black mb-3">Lifelong Learning</h4>
-                <p className="text-gray-600 font-medium">Weekly calls, in-office sessions, and continuous mentorship that never stops.</p>
+                <h4 className="text-xl font-black text-black mb-3">{bentoCards[4]?.title || "Lifelong Learning"}</h4>
+                <p className="text-gray-600 font-medium">{bentoCards[4]?.description || "Weekly calls, in-office sessions, and continuous mentorship that never stops."}</p>
               </div>
             </div>
 
@@ -231,23 +237,23 @@ export default function Home() {
             <div className="relative z-10 px-8 py-24 md:px-20 md:py-32 flex flex-col md:flex-row items-center justify-between gap-12">
               <div className="max-w-2xl">
                 <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 backdrop-blur-md border border-white/20 mb-8">
-                  <span className="text-white text-xs font-bold tracking-widest uppercase">Take Action</span>
+                  <span className="text-white text-xs font-bold tracking-widest uppercase">{cta?.badge || "Take Action"}</span>
                 </div>
                 <h2 className="text-5xl md:text-7xl font-black text-white mb-6 tracking-tighter leading-tight">
-                  Ready to transform <br/>your trading?
+                  {cta?.title || "Ready to transform your trading?"}
                 </h2>
                 <p className="text-white/70 text-xl font-medium max-w-lg leading-relaxed">
-                  Join hundreds of successful traders inside BoomingFX. Your journey to financial independence starts here.
+                  {cta?.subtitle || "Join hundreds of successful traders inside BoomingFX. Your journey to financial independence starts here."}
                 </p>
               </div>
               
               <div className="shrink-0 relative group">
                 <div className="absolute -inset-2 bg-gradient-to-r from-[#004185] to-blue-400 rounded-full blur-xl opacity-70 group-hover:opacity-100 transition duration-500 group-hover:duration-200 animate-tilt"></div>
                 <a 
-                  href="/packages" 
+                  href={cta?.btnLink || "/packages"} 
                   className="relative flex items-center justify-center px-12 py-6 bg-white text-black font-black rounded-full text-xl hover:scale-105 transition-all duration-300 gap-4"
                 >
-                  Join The Community
+                  {cta?.btnText || "Join The Community"}
                   <svg className="w-6 h-6 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
                 </a>
               </div>

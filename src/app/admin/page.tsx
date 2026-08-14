@@ -29,7 +29,12 @@ import {
   Image as ImageIcon,
   ShieldCheck,
   FileText,
-  Home
+  Home,
+  ChevronDown,
+  Layers,
+  Phone,
+  Clock,
+  Compass
 } from 'lucide-react';
 
 const ADMIN_PASSWORD = "boomingfx2025"; // Client master passcode
@@ -157,10 +162,52 @@ export default function AdminPage() {
     setFormData(prev => ({ ...prev, general: { ...prev.general, [field]: val } }));
   };
 
-  const updateHero = (field: string, val: string) => {
-    setFormData(prev => ({ ...prev, hero: { ...prev.hero, [field]: val } }));
+  // Home updates
+  const updateHomeHero = (field: string, val: string) => {
+    setFormData(prev => ({
+      ...prev,
+      home: {
+        ...prev.home,
+        hero: { ...prev.home.hero, [field]: val }
+      }
+    }));
   };
 
+  const updateHomeBento = (field: string, val: string) => {
+    setFormData(prev => ({
+      ...prev,
+      home: {
+        ...prev.home,
+        bento: { ...prev.home?.bento, [field]: val }
+      }
+    }));
+  };
+
+  const updateHomeBentoCard = (index: number, field: 'title' | 'description', val: string) => {
+    setFormData(prev => {
+      const cards = [...(prev.home?.bento?.cards || [])];
+      cards[index] = { ...cards[index], [field]: val };
+      return {
+        ...prev,
+        home: {
+          ...prev.home,
+          bento: { ...prev.home?.bento, cards }
+        }
+      };
+    });
+  };
+
+  const updateHomeCta = (field: string, val: string) => {
+    setFormData(prev => ({
+      ...prev,
+      home: {
+        ...prev.home,
+        cta: { ...prev.home?.cta, [field]: val }
+      }
+    }));
+  };
+
+  // About Me updates
   const updateAboutMe = (field: string, val: string) => {
     setFormData(prev => ({ ...prev, aboutMe: { ...prev.aboutMe, [field]: val } }));
   };
@@ -173,6 +220,17 @@ export default function AdminPage() {
     });
   };
 
+  const updateAboutCta = (field: string, val: string) => {
+    setFormData(prev => ({
+      ...prev,
+      aboutMe: {
+        ...prev.aboutMe,
+        cta: { ...prev.aboutMe?.cta, [field]: val }
+      }
+    }));
+  };
+
+  // Why Booming updates
   const updateWhyBooming = (field: string, val: string) => {
     setFormData(prev => ({ ...prev, whyBoomingFx: { ...prev.whyBoomingFx, [field]: val } }));
   };
@@ -185,6 +243,17 @@ export default function AdminPage() {
     });
   };
 
+  const updateWhyCta = (field: string, val: string) => {
+    setFormData(prev => ({
+      ...prev,
+      whyBoomingFx: {
+        ...prev.whyBoomingFx,
+        cta: { ...prev.whyBoomingFx?.cta, [field]: val }
+      }
+    }));
+  };
+
+  // Packages updates
   const updatePackagePlan = (index: number, field: string, val: any) => {
     setFormData(prev => {
       const newPlans = [...prev.packages.plans];
@@ -216,7 +285,21 @@ export default function AdminPage() {
     });
   };
 
+  const updatePackageCta = (field: string, val: string) => {
+    setFormData(prev => ({
+      ...prev,
+      packages: {
+        ...prev.packages,
+        cta: { ...prev.packages?.cta, [field]: val }
+      }
+    }));
+  };
+
   // Team management
+  const updateOurTeamHeader = (field: string, val: string) => {
+    setFormData(prev => ({ ...prev, ourTeam: { ...prev.ourTeam, [field]: val } }));
+  };
+
   const updateTeamMember = (index: number, field: string, val: string) => {
     setFormData(prev => {
       const members = [...(prev.ourTeam?.members || [])];
@@ -233,7 +316,7 @@ export default function AdminPage() {
       ...prev,
       ourTeam: {
         ...prev.ourTeam,
-        members: [...(prev.ourTeam?.members || []), { name, role, image: "/boomingfx_logo.png" }]
+        members: [...(prev.ourTeam?.members || []), { name, role, image: "/Minochel Barthelemy.jpeg" }]
       }
     }));
   };
@@ -251,6 +334,10 @@ export default function AdminPage() {
   };
 
   // Media gallery management
+  const updateMediaHeader = (field: string, val: string) => {
+    setFormData(prev => ({ ...prev, media: { ...prev.media, [field]: val } }));
+  };
+
   const updateMediaItem = (index: number, field: string, val: string) => {
     setFormData(prev => {
       const items = [...(prev.media?.items || [])];
@@ -285,12 +372,27 @@ export default function AdminPage() {
     }
   };
 
+  // Testimonials management
+  const updateTestimonials = (field: string, val: string) => {
+    setFormData(prev => ({
+      ...prev,
+      testimonials: { ...prev.testimonials, [field]: val }
+    }));
+  };
+
   // FAQs
+  const updateFaqHeader = (field: string, val: string) => {
+    setFormData(prev => ({
+      ...prev,
+      faqs: { ...prev.faqs, [field]: val }
+    }));
+  };
+
   const updateFaq = (index: number, field: 'question' | 'answer', val: string) => {
     setFormData(prev => {
-      const newFaqs = [...prev.faqs];
-      newFaqs[index] = { ...newFaqs[index], [field]: val };
-      return { ...prev, faqs: newFaqs };
+      const newItems = [...(prev.faqs?.items || [])];
+      newItems[index] = { ...newItems[index], [field]: val };
+      return { ...prev, faqs: { ...prev.faqs, items: newItems } };
     });
   };
 
@@ -301,14 +403,31 @@ export default function AdminPage() {
     if (!newA) return;
     setFormData(prev => ({
       ...prev,
-      faqs: [...prev.faqs, { id: Date.now(), question: newQ, answer: newA }]
+      faqs: {
+        ...prev.faqs,
+        items: [...(prev.faqs?.items || []), { id: Date.now(), question: newQ, answer: newA }]
+      }
     }));
   };
 
   const removeFaq = (index: number) => {
     if (window.confirm("Delete this FAQ item?")) {
-      setFormData(prev => ({ ...prev, faqs: prev.faqs.filter((_, idx) => idx !== index) }));
+      setFormData(prev => ({
+        ...prev,
+        faqs: {
+          ...prev.faqs,
+          items: (prev.faqs?.items || []).filter((_, idx) => idx !== index)
+        }
+      }));
     }
+  };
+
+  // Contact page
+  const updateContact = (field: string, val: string) => {
+    setFormData(prev => ({
+      ...prev,
+      contact: { ...prev.contact, [field]: val }
+    }));
   };
 
   // Legal
@@ -329,7 +448,7 @@ export default function AdminPage() {
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(0,65,133,0.5),transparent)]"></div>
         <div className="absolute top-1/4 left-1/3 w-96 h-96 bg-cyan-500/10 rounded-full blur-3xl pointer-events-none"></div>
 
-        <div className="relative z-10 w-full max-w-md bg-[#001b3a]/80 backdrop-blur-2xl border border-white/10 p-8 sm:p-10 rounded-3xl shadow-2xl">
+        <div className="relative z-10 w-full max-w-md bg-[#001b3a]/90 backdrop-blur-2xl border border-white/10 p-8 sm:p-10 rounded-3xl shadow-2xl">
           <div className="text-center mb-8">
             <div className="w-16 h-16 rounded-2xl bg-gradient-to-tr from-cyan-400 to-[#004185] flex items-center justify-center mx-auto mb-4 shadow-lg shadow-cyan-500/20">
               <Lock className="w-8 h-8 text-black" />
@@ -543,235 +662,492 @@ export default function AdminPage() {
           {/* Form Content Area */}
           <div className="flex-1 overflow-y-auto p-6 space-y-6 custom-scrollbar">
             
-            {/* ----------------- TAB 1: HOME PAGE HERO ----------------- */}
+            {/* ----------------- TAB 1: HOME PAGE (ALL 3 SECTIONS) ----------------- */}
             {activeTab === 'home' && (
-              <div className="space-y-5">
+              <div className="space-y-6">
                 <div className="border-b border-white/10 pb-3">
-                  <h2 className="text-base font-extrabold text-white">Home Page • Hero &amp; Banners</h2>
-                  <p className="text-xs text-blue-100/60">Customize main headlines, buttons and Google review link</p>
+                  <h2 className="text-base font-extrabold text-white">Home Page Customizer</h2>
+                  <p className="text-xs text-blue-100/60">Customize Hero, Advantage Bento Cards, and Bottom CTA Banner</p>
                 </div>
 
-                <div>
-                  <label className="block text-xs font-bold text-cyan-300 uppercase mb-1">Pill Badge Text</label>
-                  <input 
-                    type="text" 
-                    value={formData.hero.badge}
-                    onChange={(e) => updateHero('badge', e.target.value)}
-                    className="w-full px-3 py-2 bg-black/40 border border-white/15 rounded-xl text-sm"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-xs font-bold text-cyan-300 uppercase mb-1">Hero Main Title</label>
-                  <input 
-                    type="text" 
-                    value={formData.hero.title}
-                    onChange={(e) => updateHero('title', e.target.value)}
-                    className="w-full px-3 py-2 bg-black/40 border border-white/15 rounded-xl text-sm font-bold"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-xs font-bold text-cyan-300 uppercase mb-1">Hero Subtitle Paragraph</label>
-                  <textarea 
-                    rows={3}
-                    value={formData.hero.subtitle}
-                    onChange={(e) => updateHero('subtitle', e.target.value)}
-                    className="w-full px-3 py-2 bg-black/40 border border-white/15 rounded-xl text-xs"
-                  />
-                </div>
-
-                <div className="grid grid-cols-2 gap-3">
+                {/* Section 1: Hero */}
+                <div className="bg-black/30 border border-white/15 rounded-2xl p-5 space-y-4">
+                  <span className="text-xs font-black text-cyan-400 uppercase block border-b border-white/10 pb-2">
+                    Section 1: Hero Banner &amp; Google Reviews
+                  </span>
                   <div>
-                    <label className="block text-xs font-bold text-white/70 mb-1">Primary CTA Button</label>
+                    <label className="block text-[11px] font-bold text-white/70 mb-1">Pill Badge Text</label>
                     <input 
                       type="text" 
-                      value={formData.hero.ctaText}
-                      onChange={(e) => updateHero('ctaText', e.target.value)}
-                      className="w-full px-3 py-2 bg-black/40 border border-white/15 rounded-lg text-xs"
+                      value={formData.home?.hero?.badge || ''}
+                      onChange={(e) => updateHomeHero('badge', e.target.value)}
+                      className="w-full px-3 py-2 bg-black/50 border border-white/15 rounded-lg text-xs"
                     />
                   </div>
                   <div>
-                    <label className="block text-xs font-bold text-white/70 mb-1">Button Link</label>
+                    <label className="block text-[11px] font-bold text-white/70 mb-1">Hero Main Title</label>
                     <input 
                       type="text" 
-                      value={formData.hero.ctaLink}
-                      onChange={(e) => updateHero('ctaLink', e.target.value)}
-                      className="w-full px-3 py-2 bg-black/40 border border-white/15 rounded-lg text-xs"
+                      value={formData.home?.hero?.title || ''}
+                      onChange={(e) => updateHomeHero('title', e.target.value)}
+                      className="w-full px-3 py-2 bg-black/50 border border-white/15 rounded-lg text-xs font-bold"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-[11px] font-bold text-white/70 mb-1">Hero Subtitle</label>
+                    <textarea 
+                      rows={3}
+                      value={formData.home?.hero?.subtitle || ''}
+                      onChange={(e) => updateHomeHero('subtitle', e.target.value)}
+                      className="w-full px-3 py-2 bg-black/50 border border-white/15 rounded-lg text-xs text-white/80"
+                    />
+                  </div>
+                  <div className="grid grid-cols-2 gap-3">
+                    <div>
+                      <label className="block text-[11px] font-bold text-white/70 mb-1">CTA Button Text</label>
+                      <input 
+                        type="text" 
+                        value={formData.home?.hero?.ctaText || ''}
+                        onChange={(e) => updateHomeHero('ctaText', e.target.value)}
+                        className="w-full px-3 py-2 bg-black/50 border border-white/15 rounded-lg text-xs"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-[11px] font-bold text-white/70 mb-1">CTA Button Link</label>
+                      <input 
+                        type="text" 
+                        value={formData.home?.hero?.ctaLink || ''}
+                        onChange={(e) => updateHomeHero('ctaLink', e.target.value)}
+                        className="w-full px-3 py-2 bg-black/50 border border-white/15 rounded-lg text-xs"
+                      />
+                    </div>
+                  </div>
+                  <div>
+                    <label className="block text-[11px] font-bold text-cyan-300 mb-1">Google Review Link</label>
+                    <input 
+                      type="text" 
+                      value={formData.home?.hero?.googleReviewsLink || ''}
+                      onChange={(e) => updateHomeHero('googleReviewsLink', e.target.value)}
+                      className="w-full px-3 py-2 bg-black/50 border border-cyan-400/40 rounded-lg text-xs text-cyan-200 font-mono"
                     />
                   </div>
                 </div>
 
-                <div>
-                  <label className="block text-xs font-bold text-cyan-300 uppercase mb-1">Google Review Link</label>
-                  <input 
-                    type="text" 
-                    value={formData.hero.googleReviewsLink}
-                    onChange={(e) => updateHero('googleReviewsLink', e.target.value)}
-                    className="w-full px-3 py-2 bg-black/40 border border-cyan-400/40 rounded-xl text-xs text-cyan-200 font-mono"
-                  />
+                {/* Section 2: Bento Grid */}
+                <div className="bg-black/30 border border-white/15 rounded-2xl p-5 space-y-4">
+                  <span className="text-xs font-black text-cyan-400 uppercase block border-b border-white/10 pb-2">
+                    Section 2: The BoomingFX Advantage (Bento Grid)
+                  </span>
+                  <div>
+                    <label className="block text-[11px] font-bold text-white/70 mb-1">Section Badge</label>
+                    <input 
+                      type="text" 
+                      value={formData.home?.bento?.badge || ''}
+                      onChange={(e) => updateHomeBento('badge', e.target.value)}
+                      className="w-full px-3 py-2 bg-black/50 border border-white/15 rounded-lg text-xs"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-[11px] font-bold text-white/70 mb-1">Section Title</label>
+                    <input 
+                      type="text" 
+                      value={formData.home?.bento?.title || ''}
+                      onChange={(e) => updateHomeBento('title', e.target.value)}
+                      className="w-full px-3 py-2 bg-black/50 border border-white/15 rounded-lg text-xs font-bold"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-[11px] font-bold text-white/70 mb-1">Section Subtext</label>
+                    <textarea 
+                      rows={2}
+                      value={formData.home?.bento?.subtitle || ''}
+                      onChange={(e) => updateHomeBento('subtitle', e.target.value)}
+                      className="w-full px-3 py-2 bg-black/50 border border-white/15 rounded-lg text-xs text-white/80"
+                    />
+                  </div>
+
+                  <div className="space-y-3 pt-2">
+                    <span className="text-[11px] font-bold text-cyan-300 uppercase block">5 Bento Feature Cards:</span>
+                    {(formData.home?.bento?.cards || []).map((card, cIdx) => (
+                      <div key={cIdx} className="bg-white/5 p-3 rounded-xl space-y-2 border border-white/10">
+                        <span className="text-[10px] text-cyan-300 font-bold">Card #{cIdx + 1}</span>
+                        <input 
+                          type="text" 
+                          value={card.title}
+                          onChange={(e) => updateHomeBentoCard(cIdx, 'title', e.target.value)}
+                          className="w-full px-2.5 py-1.5 bg-black/50 border border-white/15 rounded-md text-xs font-bold"
+                        />
+                        <textarea 
+                          rows={2}
+                          value={card.description}
+                          onChange={(e) => updateHomeBentoCard(cIdx, 'description', e.target.value)}
+                          className="w-full px-2.5 py-1.5 bg-black/50 border border-white/15 rounded-md text-xs text-white/80"
+                        />
+                      </div>
+                    ))}
+                  </div>
                 </div>
+
+                {/* Section 3: Bottom CTA Banner */}
+                <div className="bg-black/30 border border-white/15 rounded-2xl p-5 space-y-4">
+                  <span className="text-xs font-black text-cyan-400 uppercase block border-b border-white/10 pb-2">
+                    Section 3: Bottom Call-To-Action Banner
+                  </span>
+                  <div>
+                    <label className="block text-[11px] font-bold text-white/70 mb-1">CTA Headline</label>
+                    <input 
+                      type="text" 
+                      value={formData.home?.cta?.title || ''}
+                      onChange={(e) => updateHomeCta('title', e.target.value)}
+                      className="w-full px-3 py-2 bg-black/50 border border-white/15 rounded-lg text-xs font-bold"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-[11px] font-bold text-white/70 mb-1">CTA Subtext</label>
+                    <textarea 
+                      rows={2}
+                      value={formData.home?.cta?.subtitle || ''}
+                      onChange={(e) => updateHomeCta('subtitle', e.target.value)}
+                      className="w-full px-3 py-2 bg-black/50 border border-white/15 rounded-lg text-xs text-white/80"
+                    />
+                  </div>
+                  <div className="grid grid-cols-2 gap-3">
+                    <div>
+                      <label className="block text-[11px] font-bold text-white/70 mb-1">Button Text</label>
+                      <input 
+                        type="text" 
+                        value={formData.home?.cta?.btnText || ''}
+                        onChange={(e) => updateHomeCta('btnText', e.target.value)}
+                        className="w-full px-3 py-2 bg-black/50 border border-white/15 rounded-lg text-xs"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-[11px] font-bold text-white/70 mb-1">Button Link</label>
+                      <input 
+                        type="text" 
+                        value={formData.home?.cta?.btnLink || ''}
+                        onChange={(e) => updateHomeCta('btnLink', e.target.value)}
+                        className="w-full px-3 py-2 bg-black/50 border border-white/15 rounded-lg text-xs"
+                      />
+                    </div>
+                  </div>
+                </div>
+
               </div>
             )}
 
-            {/* ----------------- TAB 2: ABOUT ME (FOUNDER STORY) ----------------- */}
+            {/* ----------------- TAB 2: ABOUT ME (ALL SECTIONS) ----------------- */}
             {activeTab === 'aboutMe' && (
-              <div className="space-y-5">
+              <div className="space-y-6">
                 <div className="border-b border-white/10 pb-3">
-                  <h2 className="text-base font-extrabold text-white">About Me • Founder Story</h2>
-                  <p className="text-xs text-blue-100/60">Customize Minochel&apos;s story, bio, milestones and photo</p>
+                  <h2 className="text-base font-extrabold text-white">About Me Customizer</h2>
+                  <p className="text-xs text-blue-100/60">Customize Founder Intro, 5 Story Chapters, Reality Quote &amp; CTA</p>
                 </div>
 
-                <div>
-                  <label className="block text-xs font-bold text-cyan-300 uppercase mb-1">Top Story Badge</label>
-                  <input 
-                    type="text" 
-                    value={formData.aboutMe?.badge || ''}
-                    onChange={(e) => updateAboutMe('badge', e.target.value)}
-                    className="w-full px-3 py-2 bg-black/40 border border-white/15 rounded-xl text-xs"
-                  />
-                </div>
-
-                <div className="grid grid-cols-2 gap-3">
+                <div className="bg-black/30 border border-white/15 rounded-2xl p-5 space-y-4">
+                  <span className="text-xs font-black text-cyan-400 uppercase block border-b border-white/10 pb-2">
+                    Section 1: Hero &amp; Founder Intro
+                  </span>
                   <div>
-                    <label className="block text-xs font-bold text-white/70 mb-1">Founder Name</label>
+                    <label className="block text-[11px] font-bold text-white/70 mb-1">Top Story Badge</label>
                     <input 
                       type="text" 
-                      value={formData.aboutMe?.founderName || ''}
-                      onChange={(e) => updateAboutMe('founderName', e.target.value)}
-                      className="w-full px-3 py-2 bg-black/40 border border-white/15 rounded-lg text-xs font-bold"
+                      value={formData.aboutMe?.badge || ''}
+                      onChange={(e) => updateAboutMe('badge', e.target.value)}
+                      className="w-full px-3 py-2 bg-black/50 border border-white/15 rounded-lg text-xs"
+                    />
+                  </div>
+                  <div className="grid grid-cols-2 gap-3">
+                    <div>
+                      <label className="block text-[11px] font-bold text-white/70 mb-1">Founder Name</label>
+                      <input 
+                        type="text" 
+                        value={formData.aboutMe?.founderName || ''}
+                        onChange={(e) => updateAboutMe('founderName', e.target.value)}
+                        className="w-full px-3 py-2 bg-black/50 border border-white/15 rounded-lg text-xs font-bold"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-[11px] font-bold text-white/70 mb-1">Founder Title</label>
+                      <input 
+                        type="text" 
+                        value={formData.aboutMe?.founderRole || ''}
+                        onChange={(e) => updateAboutMe('founderRole', e.target.value)}
+                        className="w-full px-3 py-2 bg-black/50 border border-white/15 rounded-lg text-xs"
+                      />
+                    </div>
+                  </div>
+                  <div>
+                    <label className="block text-[11px] font-bold text-white/70 mb-1">Story Main Headline</label>
+                    <textarea 
+                      rows={2}
+                      value={formData.aboutMe?.headline || ''}
+                      onChange={(e) => updateAboutMe('headline', e.target.value)}
+                      className="w-full px-3 py-2 bg-black/50 border border-white/15 rounded-lg text-xs font-bold"
                     />
                   </div>
                   <div>
-                    <label className="block text-xs font-bold text-white/70 mb-1">Founder Title</label>
+                    <label className="block text-[11px] font-bold text-white/70 mb-1">Founder Photo URL</label>
                     <input 
                       type="text" 
-                      value={formData.aboutMe?.founderRole || ''}
-                      onChange={(e) => updateAboutMe('founderRole', e.target.value)}
-                      className="w-full px-3 py-2 bg-black/40 border border-white/15 rounded-lg text-xs"
+                      value={formData.aboutMe?.founderImage || ''}
+                      onChange={(e) => updateAboutMe('founderImage', e.target.value)}
+                      className="w-full px-3 py-2 bg-black/50 border border-white/15 rounded-lg text-xs font-mono text-cyan-200"
                     />
                   </div>
                 </div>
 
-                <div>
-                  <label className="block text-xs font-bold text-cyan-300 uppercase mb-1">Story Main Headline</label>
-                  <textarea 
-                    rows={2}
-                    value={formData.aboutMe?.headline || ''}
-                    onChange={(e) => updateAboutMe('headline', e.target.value)}
-                    className="w-full px-3 py-2 bg-black/40 border border-white/15 rounded-xl text-xs font-bold"
-                  />
-                </div>
-
-                {/* Timeline Story Cards */}
-                <div className="space-y-4 pt-2 border-t border-white/10">
-                  <span className="text-xs font-extrabold text-cyan-300 uppercase block">Story Timeline Chapters ({formData.aboutMe?.cards?.length || 0})</span>
+                {/* Story Chapters */}
+                <div className="bg-black/30 border border-white/15 rounded-2xl p-5 space-y-4">
+                  <span className="text-xs font-black text-cyan-400 uppercase block border-b border-white/10 pb-2">
+                    Section 2: Story Timeline Chapters ({formData.aboutMe?.cards?.length || 0})
+                  </span>
                   {(formData.aboutMe?.cards || []).map((card, cIdx) => (
-                    <div key={cIdx} className="bg-black/30 border border-white/15 rounded-2xl p-4 space-y-2">
-                      <span className="text-xs font-bold text-cyan-400">Chapter #{cIdx + 1}</span>
+                    <div key={cIdx} className="bg-white/5 p-3 rounded-xl space-y-2 border border-white/10">
+                      <span className="text-[10px] text-cyan-300 font-bold">Chapter #{cIdx + 1}</span>
                       <input 
                         type="text" 
                         value={card.title}
                         onChange={(e) => updateAboutCard(cIdx, 'title', e.target.value)}
-                        className="w-full px-3 py-1.5 bg-black/50 border border-white/15 rounded-lg text-xs font-bold"
+                        className="w-full px-2.5 py-1.5 bg-black/50 border border-white/15 rounded-md text-xs font-bold"
                       />
                       <textarea 
                         rows={3}
                         value={card.text}
                         onChange={(e) => updateAboutCard(cIdx, 'text', e.target.value)}
-                        className="w-full px-3 py-2 bg-black/50 border border-white/15 rounded-lg text-xs text-white/80"
+                        className="w-full px-2.5 py-1.5 bg-black/50 border border-white/15 rounded-md text-xs text-white/80"
                       />
                     </div>
                   ))}
                 </div>
+
+                {/* Reality & Quote */}
+                <div className="bg-black/30 border border-white/15 rounded-2xl p-5 space-y-4">
+                  <span className="text-xs font-black text-cyan-400 uppercase block border-b border-white/10 pb-2">
+                    Section 3: The Reality &amp; Quote
+                  </span>
+                  <div>
+                    <label className="block text-[11px] font-bold text-white/70 mb-1">Reality Section Title</label>
+                    <input 
+                      type="text" 
+                      value={formData.aboutMe?.realityTitle || ''}
+                      onChange={(e) => updateAboutMe('realityTitle', e.target.value)}
+                      className="w-full px-3 py-2 bg-black/50 border border-white/15 rounded-lg text-xs"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-[11px] font-bold text-white/70 mb-1">Reality Text</label>
+                    <textarea 
+                      rows={3}
+                      value={formData.aboutMe?.realityText || ''}
+                      onChange={(e) => updateAboutMe('realityText', e.target.value)}
+                      className="w-full px-3 py-2 bg-black/50 border border-white/15 rounded-lg text-xs text-white/80"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-[11px] font-bold text-cyan-300 mb-1">Founder Final Quote</label>
+                    <input 
+                      type="text" 
+                      value={formData.aboutMe?.quote || ''}
+                      onChange={(e) => updateAboutMe('quote', e.target.value)}
+                      className="w-full px-3 py-2 bg-black/50 border border-cyan-400/40 rounded-lg text-xs text-cyan-200 italic"
+                    />
+                  </div>
+                </div>
+
+                {/* Bottom CTA */}
+                <div className="bg-black/30 border border-white/15 rounded-2xl p-5 space-y-4">
+                  <span className="text-xs font-black text-cyan-400 uppercase block border-b border-white/10 pb-2">
+                    Section 4: Bottom Call-To-Action Banner
+                  </span>
+                  <div>
+                    <label className="block text-[11px] font-bold text-white/70 mb-1">Headline</label>
+                    <input 
+                      type="text" 
+                      value={formData.aboutMe?.cta?.title || ''}
+                      onChange={(e) => updateAboutCta('title', e.target.value)}
+                      className="w-full px-3 py-2 bg-black/50 border border-white/15 rounded-lg text-xs font-bold"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-[11px] font-bold text-white/70 mb-1">Subtext</label>
+                    <textarea 
+                      rows={2}
+                      value={formData.aboutMe?.cta?.subtitle || ''}
+                      onChange={(e) => updateAboutCta('subtitle', e.target.value)}
+                      className="w-full px-3 py-2 bg-black/50 border border-white/15 rounded-lg text-xs text-white/80"
+                    />
+                  </div>
+                  <div className="grid grid-cols-2 gap-3">
+                    <input 
+                      type="text" 
+                      value={formData.aboutMe?.cta?.btnText || ''}
+                      onChange={(e) => updateAboutCta('btnText', e.target.value)}
+                      placeholder="Button Text"
+                      className="w-full px-3 py-2 bg-black/50 border border-white/15 rounded-lg text-xs"
+                    />
+                    <input 
+                      type="text" 
+                      value={formData.aboutMe?.cta?.btnLink || ''}
+                      onChange={(e) => updateAboutCta('btnLink', e.target.value)}
+                      placeholder="Button Link"
+                      className="w-full px-3 py-2 bg-black/50 border border-white/15 rounded-lg text-xs"
+                    />
+                  </div>
+                </div>
+
               </div>
             )}
 
-            {/* ----------------- TAB 3: WHY BOOMINGFX ----------------- */}
+            {/* ----------------- TAB 3: WHY BOOMINGFX (ALL SECTIONS) ----------------- */}
             {activeTab === 'whyBoomingFx' && (
-              <div className="space-y-5">
+              <div className="space-y-6">
                 <div className="border-b border-white/10 pb-3">
-                  <h2 className="text-base font-extrabold text-white">Why BoomingFX • Advantages</h2>
-                  <p className="text-xs text-blue-100/60">Customize the difference pillars and value propositions</p>
+                  <h2 className="text-base font-extrabold text-white">Why BoomingFX Customizer</h2>
+                  <p className="text-xs text-blue-100/60">Customize Difference Header, 4 Advantage Bento Cards &amp; CTA</p>
                 </div>
 
-                <div>
-                  <label className="block text-xs font-bold text-cyan-300 uppercase mb-1">Page Title</label>
-                  <input 
-                    type="text" 
-                    value={formData.whyBoomingFx?.title || ''}
-                    onChange={(e) => updateWhyBooming('title', e.target.value)}
-                    className="w-full px-3 py-2 bg-black/40 border border-white/15 rounded-xl text-xs font-bold"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-xs font-bold text-cyan-300 uppercase mb-1">Main Headline</label>
-                  <textarea 
-                    rows={2}
-                    value={formData.whyBoomingFx?.headline || ''}
-                    onChange={(e) => updateWhyBooming('headline', e.target.value)}
-                    className="w-full px-3 py-2 bg-black/40 border border-white/15 rounded-xl text-xs"
-                  />
+                <div className="bg-black/30 border border-white/15 rounded-2xl p-5 space-y-4">
+                  <span className="text-xs font-black text-cyan-400 uppercase block border-b border-white/10 pb-2">
+                    Section 1: Hero &amp; Overview Header
+                  </span>
+                  <div>
+                    <label className="block text-[11px] font-bold text-white/70 mb-1">Badge</label>
+                    <input 
+                      type="text" 
+                      value={formData.whyBoomingFx?.badge || ''}
+                      onChange={(e) => updateWhyBooming('badge', e.target.value)}
+                      className="w-full px-3 py-2 bg-black/50 border border-white/15 rounded-lg text-xs"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-[11px] font-bold text-white/70 mb-1">Page Title</label>
+                    <input 
+                      type="text" 
+                      value={formData.whyBoomingFx?.title || ''}
+                      onChange={(e) => updateWhyBooming('title', e.target.value)}
+                      className="w-full px-3 py-2 bg-black/50 border border-white/15 rounded-lg text-xs font-bold"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-[11px] font-bold text-white/70 mb-1">Main Headline</label>
+                    <textarea 
+                      rows={2}
+                      value={formData.whyBoomingFx?.headline || ''}
+                      onChange={(e) => updateWhyBooming('headline', e.target.value)}
+                      className="w-full px-3 py-2 bg-black/50 border border-white/15 rounded-lg text-xs font-bold"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-[11px] font-bold text-white/70 mb-1">Subtitle</label>
+                    <textarea 
+                      rows={2}
+                      value={formData.whyBoomingFx?.subtitle || ''}
+                      onChange={(e) => updateWhyBooming('subtitle', e.target.value)}
+                      className="w-full px-3 py-2 bg-black/50 border border-white/15 rounded-lg text-xs text-white/80"
+                    />
+                  </div>
                 </div>
 
                 {/* Advantage Cards */}
-                <div className="space-y-4 pt-2 border-t border-white/10">
-                  <span className="text-xs font-extrabold text-cyan-300 uppercase block">Advantage Pillars ({formData.whyBoomingFx?.advantages?.length || 0})</span>
+                <div className="bg-black/30 border border-white/15 rounded-2xl p-5 space-y-4">
+                  <span className="text-xs font-black text-cyan-400 uppercase block border-b border-white/10 pb-2">
+                    Section 2: Advantage Bento Cards ({formData.whyBoomingFx?.advantages?.length || 0})
+                  </span>
                   {(formData.whyBoomingFx?.advantages || []).map((adv, aIdx) => (
-                    <div key={aIdx} className="bg-black/30 border border-white/15 rounded-2xl p-4 space-y-2">
-                      <span className="text-xs font-bold text-cyan-400">Pillar #{aIdx + 1}</span>
+                    <div key={aIdx} className="bg-white/5 p-3 rounded-xl space-y-2 border border-white/10">
+                      <span className="text-[10px] text-cyan-300 font-bold">Card #{aIdx + 1}</span>
                       <input 
                         type="text" 
                         value={adv.title}
                         onChange={(e) => updateWhyCard(aIdx, 'title', e.target.value)}
-                        className="w-full px-3 py-1.5 bg-black/50 border border-white/15 rounded-lg text-xs font-bold"
+                        className="w-full px-2.5 py-1.5 bg-black/50 border border-white/15 rounded-md text-xs font-bold"
                       />
                       <textarea 
                         rows={2}
                         value={adv.description}
                         onChange={(e) => updateWhyCard(aIdx, 'description', e.target.value)}
-                        className="w-full px-3 py-2 bg-black/50 border border-white/15 rounded-lg text-xs text-white/80"
+                        className="w-full px-2.5 py-1.5 bg-black/50 border border-white/15 rounded-md text-xs text-white/80"
                       />
                     </div>
                   ))}
                 </div>
+
+                {/* Bottom CTA */}
+                <div className="bg-black/30 border border-white/15 rounded-2xl p-5 space-y-4">
+                  <span className="text-xs font-black text-cyan-400 uppercase block border-b border-white/10 pb-2">
+                    Section 3: Bottom Call-To-Action Banner
+                  </span>
+                  <input 
+                    type="text" 
+                    value={formData.whyBoomingFx?.cta?.title || ''}
+                    onChange={(e) => updateWhyCta('title', e.target.value)}
+                    placeholder="CTA Title"
+                    className="w-full px-3 py-2 bg-black/50 border border-white/15 rounded-lg text-xs font-bold"
+                  />
+                  <textarea 
+                    rows={2}
+                    value={formData.whyBoomingFx?.cta?.subtitle || ''}
+                    onChange={(e) => updateWhyCta('subtitle', e.target.value)}
+                    placeholder="CTA Subtext"
+                    className="w-full px-3 py-2 bg-black/50 border border-white/15 rounded-lg text-xs text-white/80"
+                  />
+                </div>
+
               </div>
             )}
 
-            {/* ----------------- TAB 4: PACKAGES & PRICING ----------------- */}
+            {/* ----------------- TAB 4: PACKAGES & PRICING (ALL SECTIONS) ----------------- */}
             {activeTab === 'packages' && (
               <div className="space-y-6">
                 <div className="border-b border-white/10 pb-3">
-                  <h2 className="text-base font-extrabold text-white">Pricing &amp; Stripe Setup</h2>
-                  <p className="text-xs text-blue-100/60">Edit plan costs, bullet points &amp; Stripe checkout links</p>
+                  <h2 className="text-base font-extrabold text-white">Pricing &amp; Packages Customizer</h2>
+                  <p className="text-xs text-blue-100/60">Customize Framework Headliner, 3 Plans, Stripe Links &amp; USD Disclosure</p>
                 </div>
 
-                <div className="space-y-3">
-                  <label className="block text-xs font-bold text-cyan-300 uppercase">Headliner Overview Title</label>
-                  <input 
-                    type="text" 
-                    value={formData.packages.overviewTitle}
-                    onChange={(e) => updatePackageOverview('overviewTitle', e.target.value)}
-                    className="w-full px-3 py-2 bg-black/40 border border-white/15 rounded-xl text-sm text-white"
-                  />
-                  <label className="block text-xs font-bold text-cyan-300 uppercase">Headliner Subtitle</label>
-                  <input 
-                    type="text" 
-                    value={formData.packages.overviewSubtitle}
-                    onChange={(e) => updatePackageOverview('overviewSubtitle', e.target.value)}
-                    className="w-full px-3 py-2 bg-black/40 border border-white/15 rounded-xl text-sm text-white"
-                  />
-                  <label className="block text-xs font-bold text-cyan-300 uppercase">Downtown Edmonton Framework Paragraph</label>
-                  <textarea 
-                    rows={4}
-                    value={formData.packages.overviewText}
-                    onChange={(e) => updatePackageOverview('overviewText', e.target.value)}
-                    className="w-full px-3 py-2 bg-black/40 border border-white/15 rounded-xl text-xs text-white"
-                  />
+                <div className="bg-black/30 border border-white/15 rounded-2xl p-5 space-y-4">
+                  <span className="text-xs font-black text-cyan-400 uppercase block border-b border-white/10 pb-2">
+                    Section 1: Hero &amp; Framework Overview
+                  </span>
+                  <div>
+                    <label className="block text-[11px] font-bold text-white/70 mb-1">Top Pill Badge</label>
+                    <input 
+                      type="text" 
+                      value={formData.packages.badge || 'Real Mentorship • Not Just Another Course'}
+                      onChange={(e) => updatePackageOverview('badge', e.target.value)}
+                      className="w-full px-3 py-2 bg-black/50 border border-white/15 rounded-lg text-xs"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-[11px] font-bold text-white/70 mb-1">Overview Title</label>
+                    <input 
+                      type="text" 
+                      value={formData.packages.overviewTitle}
+                      onChange={(e) => updatePackageOverview('overviewTitle', e.target.value)}
+                      className="w-full px-3 py-2 bg-black/50 border border-white/15 rounded-lg text-xs font-bold"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-[11px] font-bold text-white/70 mb-1">Overview Subtitle</label>
+                    <input 
+                      type="text" 
+                      value={formData.packages.overviewSubtitle}
+                      onChange={(e) => updatePackageOverview('overviewSubtitle', e.target.value)}
+                      className="w-full px-3 py-2 bg-black/50 border border-white/15 rounded-lg text-xs font-bold text-cyan-300"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-[11px] font-bold text-white/70 mb-1">Downtown Edmonton Framework Description</label>
+                    <textarea 
+                      rows={4}
+                      value={formData.packages.overviewText}
+                      onChange={(e) => updatePackageOverview('overviewText', e.target.value)}
+                      className="w-full px-3 py-2 bg-black/50 border border-white/15 rounded-lg text-xs text-white/80"
+                    />
+                  </div>
                 </div>
 
-                {/* 3 Package Cards */}
+                {/* 3 Package Plans */}
                 {formData.packages.plans.map((plan, pIdx) => (
                   <div key={plan.id} className="bg-black/30 border border-white/15 rounded-2xl p-5 space-y-4">
                     <div className="flex items-center justify-between border-b border-white/10 pb-2">
@@ -807,7 +1183,7 @@ export default function AdminPage() {
                     </div>
 
                     <div>
-                      <label className="block text-[11px] font-bold text-white/70 mb-1">Tagline / Short Desc</label>
+                      <label className="block text-[11px] font-bold text-white/70 mb-1">Tagline</label>
                       <input 
                         type="text" 
                         value={plan.tagline}
@@ -858,16 +1234,51 @@ export default function AdminPage() {
                     </div>
                   </div>
                 ))}
+
+                {/* USD Disclosure */}
+                <div className="bg-black/30 border border-white/15 rounded-2xl p-5 space-y-3">
+                  <span className="text-xs font-black text-cyan-400 uppercase block border-b border-white/10 pb-2">
+                    Section 4: USD Currency Transparency Disclosure
+                  </span>
+                  <textarea 
+                    rows={3}
+                    value={formData.packages.currencyNote}
+                    onChange={(e) => updatePackageOverview('currencyNote', e.target.value)}
+                    className="w-full px-3 py-2 bg-black/50 border border-white/15 rounded-lg text-xs text-white/80"
+                  />
+                </div>
+
+                {/* CTA Banner */}
+                <div className="bg-black/30 border border-white/15 rounded-2xl p-5 space-y-4">
+                  <span className="text-xs font-black text-cyan-400 uppercase block border-b border-white/10 pb-2">
+                    Section 5: Bottom Call-To-Action Banner
+                  </span>
+                  <input 
+                    type="text" 
+                    value={formData.packages.cta?.title || ''}
+                    onChange={(e) => updatePackageCta('title', e.target.value)}
+                    placeholder="CTA Title"
+                    className="w-full px-3 py-2 bg-black/50 border border-white/15 rounded-lg text-xs font-bold"
+                  />
+                  <textarea 
+                    rows={2}
+                    value={formData.packages.cta?.subtitle || ''}
+                    onChange={(e) => updatePackageCta('subtitle', e.target.value)}
+                    placeholder="CTA Subtitle"
+                    className="w-full px-3 py-2 bg-black/50 border border-white/15 rounded-lg text-xs text-white/80"
+                  />
+                </div>
+
               </div>
             )}
 
-            {/* ----------------- TAB 5: OUR TEAM ----------------- */}
+            {/* ----------------- TAB 5: OUR TEAM (ALL SECTIONS) ----------------- */}
             {activeTab === 'ourTeam' && (
-              <div className="space-y-5">
+              <div className="space-y-6">
                 <div className="flex items-center justify-between border-b border-white/10 pb-3">
                   <div>
-                    <h2 className="text-base font-extrabold text-white">Our Team • Mentors &amp; Experts</h2>
-                    <p className="text-xs text-blue-100/60">Manage instructors, analysts and risk coaches</p>
+                    <h2 className="text-base font-extrabold text-white">Our Team Customizer</h2>
+                    <p className="text-xs text-blue-100/60">Customize Hero, Add/Delete Instructors &amp; CTA</p>
                   </div>
                   <button 
                     type="button" 
@@ -878,7 +1289,44 @@ export default function AdminPage() {
                   </button>
                 </div>
 
+                <div className="bg-black/30 border border-white/15 rounded-2xl p-5 space-y-4">
+                  <span className="text-xs font-black text-cyan-400 uppercase block border-b border-white/10 pb-2">
+                    Section 1: Hero &amp; Subtitle
+                  </span>
+                  <div>
+                    <label className="block text-[11px] font-bold text-white/70 mb-1">Badge</label>
+                    <input 
+                      type="text" 
+                      value={formData.ourTeam?.badge || ''}
+                      onChange={(e) => updateOurTeamHeader('badge', e.target.value)}
+                      className="w-full px-3 py-2 bg-black/50 border border-white/15 rounded-lg text-xs"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-[11px] font-bold text-white/70 mb-1">Page Title</label>
+                    <input 
+                      type="text" 
+                      value={formData.ourTeam?.title || ''}
+                      onChange={(e) => updateOurTeamHeader('title', e.target.value)}
+                      className="w-full px-3 py-2 bg-black/50 border border-white/15 rounded-lg text-xs font-bold"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-[11px] font-bold text-white/70 mb-1">Subtitle</label>
+                    <textarea 
+                      rows={2}
+                      value={formData.ourTeam?.subtitle || ''}
+                      onChange={(e) => updateOurTeamHeader('subtitle', e.target.value)}
+                      className="w-full px-3 py-2 bg-black/50 border border-white/15 rounded-lg text-xs text-white/80"
+                    />
+                  </div>
+                </div>
+
+                {/* Team Members List */}
                 <div className="space-y-4">
+                  <span className="text-xs font-black text-cyan-400 uppercase block">
+                    Section 2: Team Members ({formData.ourTeam?.members?.length || 0})
+                  </span>
                   {(formData.ourTeam?.members || []).map((member, mIdx) => (
                     <div key={mIdx} className="bg-black/30 border border-white/15 rounded-2xl p-4 space-y-3">
                       <div className="flex items-center justify-between">
@@ -910,16 +1358,17 @@ export default function AdminPage() {
                     </div>
                   ))}
                 </div>
+
               </div>
             )}
 
-            {/* ----------------- TAB 6: MEDIA & EVENTS ----------------- */}
+            {/* ----------------- TAB 6: MEDIA & EVENTS (ALL SECTIONS) ----------------- */}
             {activeTab === 'media' && (
-              <div className="space-y-5">
+              <div className="space-y-6">
                 <div className="flex items-center justify-between border-b border-white/10 pb-3">
                   <div>
-                    <h2 className="text-base font-extrabold text-white">Media &amp; Events Gallery</h2>
-                    <p className="text-xs text-blue-100/60">Manage office meetup photos and city events</p>
+                    <h2 className="text-base font-extrabold text-white">Media &amp; Gallery Customizer</h2>
+                    <p className="text-xs text-blue-100/60">Customize Hero, Add/Delete City Chapters &amp; CTA</p>
                   </div>
                   <button 
                     type="button" 
@@ -930,7 +1379,44 @@ export default function AdminPage() {
                   </button>
                 </div>
 
+                <div className="bg-black/30 border border-white/15 rounded-2xl p-5 space-y-4">
+                  <span className="text-xs font-black text-cyan-400 uppercase block border-b border-white/10 pb-2">
+                    Section 1: Hero &amp; Subtitle
+                  </span>
+                  <div>
+                    <label className="block text-[11px] font-bold text-white/70 mb-1">Badge</label>
+                    <input 
+                      type="text" 
+                      value={formData.media?.badge || ''}
+                      onChange={(e) => updateMediaHeader('badge', e.target.value)}
+                      className="w-full px-3 py-2 bg-black/50 border border-white/15 rounded-lg text-xs"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-[11px] font-bold text-white/70 mb-1">Title</label>
+                    <input 
+                      type="text" 
+                      value={formData.media?.title || ''}
+                      onChange={(e) => updateMediaHeader('title', e.target.value)}
+                      className="w-full px-3 py-2 bg-black/50 border border-white/15 rounded-lg text-xs font-bold"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-[11px] font-bold text-white/70 mb-1">Subtitle</label>
+                    <textarea 
+                      rows={2}
+                      value={formData.media?.subtitle || ''}
+                      onChange={(e) => updateMediaHeader('subtitle', e.target.value)}
+                      className="w-full px-3 py-2 bg-black/50 border border-white/15 rounded-lg text-xs text-white/80"
+                    />
+                  </div>
+                </div>
+
+                {/* Gallery Photos */}
                 <div className="space-y-4">
+                  <span className="text-xs font-black text-cyan-400 uppercase block">
+                    Section 2: City Community Chapters ({formData.media?.items?.length || 0})
+                  </span>
                   {(formData.media?.items || []).map((item, itIdx) => (
                     <div key={itIdx} className="bg-black/30 border border-white/15 rounded-2xl p-4 space-y-3">
                       <div className="flex items-center justify-between">
@@ -960,58 +1446,77 @@ export default function AdminPage() {
                     </div>
                   ))}
                 </div>
+
               </div>
             )}
 
-            {/* ----------------- TAB 7: TESTIMONIALS & REVIEWS ----------------- */}
+            {/* ----------------- TAB 7: TESTIMONIALS & REVIEWS (ALL SECTIONS) ----------------- */}
             {activeTab === 'testimonials' && (
-              <div className="space-y-5">
+              <div className="space-y-6">
                 <div className="border-b border-white/10 pb-3">
-                  <h2 className="text-base font-extrabold text-white">Testimonials &amp; Reviews</h2>
-                  <p className="text-xs text-blue-100/60">Configure Google review links and headers</p>
+                  <h2 className="text-base font-extrabold text-white">Testimonials &amp; Reviews Customizer</h2>
+                  <p className="text-xs text-blue-100/60">Configure Hero, Google 5.0 Link, 12 Screenshots &amp; CTA</p>
                 </div>
 
-                <div>
-                  <label className="block text-xs font-bold text-cyan-300 uppercase mb-1">Section Title</label>
-                  <input 
-                    type="text" 
-                    value={formData.testimonials.title}
-                    onChange={(e) => setFormData(p => ({ ...p, testimonials: { ...p.testimonials, title: e.target.value } }))}
-                    className="w-full px-3 py-2 bg-black/40 border border-white/15 rounded-xl text-sm"
-                  />
+                <div className="bg-black/30 border border-white/15 rounded-2xl p-5 space-y-4">
+                  <span className="text-xs font-black text-cyan-400 uppercase block border-b border-white/10 pb-2">
+                    Section 1: Hero &amp; Google Link
+                  </span>
+                  <div>
+                    <label className="block text-[11px] font-bold text-white/70 mb-1">Hero Title</label>
+                    <input 
+                      type="text" 
+                      value={formData.testimonials.heroTitle || 'Student Success'}
+                      onChange={(e) => updateTestimonials('heroTitle', e.target.value)}
+                      className="w-full px-3 py-2 bg-black/50 border border-white/15 rounded-lg text-xs font-bold"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-[11px] font-bold text-white/70 mb-1">Section Heading</label>
+                    <input 
+                      type="text" 
+                      value={formData.testimonials.title}
+                      onChange={(e) => updateTestimonials('title', e.target.value)}
+                      className="w-full px-3 py-2 bg-black/50 border border-white/15 rounded-lg text-xs font-bold"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-[11px] font-bold text-cyan-300 mb-1">Google Review URL</label>
+                    <input 
+                      type="text" 
+                      value={formData.testimonials.googleReviewUrl}
+                      onChange={(e) => updateTestimonials('googleReviewUrl', e.target.value)}
+                      className="w-full px-3 py-2 bg-black/50 border border-cyan-400/40 rounded-lg text-xs text-cyan-200 font-mono"
+                    />
+                  </div>
                 </div>
 
-                <div>
-                  <label className="block text-xs font-bold text-cyan-300 uppercase mb-1">Google Review URL</label>
-                  <input 
-                    type="text" 
-                    value={formData.testimonials.googleReviewUrl}
-                    onChange={(e) => setFormData(p => ({ ...p, testimonials: { ...p.testimonials, googleReviewUrl: e.target.value } }))}
-                    className="w-full px-3 py-2 bg-black/40 border border-cyan-400/40 rounded-xl text-xs text-cyan-200 font-mono"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-xs font-bold text-white/70 mb-1">Active Slider Testimonial Screenshots (Count: {formData.testimonials.sliderImages.length})</label>
-                  <div className="grid grid-cols-4 gap-2 bg-black/30 p-3 rounded-xl border border-white/10 max-h-48 overflow-y-auto">
+                {/* Slider Images */}
+                <div className="bg-black/30 border border-white/15 rounded-2xl p-5 space-y-3">
+                  <span className="text-xs font-black text-cyan-400 uppercase block border-b border-white/10 pb-2">
+                    Section 2: 12 Testimonial Screenshots
+                  </span>
+                  <div className="grid grid-cols-4 gap-2 max-h-48 overflow-y-auto pr-1">
                     {formData.testimonials.sliderImages.map((img, i) => (
-                      <div key={i} className="relative bg-white/5 rounded p-1 text-center">
+                      <div key={i} className="relative bg-white/5 rounded p-1 text-center border border-white/10">
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
                         <img src={img} alt={`Testimonial ${i+1}`} className="w-full h-12 object-cover rounded" />
                         <span className="text-[9px] text-white/60 block mt-0.5">#{i+1}</span>
                       </div>
                     ))}
                   </div>
                 </div>
+
               </div>
             )}
 
-            {/* ----------------- TAB 8: FAQS ----------------- */}
+            {/* ----------------- TAB 8: FAQS (ALL SECTIONS) ----------------- */}
             {activeTab === 'faqs' && (
-              <div className="space-y-5">
+              <div className="space-y-6">
                 <div className="flex items-center justify-between border-b border-white/10 pb-3">
                   <div>
-                    <h2 className="text-base font-extrabold text-white">FAQ Management</h2>
-                    <p className="text-xs text-blue-100/60">Add, edit, or delete questions and answers</p>
+                    <h2 className="text-base font-extrabold text-white">FAQ Customizer</h2>
+                    <p className="text-xs text-blue-100/60">Customize Hero, Add/Delete Questions &amp; CTA</p>
                   </div>
                   <button 
                     type="button" 
@@ -1022,9 +1527,37 @@ export default function AdminPage() {
                   </button>
                 </div>
 
+                <div className="bg-black/30 border border-white/15 rounded-2xl p-5 space-y-4">
+                  <span className="text-xs font-black text-cyan-400 uppercase block border-b border-white/10 pb-2">
+                    Section 1: Hero &amp; Subtitle
+                  </span>
+                  <div>
+                    <label className="block text-[11px] font-bold text-white/70 mb-1">Badge</label>
+                    <input 
+                      type="text" 
+                      value={formData.faqs?.badge || 'Got Questions?'}
+                      onChange={(e) => updateFaqHeader('badge', e.target.value)}
+                      className="w-full px-3 py-2 bg-black/50 border border-white/15 rounded-lg text-xs"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-[11px] font-bold text-white/70 mb-1">Title</label>
+                    <input 
+                      type="text" 
+                      value={formData.faqs?.title || 'Frequently Asked Questions'}
+                      onChange={(e) => updateFaqHeader('title', e.target.value)}
+                      className="w-full px-3 py-2 bg-black/50 border border-white/15 rounded-lg text-xs font-bold"
+                    />
+                  </div>
+                </div>
+
+                {/* FAQ Questions */}
                 <div className="space-y-4">
-                  {formData.faqs.map((faq, fIdx) => (
-                    <div key={faq.id} className="bg-black/30 border border-white/15 rounded-2xl p-4 space-y-3">
+                  <span className="text-xs font-black text-cyan-400 uppercase block">
+                    Section 2: Questions &amp; Answers ({formData.faqs?.items?.length || 0})
+                  </span>
+                  {(formData.faqs?.items || []).map((faq, fIdx) => (
+                    <div key={faq.id || fIdx} className="bg-black/30 border border-white/15 rounded-2xl p-4 space-y-3">
                       <div className="flex items-center justify-between">
                         <span className="text-xs font-bold text-cyan-300">Question #{fIdx + 1}</span>
                         <button 
@@ -1050,101 +1583,123 @@ export default function AdminPage() {
                     </div>
                   ))}
                 </div>
+
               </div>
             )}
 
             {/* ----------------- TAB 9: CONTACT & GENERAL ----------------- */}
             {activeTab === 'contact' && (
-              <div className="space-y-5">
+              <div className="space-y-6">
                 <div className="border-b border-white/10 pb-3">
-                  <h2 className="text-base font-extrabold text-white">Contact &amp; Social Channels</h2>
-                  <p className="text-xs text-blue-100/60">Manage company contact info and social links</p>
+                  <h2 className="text-base font-extrabold text-white">Contact &amp; General Settings</h2>
+                  <p className="text-xs text-blue-100/60">Manage Company Info, Addresses, Hours &amp; Social Links</p>
                 </div>
 
-                <div>
-                  <label className="block text-xs font-bold text-cyan-300 uppercase mb-1">Support Email</label>
-                  <input 
-                    type="email" 
-                    value={formData.general.supportEmail}
-                    onChange={(e) => updateGeneral('supportEmail', e.target.value)}
-                    className="w-full px-3 py-2 bg-black/40 border border-white/15 rounded-xl text-sm"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-xs font-bold text-cyan-300 uppercase mb-1">Office Location</label>
-                  <input 
-                    type="text" 
-                    value={formData.general.officeAddress}
-                    onChange={(e) => updateGeneral('officeAddress', e.target.value)}
-                    className="w-full px-3 py-2 bg-black/40 border border-white/15 rounded-xl text-sm"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-xs font-bold text-cyan-300 uppercase mb-1">Business Hours</label>
-                  <input 
-                    type="text" 
-                    value={formData.general.businessHours}
-                    onChange={(e) => updateGeneral('businessHours', e.target.value)}
-                    className="w-full px-3 py-2 bg-black/40 border border-white/15 rounded-xl text-sm"
-                  />
-                </div>
-
-                <div className="pt-3 border-t border-white/10 space-y-3">
-                  <span className="text-xs font-bold text-white uppercase block">Social Media URLs</span>
+                <div className="bg-black/30 border border-white/15 rounded-2xl p-5 space-y-4">
+                  <span className="text-xs font-black text-cyan-400 uppercase block border-b border-white/10 pb-2">
+                    Section 1: Contact Page Hero &amp; Intro
+                  </span>
                   <div>
-                    <label className="block text-[11px] text-white/70 mb-0.5">Facebook URL</label>
+                    <label className="block text-[11px] font-bold text-white/70 mb-1">Headline</label>
+                    <input 
+                      type="text" 
+                      value={formData.contact?.headline || "Let's start a conversation."}
+                      onChange={(e) => updateContact('headline', e.target.value)}
+                      className="w-full px-3 py-2 bg-black/50 border border-white/15 rounded-lg text-xs font-bold"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-[11px] font-bold text-white/70 mb-1">Subtext</label>
+                    <textarea 
+                      rows={2}
+                      value={formData.contact?.subtitle || ''}
+                      onChange={(e) => updateContact('subtitle', e.target.value)}
+                      className="w-full px-3 py-2 bg-black/50 border border-white/15 rounded-lg text-xs text-white/80"
+                    />
+                  </div>
+                </div>
+
+                <div className="bg-black/30 border border-white/15 rounded-2xl p-5 space-y-4">
+                  <span className="text-xs font-black text-cyan-400 uppercase block border-b border-white/10 pb-2">
+                    Section 2: Company Details &amp; Socials
+                  </span>
+                  <div>
+                    <label className="block text-[11px] font-bold text-white/70 mb-1">Support Email</label>
+                    <input 
+                      type="email" 
+                      value={formData.general.supportEmail}
+                      onChange={(e) => updateGeneral('supportEmail', e.target.value)}
+                      className="w-full px-3 py-2 bg-black/50 border border-white/15 rounded-lg text-xs"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-[11px] font-bold text-white/70 mb-1">Office Location</label>
+                    <input 
+                      type="text" 
+                      value={formData.general.officeAddress}
+                      onChange={(e) => updateGeneral('officeAddress', e.target.value)}
+                      className="w-full px-3 py-2 bg-black/50 border border-white/15 rounded-lg text-xs"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-[11px] font-bold text-white/70 mb-1">Business Hours</label>
+                    <input 
+                      type="text" 
+                      value={formData.general.businessHours}
+                      onChange={(e) => updateGeneral('businessHours', e.target.value)}
+                      className="w-full px-3 py-2 bg-black/50 border border-white/15 rounded-lg text-xs"
+                    />
+                  </div>
+                  <div className="space-y-2 pt-2">
+                    <label className="block text-[11px] font-bold text-cyan-300 uppercase">Social Media URLs</label>
                     <input 
                       type="text" 
                       value={formData.general.facebookUrl}
                       onChange={(e) => updateGeneral('facebookUrl', e.target.value)}
-                      className="w-full px-3 py-1.5 bg-black/40 border border-white/10 rounded-lg text-xs"
+                      placeholder="Facebook URL"
+                      className="w-full px-3 py-1.5 bg-black/50 border border-white/15 rounded-lg text-xs"
                     />
-                  </div>
-                  <div>
-                    <label className="block text-[11px] text-white/70 mb-0.5">Telegram Channel URL</label>
                     <input 
                       type="text" 
                       value={formData.general.telegramUrl}
                       onChange={(e) => updateGeneral('telegramUrl', e.target.value)}
-                      className="w-full px-3 py-1.5 bg-black/40 border border-white/10 rounded-lg text-xs"
+                      placeholder="Telegram Channel URL"
+                      className="w-full px-3 py-1.5 bg-black/50 border border-white/15 rounded-lg text-xs"
                     />
-                  </div>
-                  <div>
-                    <label className="block text-[11px] text-white/70 mb-0.5">YouTube URL</label>
                     <input 
                       type="text" 
                       value={formData.general.youtubeUrl}
                       onChange={(e) => updateGeneral('youtubeUrl', e.target.value)}
-                      className="w-full px-3 py-1.5 bg-black/40 border border-white/10 rounded-lg text-xs"
+                      placeholder="YouTube URL"
+                      className="w-full px-3 py-1.5 bg-black/50 border border-white/15 rounded-lg text-xs"
                     />
-                  </div>
-                  <div>
-                    <label className="block text-[11px] text-white/70 mb-0.5">Instagram URL</label>
                     <input 
                       type="text" 
                       value={formData.general.instagramUrl}
                       onChange={(e) => updateGeneral('instagramUrl', e.target.value)}
-                      className="w-full px-3 py-1.5 bg-black/40 border border-white/10 rounded-lg text-xs"
+                      placeholder="Instagram URL"
+                      className="w-full px-3 py-1.5 bg-black/50 border border-white/15 rounded-lg text-xs"
                     />
                   </div>
                 </div>
+
               </div>
             )}
 
             {/* ----------------- TAB 10: LEGAL POLICIES ----------------- */}
             {activeTab === 'legal' && (
-              <div className="space-y-5">
+              <div className="space-y-6">
                 <div className="border-b border-white/10 pb-3">
-                  <h2 className="text-base font-extrabold text-white">Refund Policy &amp; Disclaimer</h2>
-                  <p className="text-xs text-blue-100/60">Customize legal terms and disclaimer clauses</p>
+                  <h2 className="text-base font-extrabold text-white">Policies Customizer</h2>
+                  <p className="text-xs text-blue-100/60">Customize 5-Paragraph Refund Policy and 3 Disclaimer Clauses</p>
                 </div>
 
-                <div className="space-y-3">
-                  <span className="text-xs font-bold text-cyan-300 uppercase block">Refund &amp; Cancellation Policy</span>
+                <div className="bg-black/30 border border-white/15 rounded-2xl p-5 space-y-4">
+                  <span className="text-xs font-black text-cyan-400 uppercase block border-b border-white/10 pb-2">
+                    Refund &amp; Cancellation Policy Clauses
+                  </span>
                   <div>
-                    <label className="block text-[11px] text-white/70 mb-1">Clause 1 (Non-Refundable Delivery)</label>
+                    <label className="block text-[11px] font-bold text-white/70 mb-1">Clause 1 (Non-Refundable Instant Delivery)</label>
                     <textarea 
                       rows={4}
                       value={formData.refundPolicy?.p1 || ''}
@@ -1153,7 +1708,7 @@ export default function AdminPage() {
                     />
                   </div>
                   <div>
-                    <label className="block text-[11px] text-white/70 mb-1">Clause 2 (No Reimbursements)</label>
+                    <label className="block text-[11px] font-bold text-white/70 mb-1">Clause 2 (No Exceptions / No Partial Reimbursements)</label>
                     <textarea 
                       rows={3}
                       value={formData.refundPolicy?.p2 || ''}
@@ -1161,16 +1716,45 @@ export default function AdminPage() {
                       className="w-full px-3 py-2 bg-black/50 border border-white/15 rounded-lg text-xs text-white/80"
                     />
                   </div>
+                  <div>
+                    <label className="block text-[11px] font-bold text-white/70 mb-1">Clause 3 (Cancel Anytime via Account/Email)</label>
+                    <textarea 
+                      rows={3}
+                      value={formData.refundPolicy?.p3 || ''}
+                      onChange={(e) => updateRefundPolicy('p3', e.target.value)}
+                      className="w-full px-3 py-2 bg-black/50 border border-white/15 rounded-lg text-xs text-white/80"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-[11px] font-bold text-white/70 mb-1">Clause 4 (Access till Cycle End)</label>
+                    <textarea 
+                      rows={3}
+                      value={formData.refundPolicy?.p4 || ''}
+                      onChange={(e) => updateRefundPolicy('p4', e.target.value)}
+                      className="w-full px-3 py-2 bg-black/50 border border-white/15 rounded-lg text-xs text-white/80"
+                    />
+                  </div>
                 </div>
 
-                <div className="space-y-3 pt-3 border-t border-white/10">
-                  <span className="text-xs font-bold text-cyan-300 uppercase block">Platform Disclaimer</span>
+                <div className="bg-black/30 border border-white/15 rounded-2xl p-5 space-y-4">
+                  <span className="text-xs font-black text-cyan-400 uppercase block border-b border-white/10 pb-2">
+                    Platform Disclaimer &amp; Risk Warnings
+                  </span>
                   <div>
-                    <label className="block text-[11px] text-white/70 mb-1">Disclaimer Clause 1 (Educational Only)</label>
+                    <label className="block text-[11px] font-bold text-white/70 mb-1">Disclaimer Clause 1 (Educational Only)</label>
                     <textarea 
                       rows={3}
                       value={formData.disclaimer?.p1 || ''}
                       onChange={(e) => updateDisclaimer('p1', e.target.value)}
+                      className="w-full px-3 py-2 bg-black/50 border border-white/15 rounded-lg text-xs text-white/80"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-[11px] font-bold text-white/70 mb-1">Disclaimer Clause 2 (High Risk &amp; Leverage)</label>
+                    <textarea 
+                      rows={3}
+                      value={formData.disclaimer?.p2 || ''}
+                      onChange={(e) => updateDisclaimer('p2', e.target.value)}
                       className="w-full px-3 py-2 bg-black/50 border border-white/15 rounded-lg text-xs text-white/80"
                     />
                   </div>
