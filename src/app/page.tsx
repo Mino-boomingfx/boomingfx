@@ -63,39 +63,28 @@ export default function Home() {
           </p>
           
           {/* CTA Buttons */}
-          <div className="mt-12 flex flex-col sm:flex-row gap-6 items-center justify-center w-full">
+          <div className="mt-10 flex items-center justify-center w-full">
             <a 
               href={hero.ctaLink || "/packages"} 
-              className="group relative w-full sm:w-auto overflow-hidden rounded-full bg-white px-10 py-5 text-lg font-black text-[#004185] shadow-[0_0_40px_rgba(255,255,255,0.4)] transition-all hover:scale-105 hover:shadow-[0_0_60px_rgba(255,255,255,0.6)]"
+              className="group relative w-full sm:w-auto overflow-hidden rounded-full bg-white px-12 py-5 text-lg font-black text-[#004185] shadow-[0_0_40px_rgba(255,255,255,0.4)] transition-all hover:scale-105 hover:shadow-[0_0_60px_rgba(255,255,255,0.6)]"
             >
               <span className="absolute inset-0 bg-[#004185]/5 transition-colors group-hover:bg-[#004185]/10"></span>
-              <span className="relative flex items-center gap-3">
+              <span className="relative flex items-center justify-center gap-3">
                 {hero.ctaBtn || hero.ctaText || "Start Learning Today"}
                 <svg className="w-5 h-5 transform group-hover:translate-x-2 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
               </span>
             </a>
-            
-            <a 
-              href={hero.googleReviewsLink} 
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group relative w-full sm:w-auto px-10 py-5 text-lg font-bold text-white transition-all hover:text-white/80 flex items-center justify-center gap-3"
-            >
-              <div className="absolute inset-0 border-2 border-white/30 rounded-full transition-all group-hover:border-white group-hover:scale-105"></div>
-              5 Star Reviews on Google
-              <svg className="w-5 h-5 transform group-hover:translate-y-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
-            </a>
           </div>
 
-          {/* Google Reviews Trust Badge */}
-          <div className="mt-16 flex items-center justify-center">
+          {/* Google Reviews Trust Badge (4.9 Stars) */}
+          <div className="mt-10 flex items-center justify-center">
             <a 
-              href={hero.googleReviewsLink} 
+              href={hero.googleReviewsLink || "https://www.google.com/search?kgmid=/g/11yj5h11zh&q=BoomingFx"} 
               target="_blank" 
               rel="noopener noreferrer" 
               className="inline-flex items-center gap-3.5 backdrop-blur-md bg-white/10 hover:bg-white/15 py-3.5 px-8 rounded-full border border-white/20 shadow-[0_0_30px_rgba(255,255,255,0.1)] hover:shadow-[0_0_40px_rgba(34,211,238,0.3)] transition-all duration-300 transform hover:scale-105"
             >
-              <svg className="w-5 h-5 text-white" viewBox="0 0 24 24">
+              <svg className="w-5 h-5 text-white shrink-0" viewBox="0 0 24 24">
                 <path fill="currentColor" d="M21.35,11.1H12.18V13.83H18.69C18.36,17.64 15.19,19.27 12.19,19.27C8.36,19.27 5,16.25 5,12C5,7.9 8.2,4.73 12.2,4.73C15.29,4.73 17.1,6.7 17.1,6.7L19,4.72C19,4.72 16.56,2 12.1,2C6.42,2 2.03,6.8 2.03,12C2.03,17.05 6.16,22 12.25,22C17.6,22 21.5,18.33 21.5,12.91C21.5,11.76 21.35,11.1 21.35,11.1V11.1Z" />
               </svg>
               <div className="flex items-center text-yellow-400 gap-0.5">
@@ -105,7 +94,7 @@ export default function Home() {
                   </svg>
                 ))}
               </div>
-              <span className="font-bold text-white text-sm">{hero.googleReviewsBadge}</span>
+              <span className="font-bold text-white text-sm">4.9 Star Rated on Google</span>
               <span className="text-cyan-300 text-xs font-semibold hidden sm:inline">• View All Reviews ↗</span>
             </a>
           </div>
