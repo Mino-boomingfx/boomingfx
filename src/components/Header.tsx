@@ -50,10 +50,10 @@ export default function Header() {
               <div className="relative group ml-6">
                 <div className="absolute -inset-1 bg-[#004185] rounded-full blur-md opacity-70 group-hover:opacity-100 group-hover:blur-lg transition-all duration-500"></div>
                 <a 
-                  href="#" 
+                  href="/packages" 
                   className="relative inline-flex items-center justify-center px-8 py-3 bg-[#004185] text-white font-bold rounded-full transition-all duration-300 border border-white/20 group-hover:border-white/50"
                 >
-                  Start Learning
+                  Join Mentorship
                 </a>
               </div>
             </nav>
@@ -104,11 +104,11 @@ export default function Header() {
               </a>
             ))}
             <a 
-              href="#" 
+              href="/packages" 
               onClick={() => setIsMobileMenuOpen(false)}
-              className="mt-8 px-10 py-4 bg-[#004185] text-white rounded-full border border-white/20 shadow-[0_0_20px_rgba(0,65,133,0.5)]"
+              className="mt-8 px-10 py-4 bg-[#004185] text-white rounded-full border border-white/20 shadow-[0_0_20px_rgba(0,65,133,0.5)] font-bold"
             >
-              Start Learning
+              Join Mentorship
             </a>
           </nav>
         </div>

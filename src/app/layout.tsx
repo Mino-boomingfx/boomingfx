@@ -67,7 +67,7 @@ export default function RootLayout({
                 </h4>
                 <ul className="space-y-4 text-sm font-medium text-gray-400">
                   <li><a href="/" className="hover:text-white transition-colors group flex items-center"><span className="text-[#004185] mr-2 transform group-hover:translate-x-1 transition-transform">▹</span> Home</a></li>
-                  <li><a href="/packages" className="hover:text-white transition-colors group flex items-center"><span className="text-[#004185] mr-2 transform group-hover:translate-x-1 transition-transform">▹</span> Courses</a></li>
+                  <li><a href="/packages" className="hover:text-white transition-colors group flex items-center"><span className="text-[#004185] mr-2 transform group-hover:translate-x-1 transition-transform">▹</span> Packages</a></li>
                   <li><a href="/about-me" className="hover:text-white transition-colors group flex items-center"><span className="text-[#004185] mr-2 transform group-hover:translate-x-1 transition-transform">▹</span> About Me</a></li>
                   <li><a href="/faq" className="hover:text-white transition-colors group flex items-center"><span className="text-[#004185] mr-2 transform group-hover:translate-x-1 transition-transform">▹</span> FAQ</a></li>
                 </ul>
