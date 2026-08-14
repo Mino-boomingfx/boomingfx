@@ -3,12 +3,14 @@ import React from 'react';
 import { useSiteContent } from '@/context/ContentContext';
 import TradingViewTicker from '@/components/TradingViewTicker';
 
+import defaultContent from '@/data/siteContent.json';
+
 export default function Home() {
   const { content } = useSiteContent();
-  const hero = content.home.hero;
-  const bento = content.home.bento;
-  const cta = content.home.cta;
-  const bentoCards = bento?.cards || [];
+  const hero = content.home?.hero || content.hero || defaultContent.home.hero;
+  const bento = content.home?.bento || defaultContent.home.bento;
+  const cta = content.home?.cta || defaultContent.home.cta;
+  const bentoCards = bento?.cards || defaultContent.home.bento.cards;
 
   return (
     <div className="bg-white overflow-hidden selection:bg-[#004185] selection:text-white">

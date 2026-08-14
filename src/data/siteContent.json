@@ -9,6 +9,15 @@
     "youtubeUrl": "https://youtube.com/@boomingfx",
     "telegramUrl": "https://t.me/boomingfx"
   },
+  "hero": {
+    "badge": "Real Mentorship • Not Just Another Course",
+    "title": "Master The Markets With Elite Traders",
+    "subtitle": "Stop gambling and start executing with precision. Master technical analysis, manage risk like an institutional trader, and access our exclusive mentorship community.",
+    "ctaText": "Join Mentorship",
+    "ctaLink": "/packages",
+    "googleReviewsBadge": "5.0 Star Rated on Google",
+    "googleReviewsLink": "https://share.google/5j5FnhQiRYB3qbo0o"
+  },
   "home": {
     "hero": {
       "badge": "Real Mentorship • Not Just Another Course",

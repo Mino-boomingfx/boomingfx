@@ -164,47 +164,62 @@ export default function AdminPage() {
 
   // Home updates
   const updateHomeHero = (field: string, val: string) => {
-    setFormData(prev => ({
-      ...prev,
-      home: {
-        ...prev.home,
-        hero: { ...prev.home.hero, [field]: val }
-      }
-    }));
+    setFormData(prev => {
+      const curHome = prev.home || defaultContent.home;
+      const curHero = curHome.hero || defaultContent.home.hero;
+      return {
+        ...prev,
+        home: {
+          ...curHome,
+          hero: { ...curHero, [field]: val }
+        },
+        hero: { ...curHero, [field]: val }
+      };
+    });
   };
 
   const updateHomeBento = (field: string, val: string) => {
-    setFormData(prev => ({
-      ...prev,
-      home: {
-        ...prev.home,
-        bento: { ...prev.home?.bento, [field]: val }
-      }
-    }));
+    setFormData(prev => {
+      const curHome = prev.home || defaultContent.home;
+      const curBento = curHome.bento || defaultContent.home.bento;
+      return {
+        ...prev,
+        home: {
+          ...curHome,
+          bento: { ...curBento, [field]: val }
+        }
+      };
+    });
   };
 
   const updateHomeBentoCard = (index: number, field: 'title' | 'description', val: string) => {
     setFormData(prev => {
-      const cards = [...(prev.home?.bento?.cards || [])];
+      const curHome = prev.home || defaultContent.home;
+      const curBento = curHome.bento || defaultContent.home.bento;
+      const cards = [...(curBento.cards || defaultContent.home.bento.cards)];
       cards[index] = { ...cards[index], [field]: val };
       return {
         ...prev,
         home: {
-          ...prev.home,
-          bento: { ...prev.home?.bento, cards }
+          ...curHome,
+          bento: { ...curBento, cards }
         }
       };
     });
   };
 
   const updateHomeCta = (field: string, val: string) => {
-    setFormData(prev => ({
-      ...prev,
-      home: {
-        ...prev.home,
-        cta: { ...prev.home?.cta, [field]: val }
-      }
-    }));
+    setFormData(prev => {
+      const curHome = prev.home || defaultContent.home;
+      const curCta = curHome.cta || defaultContent.home.cta;
+      return {
+        ...prev,
+        home: {
+          ...curHome,
+          cta: { ...curCta, [field]: val }
+        }
+      };
+    });
   };
 
   // About Me updates
@@ -679,7 +694,7 @@ export default function AdminPage() {
                     <label className="block text-[11px] font-bold text-white/70 mb-1">Pill Badge Text</label>
                     <input 
                       type="text" 
-                      value={formData.home?.hero?.badge || ''}
+                      value={formData.home?.hero?.badge ?? defaultContent.home.hero.badge}
                       onChange={(e) => updateHomeHero('badge', e.target.value)}
                       className="w-full px-3 py-2 bg-black/50 border border-white/15 rounded-lg text-xs"
                     />
@@ -688,7 +703,7 @@ export default function AdminPage() {
                     <label className="block text-[11px] font-bold text-white/70 mb-1">Hero Main Title</label>
                     <input 
                       type="text" 
-                      value={formData.home?.hero?.title || ''}
+                      value={formData.home?.hero?.title ?? defaultContent.home.hero.title}
                       onChange={(e) => updateHomeHero('title', e.target.value)}
                       className="w-full px-3 py-2 bg-black/50 border border-white/15 rounded-lg text-xs font-bold"
                     />
@@ -697,7 +712,7 @@ export default function AdminPage() {
                     <label className="block text-[11px] font-bold text-white/70 mb-1">Hero Subtitle</label>
                     <textarea 
                       rows={3}
-                      value={formData.home?.hero?.subtitle || ''}
+                      value={formData.home?.hero?.subtitle ?? defaultContent.home.hero.subtitle}
                       onChange={(e) => updateHomeHero('subtitle', e.target.value)}
                       className="w-full px-3 py-2 bg-black/50 border border-white/15 rounded-lg text-xs text-white/80"
                     />
@@ -707,7 +722,7 @@ export default function AdminPage() {
                       <label className="block text-[11px] font-bold text-white/70 mb-1">CTA Button Text</label>
                       <input 
                         type="text" 
-                        value={formData.home?.hero?.ctaText || ''}
+                        value={formData.home?.hero?.ctaText ?? defaultContent.home.hero.ctaText}
                         onChange={(e) => updateHomeHero('ctaText', e.target.value)}
                         className="w-full px-3 py-2 bg-black/50 border border-white/15 rounded-lg text-xs"
                       />
@@ -716,7 +731,7 @@ export default function AdminPage() {
                       <label className="block text-[11px] font-bold text-white/70 mb-1">CTA Button Link</label>
                       <input 
                         type="text" 
-                        value={formData.home?.hero?.ctaLink || ''}
+                        value={formData.home?.hero?.ctaLink ?? defaultContent.home.hero.ctaLink}
                         onChange={(e) => updateHomeHero('ctaLink', e.target.value)}
                         className="w-full px-3 py-2 bg-black/50 border border-white/15 rounded-lg text-xs"
                       />
@@ -726,7 +741,7 @@ export default function AdminPage() {
                     <label className="block text-[11px] font-bold text-cyan-300 mb-1">Google Review Link</label>
                     <input 
                       type="text" 
-                      value={formData.home?.hero?.googleReviewsLink || ''}
+                      value={formData.home?.hero?.googleReviewsLink ?? defaultContent.home.hero.googleReviewsLink}
                       onChange={(e) => updateHomeHero('googleReviewsLink', e.target.value)}
                       className="w-full px-3 py-2 bg-black/50 border border-cyan-400/40 rounded-lg text-xs text-cyan-200 font-mono"
                     />
@@ -742,7 +757,7 @@ export default function AdminPage() {
                     <label className="block text-[11px] font-bold text-white/70 mb-1">Section Badge</label>
                     <input 
                       type="text" 
-                      value={formData.home?.bento?.badge || ''}
+                      value={formData.home?.bento?.badge ?? defaultContent.home.bento.badge}
                       onChange={(e) => updateHomeBento('badge', e.target.value)}
                       className="w-full px-3 py-2 bg-black/50 border border-white/15 rounded-lg text-xs"
                     />
@@ -751,7 +766,7 @@ export default function AdminPage() {
                     <label className="block text-[11px] font-bold text-white/70 mb-1">Section Title</label>
                     <input 
                       type="text" 
-                      value={formData.home?.bento?.title || ''}
+                      value={formData.home?.bento?.title ?? defaultContent.home.bento.title}
                       onChange={(e) => updateHomeBento('title', e.target.value)}
                       className="w-full px-3 py-2 bg-black/50 border border-white/15 rounded-lg text-xs font-bold"
                     />
@@ -760,7 +775,7 @@ export default function AdminPage() {
                     <label className="block text-[11px] font-bold text-white/70 mb-1">Section Subtext</label>
                     <textarea 
                       rows={2}
-                      value={formData.home?.bento?.subtitle || ''}
+                      value={formData.home?.bento?.subtitle ?? defaultContent.home.bento.subtitle}
                       onChange={(e) => updateHomeBento('subtitle', e.target.value)}
                       className="w-full px-3 py-2 bg-black/50 border border-white/15 rounded-lg text-xs text-white/80"
                     />
@@ -768,7 +783,7 @@ export default function AdminPage() {
 
                   <div className="space-y-3 pt-2">
                     <span className="text-[11px] font-bold text-cyan-300 uppercase block">5 Bento Feature Cards:</span>
-                    {(formData.home?.bento?.cards || []).map((card, cIdx) => (
+                    {(formData.home?.bento?.cards || defaultContent.home.bento.cards).map((card, cIdx) => (
                       <div key={cIdx} className="bg-white/5 p-3 rounded-xl space-y-2 border border-white/10">
                         <span className="text-[10px] text-cyan-300 font-bold">Card #{cIdx + 1}</span>
                         <input 
@@ -797,7 +812,7 @@ export default function AdminPage() {
                     <label className="block text-[11px] font-bold text-white/70 mb-1">CTA Headline</label>
                     <input 
                       type="text" 
-                      value={formData.home?.cta?.title || ''}
+                      value={formData.home?.cta?.title ?? defaultContent.home.cta.title}
                       onChange={(e) => updateHomeCta('title', e.target.value)}
                       className="w-full px-3 py-2 bg-black/50 border border-white/15 rounded-lg text-xs font-bold"
                     />
@@ -806,7 +821,7 @@ export default function AdminPage() {
                     <label className="block text-[11px] font-bold text-white/70 mb-1">CTA Subtext</label>
                     <textarea 
                       rows={2}
-                      value={formData.home?.cta?.subtitle || ''}
+                      value={formData.home?.cta?.subtitle ?? defaultContent.home.cta.subtitle}
                       onChange={(e) => updateHomeCta('subtitle', e.target.value)}
                       className="w-full px-3 py-2 bg-black/50 border border-white/15 rounded-lg text-xs text-white/80"
                     />
@@ -816,7 +831,7 @@ export default function AdminPage() {
                       <label className="block text-[11px] font-bold text-white/70 mb-1">Button Text</label>
                       <input 
                         type="text" 
-                        value={formData.home?.cta?.btnText || ''}
+                        value={formData.home?.cta?.btnText ?? defaultContent.home.cta.btnText}
                         onChange={(e) => updateHomeCta('btnText', e.target.value)}
                         className="w-full px-3 py-2 bg-black/50 border border-white/15 rounded-lg text-xs"
                       />
@@ -825,7 +840,7 @@ export default function AdminPage() {
                       <label className="block text-[11px] font-bold text-white/70 mb-1">Button Link</label>
                       <input 
                         type="text" 
-                        value={formData.home?.cta?.btnLink || ''}
+                        value={formData.home?.cta?.btnLink ?? defaultContent.home.cta.btnLink}
                         onChange={(e) => updateHomeCta('btnLink', e.target.value)}
                         className="w-full px-3 py-2 bg-black/50 border border-white/15 rounded-lg text-xs"
                       />
