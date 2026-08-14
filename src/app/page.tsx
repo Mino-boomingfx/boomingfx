@@ -53,29 +53,24 @@ export default function Home() {
             <span className="text-white text-xs font-bold tracking-widest uppercase">{hero.badge}</span>
           </div>
 
-          {/* Headline with advanced text formatting */}
-          <h1 className="text-5xl md:text-7xl lg:text-8xl font-black text-transparent bg-clip-text bg-gradient-to-r from-white via-white to-white/60 mb-4 tracking-tighter leading-tight drop-shadow-2xl">
-            {hero.title.split('With')[0]} <br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-blue-100 to-white/50">{hero.title.includes('With') ? `With ${hero.title.split('With')[1]}` : 'Market Trading Analytics.'}</span>
+          {/* Headline with advanced typography */}
+          <h1 className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-black text-transparent bg-clip-text bg-gradient-to-b from-white via-white to-blue-100/90 mb-6 tracking-tight leading-[1.08] drop-shadow-2xl max-w-5xl">
+            {hero.title || "Learn to Trade with Discipline, Clarity, and a Community Behind You"}
           </h1>
-          
-          <h2 className="text-xl md:text-3xl font-bold text-white/90 mb-6 drop-shadow-lg">
-            A community where traders and investors truly belong.
-          </h2>
 
-          <p className="mt-4 text-lg md:text-xl text-white/80 max-w-3xl mx-auto font-medium leading-relaxed drop-shadow-md">
-            {hero.subtitle}
+          <p className="text-lg md:text-2xl text-blue-100/90 max-w-3xl mx-auto font-normal leading-relaxed drop-shadow-md">
+            {hero.subtitle || "BoomingFX is Edmonton's largest trading education community. We teach proven strategies in Forex, commodities, and crypto — with live mentorship, 24/7 course access, and a physical office you can actually walk into."}
           </p>
           
           {/* CTA Buttons */}
           <div className="mt-12 flex flex-col sm:flex-row gap-6 items-center justify-center w-full">
             <a 
-              href={hero.ctaLink} 
+              href={hero.ctaLink || "/packages"} 
               className="group relative w-full sm:w-auto overflow-hidden rounded-full bg-white px-10 py-5 text-lg font-black text-[#004185] shadow-[0_0_40px_rgba(255,255,255,0.4)] transition-all hover:scale-105 hover:shadow-[0_0_60px_rgba(255,255,255,0.6)]"
             >
               <span className="absolute inset-0 bg-[#004185]/5 transition-colors group-hover:bg-[#004185]/10"></span>
               <span className="relative flex items-center gap-3">
-                {hero.ctaText}
+                {hero.ctaBtn || hero.ctaText || "Start Learning Today"}
                 <svg className="w-5 h-5 transform group-hover:translate-x-2 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
               </span>
             </a>
