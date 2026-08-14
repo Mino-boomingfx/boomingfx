@@ -65,7 +65,7 @@ const PAGE_ROUTES: Record<AdminTab, string> = {
 };
 
 export default function AdminPage() {
-  const { content, updateContent, resetContent, isCustomized } = useSiteContent();
+  const { content, updateContent, saveToCloud, resetContent, isCustomized, isSyncing, lastSyncedAt } = useSiteContent();
   const [formData, setFormData] = useState<SiteContentType>(content);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [passwordInput, setPasswordInput] = useState("");
@@ -74,6 +74,8 @@ export default function AdminPage() {
   const [previewDevice, setPreviewDevice] = useState<'desktop' | 'tablet' | 'mobile'>('desktop');
   const [previewPage, setPreviewPage] = useState<string>('/');
   const [savedNotification, setSavedNotification] = useState(false);
+  const [isSavingCloud, setIsSavingCloud] = useState(false);
+  const [cloudSaveMessage, setCloudSaveMessage] = useState("");
 
   useEffect(() => {
     setFormData(content);
@@ -115,16 +117,23 @@ export default function AdminPage() {
     sessionStorage.removeItem("boomingfx_admin_auth");
   };
 
-  const handleSave = () => {
+  const handleSave = async () => {
+    setIsSavingCloud(true);
     updateContent(formData);
+    const res = await saveToCloud(formData);
+    setIsSavingCloud(false);
+    setCloudSaveMessage(res.success ? "Published Globally for All Users & Incognito Sessions!" : (res.message || "Saved Locally"));
     setSavedNotification(true);
-    setTimeout(() => setSavedNotification(false), 3000);
+    setTimeout(() => setSavedNotification(false), 4500);
   };
 
-  const handleReset = () => {
+  const handleReset = async () => {
     if (window.confirm("Are you sure you want to reset all content across the website to original default settings?")) {
-      resetContent();
+      setIsSavingCloud(true);
+      await resetContent();
       setFormData(defaultContent);
+      setIsSavingCloud(false);
+      setCloudSaveMessage("Reset to Defaults Globally!");
       setSavedNotification(true);
       setTimeout(() => setSavedNotification(false), 3000);
     }
@@ -563,18 +572,33 @@ export default function AdminPage() {
 
         {/* Action Controls */}
         <div className="flex items-center gap-3">
+          <div className="hidden lg:flex items-center gap-2 px-3 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs font-semibold">
+            <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+            <span>Global Cloud Sync Active</span>
+          </div>
+
           {savedNotification && (
-            <div className="flex items-center gap-1.5 text-xs text-emerald-400 font-bold bg-emerald-500/10 border border-emerald-500/30 px-3 py-1.5 rounded-lg animate-pulse">
-              <Check className="w-4 h-4" /> Changes Applied Live!
+            <div className="flex items-center gap-1.5 text-xs text-emerald-400 font-bold bg-emerald-500/10 border border-emerald-500/30 px-3 py-1.5 rounded-lg shadow-lg">
+              <Check className="w-4 h-4" /> {cloudSaveMessage || "Changes Applied Live Globally!"}
             </div>
           )}
 
           <button 
             onClick={handleSave}
-            className="flex items-center gap-2 px-5 py-2 rounded-xl bg-gradient-to-r from-cyan-400 to-blue-500 text-black font-extrabold text-xs uppercase tracking-wider hover:scale-105 transition-all shadow-[0_0_20px_rgba(34,211,238,0.4)]"
+            disabled={isSavingCloud}
+            className="flex items-center gap-2 px-5 py-2 rounded-xl bg-gradient-to-r from-cyan-400 to-blue-500 text-black font-extrabold text-xs uppercase tracking-wider hover:scale-105 transition-all shadow-[0_0_20px_rgba(34,211,238,0.4)] disabled:opacity-60 cursor-pointer"
           >
-            <Save className="w-4 h-4" />
-            Save Live Changes
+            {isSavingCloud ? (
+              <>
+                <div className="w-3.5 h-3.5 border-2 border-black border-t-transparent rounded-full animate-spin"></div>
+                Publishing to Cloud...
+              </>
+            ) : (
+              <>
+                <Save className="w-4 h-4" />
+                Save Live Changes
+              </>
+            )}
           </button>
 
           <button 
