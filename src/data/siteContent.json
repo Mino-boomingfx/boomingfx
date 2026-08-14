@@ -18,6 +18,68 @@
     "googleReviewsBadge": "5.0 Star Rated on Google",
     "googleReviewsLink": "https://share.google/5j5FnhQiRYB3qbo0o"
   },
+  "aboutMe": {
+    "badge": "The Story Behind BoomingFX",
+    "founderName": "Minochel Barthelemy",
+    "founderRole": "Founder & Full-Time Trader",
+    "headline": "From working in a lab to building Edmonton's largest trading community.",
+    "founderImage": "/Minochel Barthelemy.jpeg",
+    "cards": [
+      {
+        "title": "Humble Beginnings",
+        "text": "My journey started like many others. I got my first job at 16 years old, working at Ricky's All Day Grill. It taught me the value of hard work early on — a lesson that carried me through my education at NAIT, where I completed the Chemical Technology program. By 22, I landed my first career position as a lab analyst, and by 24, I had advanced to a lab chemist role at Intertek."
+      },
+      {
+        "title": "The Spark",
+        "text": "On paper, my career was progressing. But I felt a growing desire to build something of my own. While working full time, I began investing in the stock market, starting with ETFs. As I learned more, I discovered trading — and everything changed."
+      },
+      {
+        "title": "The Grind (2020)",
+        "text": "I quickly realized this wasn't just a side hustle; it was one of the most challenging paths I could've taken, with an average success rate of only 5%. But I was all in. My daily routine for over two years consisted of working 8:00 AM – 4:30 PM, dinner and rest, and studying charts & markets from 7:00 PM – 1:00 AM every single night."
+      },
+      {
+        "title": "The Breakthrough",
+        "text": "Eventually, the discipline paid off. I achieved consistency, passed prop firm challenges, and proved to myself that trading could be more than just a dream. It became a viable, thriving reality."
+      },
+      {
+        "title": "The Vision for BoomingFX",
+        "text": "I founded BoomingFX not to sell generic courses, but to build a real physical mentorship framework in downtown Edmonton. An actual community where traders don't trade alone, but learn institutional discipline, risk management, and capital scaling together."
+      }
+    ]
+  },
+  "whyBoomingFx": {
+    "badge": "The Difference",
+    "title": "Why BoomingFX?",
+    "headline": "Not just numbers and charts. Find a place where you truly belong.",
+    "subtitle": "We haven't just built a platform; we've cultivated a vibrant ecosystem where every individual is welcomed into something bigger than themselves.",
+    "advantages": [
+      {
+        "title": "Edmonton's Largest Community",
+        "description": "Join a dynamic network of elite traders worldwide. We don't just trade together; we evolve together, sharing insights in real-time.",
+        "icon": "Users"
+      },
+      {
+        "title": "Beginner Friendly",
+        "description": "No prior knowledge necessary. We build your foundation from the ground up with structured step-by-step roadmaps.",
+        "icon": "BookOpen"
+      },
+      {
+        "title": "Full Transparency",
+        "description": "No hidden fees, no complex jargon. Just an honest, straightforward approach backed by verified live trades and Google reviews.",
+        "icon": "ShieldCheck"
+      },
+      {
+        "title": "Physical Trading Office",
+        "description": "Located in downtown Edmonton, providing an actual trading desk environment with live mentorship and real-time screen sharing.",
+        "icon": "Building2"
+      },
+      {
+        "title": "Lifelong Mentorship",
+        "description": "Weekly live market breakdowns, daily Telegram trade ideas, in-office workshops, and continuous guidance that never expires.",
+        "icon": "Sparkles"
+      }
+    ]
+  },
   "packages": {
     "overviewTitle": "Mentorship Packages",
     "overviewSubtitle": "What You're Stepping Into",
@@ -80,6 +142,70 @@
       }
     ]
   },
+  "ourTeam": {
+    "badge": "BoomingFx Experts",
+    "title": "Meet The Team",
+    "subtitle": "Our team consists of full-time funded traders and analysts dedicated to guiding you through technical precision and strict risk control.",
+    "members": [
+      {
+        "name": "Minochel Barthelemy",
+        "role": "Founder & Lead Instructor",
+        "image": "/Minochel Barthelemy.jpeg"
+      },
+      {
+        "name": "Isaiah Lewis",
+        "role": "Executive Director & Instructor",
+        "image": "/Isaiah Lewis.jpeg"
+      },
+      {
+        "name": "Rika Tjituri",
+        "role": "Co-Director & Instructor",
+        "image": "/Rika Tjituri.jpeg"
+      },
+      {
+        "name": "Joe Mpunga",
+        "role": "Co-Director & Instructor",
+        "image": "/Joe Mpunga.jpg"
+      },
+      {
+        "name": "Hans Adolphe",
+        "role": "Fundamental Analysis Expert",
+        "image": "/Hans Adolphe.jpeg"
+      },
+      {
+        "name": "Ronald Reece",
+        "role": "Risk Management Expert",
+        "image": "/Ronald Reece.jpeg"
+      }
+    ]
+  },
+  "media": {
+    "badge": "Global Community",
+    "title": "Media & Event Gallery",
+    "subtitle": "Connecting traders across North America with physical office sessions, meetups, and workshops.",
+    "items": [
+      {
+        "title": "The Edmonton Team",
+        "description": "Our headquarters in Edmonton, where it all started.",
+        "image": "/The Edmonton team.png"
+      },
+      {
+        "title": "The Calgary Team",
+        "description": "Connecting with traders in the heart of Calgary.",
+        "image": "/The Calgary team.webp"
+      },
+      {
+        "title": "The Montreal Team",
+        "description": "Expanding our footprint across the East.",
+        "image": "/The Montreal team.jpeg"
+      },
+      {
+        "title": "The Toronto Team",
+        "description": "Hosting massive events and building community in Toronto.",
+        "image": "/The Toronto Team.jpeg"
+      }
+    ]
+  },
   "testimonials": {
     "title": "Client Testimonials",
     "subtitle": "100% Recommended: Authentic Feedback from Real Mentees",
@@ -125,5 +251,23 @@
       "question": "HOW DO YOUR TRADING SIGNALS WORK?",
       "answer": "Our expert team analyzes market opportunities daily and delivers verified signals with exact entries, stop-losses, and profit targets directly through Telegram, complete with full technical rationale."
     }
-  ]
+  ],
+  "refundPolicy": {
+    "badge": "Official Policy • Transparent Terms",
+    "title": "Refund & Cancellation Policy",
+    "effectiveDate": "August 2025",
+    "p1": "At BoomingFX, we prioritize transparency, clarity, and professionalism in all our interactions with members. When you subscribe to BoomingFX, you gain instant access to a range of premium services including daily trading signals, market analysis, educational resources, mentorship, and membership within our exclusive trading community. Because of the immediate delivery of digital content and access to proprietary trading tools and strategies, all subscription payments made to BoomingFX are final and strictly non-refundable.",
+    "p2": "We do not offer refunds or partial reimbursements under any circumstances once a payment has been processed. This includes but is not limited to situations where the subscriber has not utilized the services, was unsatisfied with the results, or forgot to cancel prior to the next billing cycle. By subscribing, you acknowledge and agree that BoomingFX is not obligated to provide refunds for any reason.",
+    "p3": "However, we understand that individual circumstances change, and you retain complete control over your subscription. You may cancel your subscription at any time by accessing your account settings or by emailing our support team at support@boomingfx.org with your cancellation request before your upcoming billing date.",
+    "p4": "Upon cancellation, your recurring payments will stop immediately, and you will not be charged for subsequent billing cycles. You will continue to have full access to all BoomingFX services, signals, educational content, and community features until the end of your current paid billing period.",
+    "p5": "We encourage all prospective members to carefully review our services, subscription plans, and terms before purchasing. If you have any questions, need clarification, or require assistance with your account, our support team is available to assist you at support@boomingfx.org."
+  },
+  "disclaimer": {
+    "badge": "Legal & Compliance Notice",
+    "title": "Disclaimer & Risk Disclosure",
+    "effectiveDate": "August 2025",
+    "p1": "All content, trading signals, educational materials, live sessions, and market commentary provided by BoomingFX are strictly for educational and informational purposes only. BoomingFX is not a registered investment advisor, broker-dealer, or financial analyst.",
+    "p2": "Trading foreign exchange (Forex), commodities, equities, and CFDs carries a high level of risk and may not be suitable for all investors. The high degree of leverage that is often obtainable in commodity trading can work against you as well as for you. You must be aware of the risks and be willing to accept them in order to trade in these markets.",
+    "p3": "Past performance is not indicative of future results. No representation is being made that any account will or is likely to achieve profits or losses similar to those discussed on this platform. You should never trade or invest with money that you cannot afford to lose."
+  }
 }

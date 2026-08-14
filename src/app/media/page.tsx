@@ -1,37 +1,12 @@
+"use client";
 import React from 'react';
+import { useSiteContent } from '@/context/ContentContext';
 import { ArrowRight, MapPin } from 'lucide-react';
 
 export default function Media() {
-  const teams = [
-    {
-      title: "The Edmonton Team",
-      image: "/The Edmonton team.png",
-      colSpan: "col-span-1 md:col-span-2 lg:col-span-8",
-      rowSpan: "row-span-1 md:row-span-2",
-      description: "Our headquarters in Edmonton, where it all started."
-    },
-    {
-      title: "The Calgary Team",
-      image: "/The Calgary team.webp",
-      colSpan: "col-span-1 md:col-span-1 lg:col-span-4",
-      rowSpan: "row-span-1",
-      description: "Connecting with traders in the heart of Calgary."
-    },
-    {
-      title: "The Montreal Team",
-      image: "/The Montreal team.jpeg",
-      colSpan: "col-span-1 md:col-span-1 lg:col-span-4",
-      rowSpan: "row-span-1",
-      description: "Expanding our footprint across the East."
-    },
-    {
-      title: "The Toronto Team",
-      image: "/The Toronto Team.jpeg",
-      colSpan: "col-span-1 md:col-span-2 lg:col-span-12",
-      rowSpan: "row-span-1 md:row-span-2",
-      description: "Hosting massive events and building community in Toronto."
-    }
-  ];
+  const { content } = useSiteContent();
+  const { media } = content;
+  const teams = media?.items || [];
 
   return (
     <div className="bg-[#001f3f] min-h-screen selection:bg-[#004185] selection:text-white font-sans text-white overflow-hidden">
@@ -55,66 +30,67 @@ export default function Media() {
         <div className="relative z-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full flex flex-col items-center text-center">
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 backdrop-blur-md mb-8">
             <span className="w-2 h-2 rounded-full bg-cyan-400 animate-pulse"></span>
-            <span className="text-cyan-100 text-sm font-medium tracking-wide uppercase">Global Community</span>
+            <span className="text-cyan-100 text-sm font-medium tracking-wide uppercase">{media?.badge || "Global Community"}</span>
           </div>
           
           <h1 className="text-5xl md:text-7xl font-black text-transparent bg-clip-text bg-gradient-to-b from-white via-white to-white/70 mb-6 tracking-tight leading-[1.1] drop-shadow-2xl">
-            BoomingFx <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500">Media</span>
+            {media?.title || "Media & Gallery"}
           </h1>
           
           <p className="text-blue-100/80 text-lg md:text-xl max-w-3xl mx-auto font-light leading-relaxed">
-            What sets BoomingFx apart is our unique blend of online and offline mentorship. Not only do we offer virtual guidance, but our team travels globally to host in-person trading sessions.
+            {media?.subtitle || "Connecting traders across North America with physical office sessions, meetups, and workshops."}
           </p>
         </div>
       </section>
 
       {/* 
         ========================================================================
-        GALLERY BENTO GRID SECTION
+        GALLERY SECTION
         ========================================================================
       */}
-      <section className="py-20 relative z-20 -mt-10">
+      <section className="py-20 relative z-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-6 auto-rows-[250px] md:auto-rows-[300px]">
-            {teams.map((team, index) => (
-              <div 
-                key={index} 
-                className={`group relative rounded-[2rem] overflow-hidden ${team.colSpan} ${team.rowSpan} border border-white/10 hover:border-cyan-400/50 transition-colors duration-500 hover:shadow-[0_0_40px_rgba(34,211,238,0.2)]`}
-              >
-                {/* Background Image */}
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img 
-                  src={team.image} 
-                  alt={team.title} 
-                  className="absolute inset-0 w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700 ease-in-out"
-                />
-                
-                {/* Gradient Overlays */}
-                <div className="absolute inset-0 bg-gradient-to-t from-[#001f3f]/90 via-[#001f3f]/40 to-transparent"></div>
-                <div className="absolute inset-0 bg-cyan-900/20 mix-blend-overlay group-hover:opacity-0 transition-opacity duration-500"></div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-8 auto-rows-[350px]">
+            {teams.map((item, index) => {
+              const isLarge = index === 0 || index === 3;
+              const colSpan = isLarge ? "col-span-1 md:col-span-2 lg:col-span-8" : "col-span-1 md:col-span-1 lg:col-span-4";
+              const rowSpan = isLarge ? "row-span-1 md:row-span-2" : "row-span-1";
 
-                {/* Content */}
-                <div className="absolute bottom-0 left-0 w-full p-8 md:p-10 transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
-                  <div className="flex items-center gap-2 mb-3 opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100">
-                    <MapPin className="w-4 h-4 text-cyan-400" />
-                    <span className="text-cyan-400 text-sm font-semibold tracking-wider uppercase">In-Person Event</span>
+              return (
+                <div 
+                  key={index} 
+                  className={`group relative rounded-[2rem] overflow-hidden border border-white/10 shadow-2xl transition-all duration-500 hover:border-cyan-400/50 hover:shadow-[0_0_40px_rgba(0,194,255,0.2)] ${colSpan} ${rowSpan}`}
+                >
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img 
+                    src={item.image} 
+                    alt={item.title} 
+                    className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700 filter brightness-90 group-hover:brightness-100" 
+                  />
+                  
+                  {/* Gradient Overlay */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#001f3f] via-[#001f3f]/40 to-transparent opacity-90 group-hover:opacity-75 transition-opacity duration-500"></div>
+
+                  <div className="absolute bottom-0 left-0 right-0 p-8 flex flex-col justify-end">
+                    <div className="inline-flex items-center gap-2 text-cyan-400 text-sm font-bold uppercase tracking-wider mb-2">
+                      <MapPin className="w-4 h-4" /> Community Chapter
+                    </div>
+                    <h3 className="text-2xl md:text-3xl font-black text-white mb-2 leading-tight">
+                      {item.title}
+                    </h3>
+                    <p className="text-blue-100/80 text-sm max-w-xl font-light">
+                      {item.description}
+                    </p>
                   </div>
-                  <h2 className="text-3xl md:text-4xl font-bold text-white mb-2 drop-shadow-lg leading-tight">{team.title}</h2>
-                  <p className="text-blue-100/90 text-base max-w-lg drop-shadow-md opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-150">
-                    {team.description}
-                  </p>
                 </div>
-                
-                {/* Decorative glowing border effect on hover */}
-                <div className="absolute inset-0 rounded-[2rem] border-2 border-transparent group-hover:border-cyan-400/20 pointer-events-none transition-colors duration-500"></div>
-              </div>
-            ))}
+              );
+            })}
           </div>
 
         </div>
       </section>
-      
+
       {/* 
         ========================================================================
         ENROLL CALL TO ACTION
@@ -129,7 +105,7 @@ export default function Media() {
             
             <div className="relative z-10 text-center md:text-left max-w-xl">
               <h2 className="text-3xl md:text-5xl font-black text-white mb-6 tracking-tight leading-tight">
-                Join the <br/>Global <span className="text-cyan-400">Movement.</span>
+                Be Part of Our <br/>Next <span className="text-cyan-400">Chapter.</span>
               </h2>
               <p className="text-blue-100 text-lg">
                 <strong className="text-white font-bold">BoomingFX.</strong> Where transparency meets expertise. Get mentorship, signals, and community support to trade with confidence.

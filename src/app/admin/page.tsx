@@ -7,10 +7,8 @@ import {
   RotateCcw, 
   Download, 
   Upload, 
-  Eye, 
   ExternalLink, 
   Lock, 
-  Unlock, 
   Sparkles, 
   Plus, 
   Trash2, 
@@ -18,17 +16,48 @@ import {
   HelpCircle, 
   Star, 
   Settings, 
-  Layers, 
   Check,
   Smartphone,
   Tablet,
   Monitor,
   Building,
   Mail,
-  Link as LinkIcon
+  Link as LinkIcon,
+  User,
+  Zap,
+  Users,
+  Image as ImageIcon,
+  ShieldCheck,
+  FileText,
+  Home
 } from 'lucide-react';
 
 const ADMIN_PASSWORD = "boomingfx2025"; // Client master passcode
+
+type AdminTab = 
+  | 'home'
+  | 'aboutMe'
+  | 'whyBoomingFx'
+  | 'packages'
+  | 'ourTeam'
+  | 'media'
+  | 'testimonials'
+  | 'faqs'
+  | 'contact'
+  | 'legal';
+
+const PAGE_ROUTES: Record<AdminTab, string> = {
+  home: '/',
+  aboutMe: '/about-me',
+  whyBoomingFx: '/why-boomingfx',
+  packages: '/packages',
+  ourTeam: '/our-team',
+  media: '/media',
+  testimonials: '/testimonial',
+  faqs: '/faq',
+  contact: '/contact-us',
+  legal: '/refund-policy',
+};
 
 export default function AdminPage() {
   const { content, updateContent, resetContent, isCustomized } = useSiteContent();
@@ -36,7 +65,7 @@ export default function AdminPage() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [passwordInput, setPasswordInput] = useState("");
   const [authError, setAuthError] = useState(false);
-  const [activeTab, setActiveTab] = useState<'packages' | 'hero' | 'general' | 'faqs' | 'testimonials'>('packages');
+  const [activeTab, setActiveTab] = useState<AdminTab>('home');
   const [previewDevice, setPreviewDevice] = useState<'desktop' | 'tablet' | 'mobile'>('desktop');
   const [previewPage, setPreviewPage] = useState<string>('/');
   const [savedNotification, setSavedNotification] = useState(false);
@@ -51,6 +80,19 @@ export default function AdminPage() {
       setIsAuthenticated(true);
     }
   }, []);
+
+  const handleTabChange = (tab: AdminTab) => {
+    setActiveTab(tab);
+    setPreviewPage(PAGE_ROUTES[tab]);
+  };
+
+  const handlePreviewPageChange = (url: string) => {
+    setPreviewPage(url);
+    const foundTab = (Object.keys(PAGE_ROUTES) as AdminTab[]).find(k => PAGE_ROUTES[k] === url);
+    if (foundTab) {
+      setActiveTab(foundTab);
+    }
+  };
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
@@ -75,7 +117,7 @@ export default function AdminPage() {
   };
 
   const handleReset = () => {
-    if (window.confirm("Are you sure you want to reset all content to the default website settings?")) {
+    if (window.confirm("Are you sure you want to reset all content across the website to original default settings?")) {
       resetContent();
       setFormData(defaultContent);
       setSavedNotification(true);
@@ -102,7 +144,7 @@ export default function AdminPage() {
           const parsed = JSON.parse(event.target?.result as string);
           setFormData(parsed);
           updateContent(parsed);
-          alert("Content successfully imported and applied!");
+          alert("All website pages & content successfully imported and applied!");
         } catch (err) {
           alert("Invalid JSON file format.");
         }
@@ -110,37 +152,49 @@ export default function AdminPage() {
     }
   };
 
-  // Helper to update deeply nested fields
+  // Helper update handlers
   const updateGeneral = (field: string, val: string) => {
-    setFormData(prev => ({
-      ...prev,
-      general: { ...prev.general, [field]: val }
-    }));
+    setFormData(prev => ({ ...prev, general: { ...prev.general, [field]: val } }));
   };
 
   const updateHero = (field: string, val: string) => {
-    setFormData(prev => ({
-      ...prev,
-      hero: { ...prev.hero, [field]: val }
-    }));
+    setFormData(prev => ({ ...prev, hero: { ...prev.hero, [field]: val } }));
+  };
+
+  const updateAboutMe = (field: string, val: string) => {
+    setFormData(prev => ({ ...prev, aboutMe: { ...prev.aboutMe, [field]: val } }));
+  };
+
+  const updateAboutCard = (index: number, field: 'title' | 'text', val: string) => {
+    setFormData(prev => {
+      const cards = [...(prev.aboutMe?.cards || [])];
+      cards[index] = { ...cards[index], [field]: val };
+      return { ...prev, aboutMe: { ...prev.aboutMe, cards } };
+    });
+  };
+
+  const updateWhyBooming = (field: string, val: string) => {
+    setFormData(prev => ({ ...prev, whyBoomingFx: { ...prev.whyBoomingFx, [field]: val } }));
+  };
+
+  const updateWhyCard = (index: number, field: 'title' | 'description', val: string) => {
+    setFormData(prev => {
+      const advantages = [...(prev.whyBoomingFx?.advantages || [])];
+      advantages[index] = { ...advantages[index], [field]: val };
+      return { ...prev, whyBoomingFx: { ...prev.whyBoomingFx, advantages } };
+    });
   };
 
   const updatePackagePlan = (index: number, field: string, val: any) => {
     setFormData(prev => {
       const newPlans = [...prev.packages.plans];
       newPlans[index] = { ...newPlans[index], [field]: val };
-      return {
-        ...prev,
-        packages: { ...prev.packages, plans: newPlans }
-      };
+      return { ...prev, packages: { ...prev.packages, plans: newPlans } };
     });
   };
 
   const updatePackageOverview = (field: string, val: string) => {
-    setFormData(prev => ({
-      ...prev,
-      packages: { ...prev.packages, [field]: val }
-    }));
+    setFormData(prev => ({ ...prev, packages: { ...prev.packages, [field]: val } }));
   };
 
   const addPlanFeature = (planIndex: number) => {
@@ -149,10 +203,7 @@ export default function AdminPage() {
       setFormData(prev => {
         const newPlans = [...prev.packages.plans];
         newPlans[planIndex].features.push(newFeature.trim());
-        return {
-          ...prev,
-          packages: { ...prev.packages, plans: newPlans }
-        };
+        return { ...prev, packages: { ...prev.packages, plans: newPlans } };
       });
     }
   };
@@ -161,13 +212,80 @@ export default function AdminPage() {
     setFormData(prev => {
       const newPlans = [...prev.packages.plans];
       newPlans[planIndex].features = newPlans[planIndex].features.filter((_, idx) => idx !== featureIndex);
-      return {
-        ...prev,
-        packages: { ...prev.packages, plans: newPlans }
-      };
+      return { ...prev, packages: { ...prev.packages, plans: newPlans } };
     });
   };
 
+  // Team management
+  const updateTeamMember = (index: number, field: string, val: string) => {
+    setFormData(prev => {
+      const members = [...(prev.ourTeam?.members || [])];
+      members[index] = { ...members[index], [field]: val };
+      return { ...prev, ourTeam: { ...prev.ourTeam, members } };
+    });
+  };
+
+  const addTeamMember = () => {
+    const name = prompt("Enter team member name:");
+    if (!name) return;
+    const role = prompt("Enter role (e.g. Lead Instructor, Risk Analyst):") || "Instructor";
+    setFormData(prev => ({
+      ...prev,
+      ourTeam: {
+        ...prev.ourTeam,
+        members: [...(prev.ourTeam?.members || []), { name, role, image: "/boomingfx_logo.png" }]
+      }
+    }));
+  };
+
+  const removeTeamMember = (index: number) => {
+    if (window.confirm("Remove this team member?")) {
+      setFormData(prev => ({
+        ...prev,
+        ourTeam: {
+          ...prev.ourTeam,
+          members: (prev.ourTeam?.members || []).filter((_, i) => i !== index)
+        }
+      }));
+    }
+  };
+
+  // Media gallery management
+  const updateMediaItem = (index: number, field: string, val: string) => {
+    setFormData(prev => {
+      const items = [...(prev.media?.items || [])];
+      items[index] = { ...items[index], [field]: val };
+      return { ...prev, media: { ...prev.media, items } };
+    });
+  };
+
+  const addMediaItem = () => {
+    const title = prompt("Enter photo/event title:");
+    if (!title) return;
+    const description = prompt("Enter short description:") || "";
+    const image = prompt("Enter image URL or path:") || "/The Edmonton team.png";
+    setFormData(prev => ({
+      ...prev,
+      media: {
+        ...prev.media,
+        items: [...(prev.media?.items || []), { title, description, image }]
+      }
+    }));
+  };
+
+  const removeMediaItem = (index: number) => {
+    if (window.confirm("Delete this gallery photo?")) {
+      setFormData(prev => ({
+        ...prev,
+        media: {
+          ...prev.media,
+          items: (prev.media?.items || []).filter((_, i) => i !== index)
+        }
+      }));
+    }
+  };
+
+  // FAQs
   const updateFaq = (index: number, field: 'question' | 'answer', val: string) => {
     setFormData(prev => {
       const newFaqs = [...prev.faqs];
@@ -181,23 +299,25 @@ export default function AdminPage() {
     if (!newQ) return;
     const newA = prompt("Enter FAQ Answer:");
     if (!newA) return;
-
     setFormData(prev => ({
       ...prev,
-      faqs: [
-        ...prev.faqs,
-        { id: Date.now(), question: newQ, answer: newA }
-      ]
+      faqs: [...prev.faqs, { id: Date.now(), question: newQ, answer: newA }]
     }));
   };
 
   const removeFaq = (index: number) => {
     if (window.confirm("Delete this FAQ item?")) {
-      setFormData(prev => ({
-        ...prev,
-        faqs: prev.faqs.filter((_, idx) => idx !== index)
-      }));
+      setFormData(prev => ({ ...prev, faqs: prev.faqs.filter((_, idx) => idx !== index) }));
     }
+  };
+
+  // Legal
+  const updateRefundPolicy = (field: string, val: string) => {
+    setFormData(prev => ({ ...prev, refundPolicy: { ...prev.refundPolicy, [field]: val } }));
+  };
+
+  const updateDisclaimer = (field: string, val: string) => {
+    setFormData(prev => ({ ...prev, disclaimer: { ...prev.disclaimer, [field]: val } }));
   };
 
   // ----------------------------------------------------
@@ -215,7 +335,7 @@ export default function AdminPage() {
               <Lock className="w-8 h-8 text-black" />
             </div>
             <h1 className="text-2xl font-black text-white">BoomingFX CMS Studio</h1>
-            <p className="text-blue-100/60 text-sm mt-1">Live Visual Editor &amp; Site Customizer</p>
+            <p className="text-blue-100/60 text-sm mt-1">Live Visual Editor &amp; Full Page Customizer</p>
           </div>
 
           <form onSubmit={handleLogin} className="space-y-5">
@@ -235,7 +355,7 @@ export default function AdminPage() {
 
             {authError && (
               <p className="text-red-400 text-xs font-semibold bg-red-500/10 p-3 rounded-xl border border-red-500/20">
-                Incorrect password. Please try again or use the default passcode.
+                Incorrect password. Please try again with master password.
               </p>
             )}
 
@@ -269,9 +389,9 @@ export default function AdminPage() {
           </div>
           <div>
             <h1 className="font-extrabold text-sm tracking-wide flex items-center gap-2">
-              BoomingFX Studio <span className="text-[10px] bg-cyan-400/20 text-cyan-300 px-2 py-0.5 rounded-full font-bold border border-cyan-400/30 uppercase">CMS Active</span>
+              BoomingFX Studio <span className="text-[10px] bg-cyan-400/20 text-cyan-300 px-2 py-0.5 rounded-full font-bold border border-cyan-400/30 uppercase">Full CMS Active</span>
             </h1>
-            <p className="text-white/40 text-xs">Visual Customizer &amp; Content Management</p>
+            <p className="text-white/40 text-xs">Visual Page Builder &amp; Content Customizer</p>
           </div>
         </div>
 
@@ -338,58 +458,293 @@ export default function AdminPage() {
       <div className="flex-1 flex overflow-hidden">
         
         {/* LEFT EDITING PANEL (Elementor-Style Sidebar) */}
-        <aside className="w-full lg:w-[480px] bg-[#001733] border-r border-white/10 flex flex-col shrink-0 z-20 overflow-hidden">
+        <aside className="w-full lg:w-[490px] bg-[#001733] border-r border-white/10 flex flex-col shrink-0 z-20 overflow-hidden">
           
-          {/* Navigation Tabs */}
-          <div className="grid grid-cols-5 p-2 bg-black/40 border-b border-white/10 text-xs font-bold gap-1 shrink-0">
-            <button 
-              onClick={() => setActiveTab('packages')}
-              className={`py-2 px-1 rounded-lg transition-all text-center flex flex-col items-center gap-1 ${activeTab === 'packages' ? 'bg-[#004185] text-cyan-300 shadow' : 'text-white/60 hover:text-white'}`}
-            >
-              <DollarSign className="w-4 h-4" />
-              <span>Pricing</span>
-            </button>
-            <button 
-              onClick={() => setActiveTab('hero')}
-              className={`py-2 px-1 rounded-lg transition-all text-center flex flex-col items-center gap-1 ${activeTab === 'hero' ? 'bg-[#004185] text-cyan-300 shadow' : 'text-white/60 hover:text-white'}`}
-            >
-              <Sparkles className="w-4 h-4" />
-              <span>Hero</span>
-            </button>
-            <button 
-              onClick={() => setActiveTab('faqs')}
-              className={`py-2 px-1 rounded-lg transition-all text-center flex flex-col items-center gap-1 ${activeTab === 'faqs' ? 'bg-[#004185] text-cyan-300 shadow' : 'text-white/60 hover:text-white'}`}
-            >
-              <HelpCircle className="w-4 h-4" />
-              <span>FAQs</span>
-            </button>
-            <button 
-              onClick={() => setActiveTab('testimonials')}
-              className={`py-2 px-1 rounded-lg transition-all text-center flex flex-col items-center gap-1 ${activeTab === 'testimonials' ? 'bg-[#004185] text-cyan-300 shadow' : 'text-white/60 hover:text-white'}`}
-            >
-              <Star className="w-4 h-4" />
-              <span>Reviews</span>
-            </button>
-            <button 
-              onClick={() => setActiveTab('general')}
-              className={`py-2 px-1 rounded-lg transition-all text-center flex flex-col items-center gap-1 ${activeTab === 'general' ? 'bg-[#004185] text-cyan-300 shadow' : 'text-white/60 hover:text-white'}`}
-            >
-              <Settings className="w-4 h-4" />
-              <span>General</span>
-            </button>
+          {/* Page / Section Navigation Selector */}
+          <div className="p-3 bg-black/50 border-b border-white/10 shrink-0">
+            <label className="block text-[11px] font-bold text-cyan-300 uppercase mb-1.5 flex items-center justify-between">
+              <span>Select Page to Customize:</span>
+              <span className="text-[10px] text-white/50 lowercase">{PAGE_ROUTES[activeTab]}</span>
+            </label>
+            <div className="grid grid-cols-5 gap-1 text-[11px] font-bold">
+              <button 
+                onClick={() => handleTabChange('home')}
+                className={`py-2 px-1 rounded-lg transition-all text-center flex flex-col items-center gap-1 ${activeTab === 'home' ? 'bg-[#004185] text-cyan-300 shadow border border-cyan-400/40' : 'bg-white/5 text-white/60 hover:text-white'}`}
+              >
+                <Home className="w-3.5 h-3.5" />
+                <span className="truncate w-full text-[10px]">Home</span>
+              </button>
+              <button 
+                onClick={() => handleTabChange('aboutMe')}
+                className={`py-2 px-1 rounded-lg transition-all text-center flex flex-col items-center gap-1 ${activeTab === 'aboutMe' ? 'bg-[#004185] text-cyan-300 shadow border border-cyan-400/40' : 'bg-white/5 text-white/60 hover:text-white'}`}
+              >
+                <User className="w-3.5 h-3.5" />
+                <span className="truncate w-full text-[10px]">About Me</span>
+              </button>
+              <button 
+                onClick={() => handleTabChange('whyBoomingFx')}
+                className={`py-2 px-1 rounded-lg transition-all text-center flex flex-col items-center gap-1 ${activeTab === 'whyBoomingFx' ? 'bg-[#004185] text-cyan-300 shadow border border-cyan-400/40' : 'bg-white/5 text-white/60 hover:text-white'}`}
+              >
+                <Zap className="w-3.5 h-3.5" />
+                <span className="truncate w-full text-[10px]">Why Booming</span>
+              </button>
+              <button 
+                onClick={() => handleTabChange('packages')}
+                className={`py-2 px-1 rounded-lg transition-all text-center flex flex-col items-center gap-1 ${activeTab === 'packages' ? 'bg-[#004185] text-cyan-300 shadow border border-cyan-400/40' : 'bg-white/5 text-white/60 hover:text-white'}`}
+              >
+                <DollarSign className="w-3.5 h-3.5" />
+                <span className="truncate w-full text-[10px]">Packages</span>
+              </button>
+              <button 
+                onClick={() => handleTabChange('ourTeam')}
+                className={`py-2 px-1 rounded-lg transition-all text-center flex flex-col items-center gap-1 ${activeTab === 'ourTeam' ? 'bg-[#004185] text-cyan-300 shadow border border-cyan-400/40' : 'bg-white/5 text-white/60 hover:text-white'}`}
+              >
+                <Users className="w-3.5 h-3.5" />
+                <span className="truncate w-full text-[10px]">Our Team</span>
+              </button>
+              <button 
+                onClick={() => handleTabChange('media')}
+                className={`py-2 px-1 rounded-lg transition-all text-center flex flex-col items-center gap-1 ${activeTab === 'media' ? 'bg-[#004185] text-cyan-300 shadow border border-cyan-400/40' : 'bg-white/5 text-white/60 hover:text-white'}`}
+              >
+                <ImageIcon className="w-3.5 h-3.5" />
+                <span className="truncate w-full text-[10px]">Media</span>
+              </button>
+              <button 
+                onClick={() => handleTabChange('testimonials')}
+                className={`py-2 px-1 rounded-lg transition-all text-center flex flex-col items-center gap-1 ${activeTab === 'testimonials' ? 'bg-[#004185] text-cyan-300 shadow border border-cyan-400/40' : 'bg-white/5 text-white/60 hover:text-white'}`}
+              >
+                <Star className="w-3.5 h-3.5" />
+                <span className="truncate w-full text-[10px]">Reviews</span>
+              </button>
+              <button 
+                onClick={() => handleTabChange('faqs')}
+                className={`py-2 px-1 rounded-lg transition-all text-center flex flex-col items-center gap-1 ${activeTab === 'faqs' ? 'bg-[#004185] text-cyan-300 shadow border border-cyan-400/40' : 'bg-white/5 text-white/60 hover:text-white'}`}
+              >
+                <HelpCircle className="w-3.5 h-3.5" />
+                <span className="truncate w-full text-[10px]">FAQs</span>
+              </button>
+              <button 
+                onClick={() => handleTabChange('contact')}
+                className={`py-2 px-1 rounded-lg transition-all text-center flex flex-col items-center gap-1 ${activeTab === 'contact' ? 'bg-[#004185] text-cyan-300 shadow border border-cyan-400/40' : 'bg-white/5 text-white/60 hover:text-white'}`}
+              >
+                <Mail className="w-3.5 h-3.5" />
+                <span className="truncate w-full text-[10px]">Contact</span>
+              </button>
+              <button 
+                onClick={() => handleTabChange('legal')}
+                className={`py-2 px-1 rounded-lg transition-all text-center flex flex-col items-center gap-1 ${activeTab === 'legal' ? 'bg-[#004185] text-cyan-300 shadow border border-cyan-400/40' : 'bg-white/5 text-white/60 hover:text-white'}`}
+              >
+                <FileText className="w-3.5 h-3.5" />
+                <span className="truncate w-full text-[10px]">Policies</span>
+              </button>
+            </div>
           </div>
 
           {/* Form Content Area */}
           <div className="flex-1 overflow-y-auto p-6 space-y-6 custom-scrollbar">
             
-            {/* ----------------- TAB: PACKAGES & PRICING ----------------- */}
+            {/* ----------------- TAB 1: HOME PAGE HERO ----------------- */}
+            {activeTab === 'home' && (
+              <div className="space-y-5">
+                <div className="border-b border-white/10 pb-3">
+                  <h2 className="text-base font-extrabold text-white">Home Page • Hero &amp; Banners</h2>
+                  <p className="text-xs text-blue-100/60">Customize main headlines, buttons and Google review link</p>
+                </div>
+
+                <div>
+                  <label className="block text-xs font-bold text-cyan-300 uppercase mb-1">Pill Badge Text</label>
+                  <input 
+                    type="text" 
+                    value={formData.hero.badge}
+                    onChange={(e) => updateHero('badge', e.target.value)}
+                    className="w-full px-3 py-2 bg-black/40 border border-white/15 rounded-xl text-sm"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-xs font-bold text-cyan-300 uppercase mb-1">Hero Main Title</label>
+                  <input 
+                    type="text" 
+                    value={formData.hero.title}
+                    onChange={(e) => updateHero('title', e.target.value)}
+                    className="w-full px-3 py-2 bg-black/40 border border-white/15 rounded-xl text-sm font-bold"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-xs font-bold text-cyan-300 uppercase mb-1">Hero Subtitle Paragraph</label>
+                  <textarea 
+                    rows={3}
+                    value={formData.hero.subtitle}
+                    onChange={(e) => updateHero('subtitle', e.target.value)}
+                    className="w-full px-3 py-2 bg-black/40 border border-white/15 rounded-xl text-xs"
+                  />
+                </div>
+
+                <div className="grid grid-cols-2 gap-3">
+                  <div>
+                    <label className="block text-xs font-bold text-white/70 mb-1">Primary CTA Button</label>
+                    <input 
+                      type="text" 
+                      value={formData.hero.ctaText}
+                      onChange={(e) => updateHero('ctaText', e.target.value)}
+                      className="w-full px-3 py-2 bg-black/40 border border-white/15 rounded-lg text-xs"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-xs font-bold text-white/70 mb-1">Button Link</label>
+                    <input 
+                      type="text" 
+                      value={formData.hero.ctaLink}
+                      onChange={(e) => updateHero('ctaLink', e.target.value)}
+                      className="w-full px-3 py-2 bg-black/40 border border-white/15 rounded-lg text-xs"
+                    />
+                  </div>
+                </div>
+
+                <div>
+                  <label className="block text-xs font-bold text-cyan-300 uppercase mb-1">Google Review Link</label>
+                  <input 
+                    type="text" 
+                    value={formData.hero.googleReviewsLink}
+                    onChange={(e) => updateHero('googleReviewsLink', e.target.value)}
+                    className="w-full px-3 py-2 bg-black/40 border border-cyan-400/40 rounded-xl text-xs text-cyan-200 font-mono"
+                  />
+                </div>
+              </div>
+            )}
+
+            {/* ----------------- TAB 2: ABOUT ME (FOUNDER STORY) ----------------- */}
+            {activeTab === 'aboutMe' && (
+              <div className="space-y-5">
+                <div className="border-b border-white/10 pb-3">
+                  <h2 className="text-base font-extrabold text-white">About Me • Founder Story</h2>
+                  <p className="text-xs text-blue-100/60">Customize Minochel&apos;s story, bio, milestones and photo</p>
+                </div>
+
+                <div>
+                  <label className="block text-xs font-bold text-cyan-300 uppercase mb-1">Top Story Badge</label>
+                  <input 
+                    type="text" 
+                    value={formData.aboutMe?.badge || ''}
+                    onChange={(e) => updateAboutMe('badge', e.target.value)}
+                    className="w-full px-3 py-2 bg-black/40 border border-white/15 rounded-xl text-xs"
+                  />
+                </div>
+
+                <div className="grid grid-cols-2 gap-3">
+                  <div>
+                    <label className="block text-xs font-bold text-white/70 mb-1">Founder Name</label>
+                    <input 
+                      type="text" 
+                      value={formData.aboutMe?.founderName || ''}
+                      onChange={(e) => updateAboutMe('founderName', e.target.value)}
+                      className="w-full px-3 py-2 bg-black/40 border border-white/15 rounded-lg text-xs font-bold"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-xs font-bold text-white/70 mb-1">Founder Title</label>
+                    <input 
+                      type="text" 
+                      value={formData.aboutMe?.founderRole || ''}
+                      onChange={(e) => updateAboutMe('founderRole', e.target.value)}
+                      className="w-full px-3 py-2 bg-black/40 border border-white/15 rounded-lg text-xs"
+                    />
+                  </div>
+                </div>
+
+                <div>
+                  <label className="block text-xs font-bold text-cyan-300 uppercase mb-1">Story Main Headline</label>
+                  <textarea 
+                    rows={2}
+                    value={formData.aboutMe?.headline || ''}
+                    onChange={(e) => updateAboutMe('headline', e.target.value)}
+                    className="w-full px-3 py-2 bg-black/40 border border-white/15 rounded-xl text-xs font-bold"
+                  />
+                </div>
+
+                {/* Timeline Story Cards */}
+                <div className="space-y-4 pt-2 border-t border-white/10">
+                  <span className="text-xs font-extrabold text-cyan-300 uppercase block">Story Timeline Chapters ({formData.aboutMe?.cards?.length || 0})</span>
+                  {(formData.aboutMe?.cards || []).map((card, cIdx) => (
+                    <div key={cIdx} className="bg-black/30 border border-white/15 rounded-2xl p-4 space-y-2">
+                      <span className="text-xs font-bold text-cyan-400">Chapter #{cIdx + 1}</span>
+                      <input 
+                        type="text" 
+                        value={card.title}
+                        onChange={(e) => updateAboutCard(cIdx, 'title', e.target.value)}
+                        className="w-full px-3 py-1.5 bg-black/50 border border-white/15 rounded-lg text-xs font-bold"
+                      />
+                      <textarea 
+                        rows={3}
+                        value={card.text}
+                        onChange={(e) => updateAboutCard(cIdx, 'text', e.target.value)}
+                        className="w-full px-3 py-2 bg-black/50 border border-white/15 rounded-lg text-xs text-white/80"
+                      />
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* ----------------- TAB 3: WHY BOOMINGFX ----------------- */}
+            {activeTab === 'whyBoomingFx' && (
+              <div className="space-y-5">
+                <div className="border-b border-white/10 pb-3">
+                  <h2 className="text-base font-extrabold text-white">Why BoomingFX • Advantages</h2>
+                  <p className="text-xs text-blue-100/60">Customize the difference pillars and value propositions</p>
+                </div>
+
+                <div>
+                  <label className="block text-xs font-bold text-cyan-300 uppercase mb-1">Page Title</label>
+                  <input 
+                    type="text" 
+                    value={formData.whyBoomingFx?.title || ''}
+                    onChange={(e) => updateWhyBooming('title', e.target.value)}
+                    className="w-full px-3 py-2 bg-black/40 border border-white/15 rounded-xl text-xs font-bold"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-xs font-bold text-cyan-300 uppercase mb-1">Main Headline</label>
+                  <textarea 
+                    rows={2}
+                    value={formData.whyBoomingFx?.headline || ''}
+                    onChange={(e) => updateWhyBooming('headline', e.target.value)}
+                    className="w-full px-3 py-2 bg-black/40 border border-white/15 rounded-xl text-xs"
+                  />
+                </div>
+
+                {/* Advantage Cards */}
+                <div className="space-y-4 pt-2 border-t border-white/10">
+                  <span className="text-xs font-extrabold text-cyan-300 uppercase block">Advantage Pillars ({formData.whyBoomingFx?.advantages?.length || 0})</span>
+                  {(formData.whyBoomingFx?.advantages || []).map((adv, aIdx) => (
+                    <div key={aIdx} className="bg-black/30 border border-white/15 rounded-2xl p-4 space-y-2">
+                      <span className="text-xs font-bold text-cyan-400">Pillar #{aIdx + 1}</span>
+                      <input 
+                        type="text" 
+                        value={adv.title}
+                        onChange={(e) => updateWhyCard(aIdx, 'title', e.target.value)}
+                        className="w-full px-3 py-1.5 bg-black/50 border border-white/15 rounded-lg text-xs font-bold"
+                      />
+                      <textarea 
+                        rows={2}
+                        value={adv.description}
+                        onChange={(e) => updateWhyCard(aIdx, 'description', e.target.value)}
+                        className="w-full px-3 py-2 bg-black/50 border border-white/15 rounded-lg text-xs text-white/80"
+                      />
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* ----------------- TAB 4: PACKAGES & PRICING ----------------- */}
             {activeTab === 'packages' && (
               <div className="space-y-6">
-                <div className="flex items-center justify-between border-b border-white/10 pb-3">
-                  <div>
-                    <h2 className="text-base font-extrabold text-white">Pricing &amp; Stripe Setup</h2>
-                    <p className="text-xs text-blue-100/60">Edit plan costs, bullet points &amp; Stripe checkout links</p>
-                  </div>
+                <div className="border-b border-white/10 pb-3">
+                  <h2 className="text-base font-extrabold text-white">Pricing &amp; Stripe Setup</h2>
+                  <p className="text-xs text-blue-100/60">Edit plan costs, bullet points &amp; Stripe checkout links</p>
                 </div>
 
                 <div className="space-y-3">
@@ -407,7 +762,7 @@ export default function AdminPage() {
                     onChange={(e) => updatePackageOverview('overviewSubtitle', e.target.value)}
                     className="w-full px-3 py-2 bg-black/40 border border-white/15 rounded-xl text-sm text-white"
                   />
-                  <label className="block text-xs font-bold text-cyan-300 uppercase">What You&apos;re Stepping Into Paragraph</label>
+                  <label className="block text-xs font-bold text-cyan-300 uppercase">Downtown Edmonton Framework Paragraph</label>
                   <textarea 
                     rows={4}
                     value={formData.packages.overviewText}
@@ -506,78 +861,151 @@ export default function AdminPage() {
               </div>
             )}
 
-            {/* ----------------- TAB: HERO & HEADLINES ----------------- */}
-            {activeTab === 'hero' && (
+            {/* ----------------- TAB 5: OUR TEAM ----------------- */}
+            {activeTab === 'ourTeam' && (
+              <div className="space-y-5">
+                <div className="flex items-center justify-between border-b border-white/10 pb-3">
+                  <div>
+                    <h2 className="text-base font-extrabold text-white">Our Team • Mentors &amp; Experts</h2>
+                    <p className="text-xs text-blue-100/60">Manage instructors, analysts and risk coaches</p>
+                  </div>
+                  <button 
+                    type="button" 
+                    onClick={addTeamMember}
+                    className="px-3 py-1.5 bg-cyan-400 text-black font-extrabold rounded-lg text-xs flex items-center gap-1 shadow"
+                  >
+                    <Plus className="w-3.5 h-3.5" /> Add Member
+                  </button>
+                </div>
+
+                <div className="space-y-4">
+                  {(formData.ourTeam?.members || []).map((member, mIdx) => (
+                    <div key={mIdx} className="bg-black/30 border border-white/15 rounded-2xl p-4 space-y-3">
+                      <div className="flex items-center justify-between">
+                        <span className="text-xs font-bold text-cyan-300">Member #{mIdx + 1}</span>
+                        <button 
+                          type="button" 
+                          onClick={() => removeTeamMember(mIdx)}
+                          className="text-red-400 hover:text-red-300 text-xs p-1"
+                        >
+                          <Trash2 className="w-3.5 h-3.5" />
+                        </button>
+                      </div>
+                      <div className="grid grid-cols-2 gap-3">
+                        <input 
+                          type="text" 
+                          value={member.name}
+                          onChange={(e) => updateTeamMember(mIdx, 'name', e.target.value)}
+                          placeholder="Full Name"
+                          className="w-full px-3 py-1.5 bg-black/50 border border-white/15 rounded-lg text-xs font-bold"
+                        />
+                        <input 
+                          type="text" 
+                          value={member.role}
+                          onChange={(e) => updateTeamMember(mIdx, 'role', e.target.value)}
+                          placeholder="Role / Title"
+                          className="w-full px-3 py-1.5 bg-black/50 border border-white/15 rounded-lg text-xs text-cyan-200"
+                        />
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* ----------------- TAB 6: MEDIA & EVENTS ----------------- */}
+            {activeTab === 'media' && (
+              <div className="space-y-5">
+                <div className="flex items-center justify-between border-b border-white/10 pb-3">
+                  <div>
+                    <h2 className="text-base font-extrabold text-white">Media &amp; Events Gallery</h2>
+                    <p className="text-xs text-blue-100/60">Manage office meetup photos and city events</p>
+                  </div>
+                  <button 
+                    type="button" 
+                    onClick={addMediaItem}
+                    className="px-3 py-1.5 bg-cyan-400 text-black font-extrabold rounded-lg text-xs flex items-center gap-1 shadow"
+                  >
+                    <Plus className="w-3.5 h-3.5" /> Add Photo
+                  </button>
+                </div>
+
+                <div className="space-y-4">
+                  {(formData.media?.items || []).map((item, itIdx) => (
+                    <div key={itIdx} className="bg-black/30 border border-white/15 rounded-2xl p-4 space-y-3">
+                      <div className="flex items-center justify-between">
+                        <span className="text-xs font-bold text-cyan-300">Item #{itIdx + 1}</span>
+                        <button 
+                          type="button" 
+                          onClick={() => removeMediaItem(itIdx)}
+                          className="text-red-400 hover:text-red-300 text-xs p-1"
+                        >
+                          <Trash2 className="w-3.5 h-3.5" />
+                        </button>
+                      </div>
+                      <input 
+                        type="text" 
+                        value={item.title}
+                        onChange={(e) => updateMediaItem(itIdx, 'title', e.target.value)}
+                        placeholder="Title (e.g. Edmonton Headquarters)"
+                        className="w-full px-3 py-1.5 bg-black/50 border border-white/15 rounded-lg text-xs font-bold"
+                      />
+                      <input 
+                        type="text" 
+                        value={item.description}
+                        onChange={(e) => updateMediaItem(itIdx, 'description', e.target.value)}
+                        placeholder="Short description"
+                        className="w-full px-3 py-1.5 bg-black/50 border border-white/15 rounded-lg text-xs text-white/80"
+                      />
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* ----------------- TAB 7: TESTIMONIALS & REVIEWS ----------------- */}
+            {activeTab === 'testimonials' && (
               <div className="space-y-5">
                 <div className="border-b border-white/10 pb-3">
-                  <h2 className="text-base font-extrabold text-white">Hero &amp; Landing Banners</h2>
-                  <p className="text-xs text-blue-100/60">Customize your main homepage headline and buttons</p>
+                  <h2 className="text-base font-extrabold text-white">Testimonials &amp; Reviews</h2>
+                  <p className="text-xs text-blue-100/60">Configure Google review links and headers</p>
                 </div>
 
                 <div>
-                  <label className="block text-xs font-bold text-cyan-300 uppercase mb-1">Pill Badge Text</label>
+                  <label className="block text-xs font-bold text-cyan-300 uppercase mb-1">Section Title</label>
                   <input 
                     type="text" 
-                    value={formData.hero.badge}
-                    onChange={(e) => updateHero('badge', e.target.value)}
+                    value={formData.testimonials.title}
+                    onChange={(e) => setFormData(p => ({ ...p, testimonials: { ...p.testimonials, title: e.target.value } }))}
                     className="w-full px-3 py-2 bg-black/40 border border-white/15 rounded-xl text-sm"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-xs font-bold text-cyan-300 uppercase mb-1">Hero Main Title</label>
+                  <label className="block text-xs font-bold text-cyan-300 uppercase mb-1">Google Review URL</label>
                   <input 
                     type="text" 
-                    value={formData.hero.title}
-                    onChange={(e) => updateHero('title', e.target.value)}
-                    className="w-full px-3 py-2 bg-black/40 border border-white/15 rounded-xl text-sm font-bold"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-xs font-bold text-cyan-300 uppercase mb-1">Hero Subtitle Paragraph</label>
-                  <textarea 
-                    rows={3}
-                    value={formData.hero.subtitle}
-                    onChange={(e) => updateHero('subtitle', e.target.value)}
-                    className="w-full px-3 py-2 bg-black/40 border border-white/15 rounded-xl text-xs"
-                  />
-                </div>
-
-                <div className="grid grid-cols-2 gap-3">
-                  <div>
-                    <label className="block text-xs font-bold text-white/70 mb-1">Primary CTA Button</label>
-                    <input 
-                      type="text" 
-                      value={formData.hero.ctaText}
-                      onChange={(e) => updateHero('ctaText', e.target.value)}
-                      className="w-full px-3 py-2 bg-black/40 border border-white/15 rounded-lg text-xs"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-xs font-bold text-white/70 mb-1">Button Link</label>
-                    <input 
-                      type="text" 
-                      value={formData.hero.ctaLink}
-                      onChange={(e) => updateHero('ctaLink', e.target.value)}
-                      className="w-full px-3 py-2 bg-black/40 border border-white/15 rounded-lg text-xs"
-                    />
-                  </div>
-                </div>
-
-                <div>
-                  <label className="block text-xs font-bold text-cyan-300 uppercase mb-1">Google Review Link</label>
-                  <input 
-                    type="text" 
-                    value={formData.hero.googleReviewsLink}
-                    onChange={(e) => updateHero('googleReviewsLink', e.target.value)}
+                    value={formData.testimonials.googleReviewUrl}
+                    onChange={(e) => setFormData(p => ({ ...p, testimonials: { ...p.testimonials, googleReviewUrl: e.target.value } }))}
                     className="w-full px-3 py-2 bg-black/40 border border-cyan-400/40 rounded-xl text-xs text-cyan-200 font-mono"
                   />
+                </div>
+
+                <div>
+                  <label className="block text-xs font-bold text-white/70 mb-1">Active Slider Testimonial Screenshots (Count: {formData.testimonials.sliderImages.length})</label>
+                  <div className="grid grid-cols-4 gap-2 bg-black/30 p-3 rounded-xl border border-white/10 max-h-48 overflow-y-auto">
+                    {formData.testimonials.sliderImages.map((img, i) => (
+                      <div key={i} className="relative bg-white/5 rounded p-1 text-center">
+                        <img src={img} alt={`Testimonial ${i+1}`} className="w-full h-12 object-cover rounded" />
+                        <span className="text-[9px] text-white/60 block mt-0.5">#{i+1}</span>
+                      </div>
+                    ))}
+                  </div>
                 </div>
               </div>
             )}
 
-            {/* ----------------- TAB: FAQS ----------------- */}
+            {/* ----------------- TAB 8: FAQS ----------------- */}
             {activeTab === 'faqs' && (
               <div className="space-y-5">
                 <div className="flex items-center justify-between border-b border-white/10 pb-3">
@@ -625,53 +1053,11 @@ export default function AdminPage() {
               </div>
             )}
 
-            {/* ----------------- TAB: TESTIMONIALS & REVIEWS ----------------- */}
-            {activeTab === 'testimonials' && (
+            {/* ----------------- TAB 9: CONTACT & GENERAL ----------------- */}
+            {activeTab === 'contact' && (
               <div className="space-y-5">
                 <div className="border-b border-white/10 pb-3">
-                  <h2 className="text-base font-extrabold text-white">Testimonials &amp; Reviews</h2>
-                  <p className="text-xs text-blue-100/60">Configure review links and headings</p>
-                </div>
-
-                <div>
-                  <label className="block text-xs font-bold text-cyan-300 uppercase mb-1">Section Title</label>
-                  <input 
-                    type="text" 
-                    value={formData.testimonials.title}
-                    onChange={(e) => setFormData(p => ({ ...p, testimonials: { ...p.testimonials, title: e.target.value } }))}
-                    className="w-full px-3 py-2 bg-black/40 border border-white/15 rounded-xl text-sm"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-xs font-bold text-cyan-300 uppercase mb-1">Google Review URL</label>
-                  <input 
-                    type="text" 
-                    value={formData.testimonials.googleReviewUrl}
-                    onChange={(e) => setFormData(p => ({ ...p, testimonials: { ...p.testimonials, googleReviewUrl: e.target.value } }))}
-                    className="w-full px-3 py-2 bg-black/40 border border-cyan-400/40 rounded-xl text-xs text-cyan-200 font-mono"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-xs font-bold text-white/70 mb-1">Active Slider Images (Count: {formData.testimonials.sliderImages.length})</label>
-                  <div className="grid grid-cols-4 gap-2 bg-black/30 p-3 rounded-xl border border-white/10 max-h-48 overflow-y-auto">
-                    {formData.testimonials.sliderImages.map((img, i) => (
-                      <div key={i} className="relative bg-white/5 rounded p-1 text-center">
-                        <img src={img} alt={`Testimonial ${i+1}`} className="w-full h-12 object-cover rounded" />
-                        <span className="text-[9px] text-white/60 block mt-0.5">#{i+1}</span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            )}
-
-            {/* ----------------- TAB: GENERAL ----------------- */}
-            {activeTab === 'general' && (
-              <div className="space-y-5">
-                <div className="border-b border-white/10 pb-3">
-                  <h2 className="text-base font-extrabold text-white">General &amp; Contact Info</h2>
+                  <h2 className="text-base font-extrabold text-white">Contact &amp; Social Channels</h2>
                   <p className="text-xs text-blue-100/60">Manage company contact info and social links</p>
                 </div>
 
@@ -734,6 +1120,60 @@ export default function AdminPage() {
                       className="w-full px-3 py-1.5 bg-black/40 border border-white/10 rounded-lg text-xs"
                     />
                   </div>
+                  <div>
+                    <label className="block text-[11px] text-white/70 mb-0.5">Instagram URL</label>
+                    <input 
+                      type="text" 
+                      value={formData.general.instagramUrl}
+                      onChange={(e) => updateGeneral('instagramUrl', e.target.value)}
+                      className="w-full px-3 py-1.5 bg-black/40 border border-white/10 rounded-lg text-xs"
+                    />
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* ----------------- TAB 10: LEGAL POLICIES ----------------- */}
+            {activeTab === 'legal' && (
+              <div className="space-y-5">
+                <div className="border-b border-white/10 pb-3">
+                  <h2 className="text-base font-extrabold text-white">Refund Policy &amp; Disclaimer</h2>
+                  <p className="text-xs text-blue-100/60">Customize legal terms and disclaimer clauses</p>
+                </div>
+
+                <div className="space-y-3">
+                  <span className="text-xs font-bold text-cyan-300 uppercase block">Refund &amp; Cancellation Policy</span>
+                  <div>
+                    <label className="block text-[11px] text-white/70 mb-1">Clause 1 (Non-Refundable Delivery)</label>
+                    <textarea 
+                      rows={4}
+                      value={formData.refundPolicy?.p1 || ''}
+                      onChange={(e) => updateRefundPolicy('p1', e.target.value)}
+                      className="w-full px-3 py-2 bg-black/50 border border-white/15 rounded-lg text-xs text-white/80"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-[11px] text-white/70 mb-1">Clause 2 (No Reimbursements)</label>
+                    <textarea 
+                      rows={3}
+                      value={formData.refundPolicy?.p2 || ''}
+                      onChange={(e) => updateRefundPolicy('p2', e.target.value)}
+                      className="w-full px-3 py-2 bg-black/50 border border-white/15 rounded-lg text-xs text-white/80"
+                    />
+                  </div>
+                </div>
+
+                <div className="space-y-3 pt-3 border-t border-white/10">
+                  <span className="text-xs font-bold text-cyan-300 uppercase block">Platform Disclaimer</span>
+                  <div>
+                    <label className="block text-[11px] text-white/70 mb-1">Disclaimer Clause 1 (Educational Only)</label>
+                    <textarea 
+                      rows={3}
+                      value={formData.disclaimer?.p1 || ''}
+                      onChange={(e) => updateDisclaimer('p1', e.target.value)}
+                      className="w-full px-3 py-2 bg-black/50 border border-white/15 rounded-lg text-xs text-white/80"
+                    />
+                  </div>
                 </div>
               </div>
             )}
@@ -758,11 +1198,15 @@ export default function AdminPage() {
               <span className="text-xs font-bold text-white/50 uppercase">Previewing:</span>
               <select 
                 value={previewPage}
-                onChange={(e) => setPreviewPage(e.target.value)}
+                onChange={(e) => handlePreviewPageChange(e.target.value)}
                 className="bg-black/50 border border-white/15 text-xs text-cyan-300 font-bold px-3 py-1.5 rounded-lg outline-none cursor-pointer"
               >
                 <option value="/">Home Page (/)</option>
+                <option value="/about-me">About Me (/about-me)</option>
+                <option value="/why-boomingfx">Why BoomingFX (/why-boomingfx)</option>
                 <option value="/packages">Packages (/packages)</option>
+                <option value="/our-team">Our Team (/our-team)</option>
+                <option value="/media">Media &amp; Gallery (/media)</option>
                 <option value="/testimonial">Testimonial (/testimonial)</option>
                 <option value="/faq">FAQ (/faq)</option>
                 <option value="/contact-us">Contact Us (/contact-us)</option>
