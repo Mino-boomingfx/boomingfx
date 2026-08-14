@@ -353,6 +353,38 @@ export default function AdminPage() {
     setFormData(prev => ({ ...prev, media: { ...prev.media, [field]: val } }));
   };
 
+  const updateGalleryPhoto = (index: number, field: string, val: string) => {
+    setFormData(prev => {
+      const curMedia = prev.media || defaultContent.media;
+      const gallery = [...(curMedia.gallery || (defaultContent.media as any).gallery)];
+      gallery[index] = { ...gallery[index], [field]: val };
+      return { ...prev, media: { ...curMedia, gallery } };
+    });
+  };
+
+  const addGalleryPhoto = () => {
+    const title = prompt("Enter photo title (e.g. In-Office Mentorship):");
+    if (!title) return;
+    const caption = prompt("Enter caption/details:") || "";
+    const image = prompt("Enter image URL (e.g. /gallery/media_1.jpg):") || "/gallery/media_1.jpg";
+    const location = prompt("Enter location (e.g. Edmonton HQ):") || "Edmonton HQ";
+    setFormData(prev => {
+      const curMedia = prev.media || defaultContent.media;
+      const gallery = [...(curMedia.gallery || (defaultContent.media as any).gallery), { id: Date.now(), title, caption, image, location }];
+      return { ...prev, media: { ...curMedia, gallery } };
+    });
+  };
+
+  const removeGalleryPhoto = (index: number) => {
+    if (window.confirm("Delete this photo from slideshow?")) {
+      setFormData(prev => {
+        const curMedia = prev.media || defaultContent.media;
+        const gallery = (curMedia.gallery || (defaultContent.media as any).gallery).filter((_: any, i: number) => i !== index);
+        return { ...prev, media: { ...curMedia, gallery } };
+      });
+    }
+  };
+
   const updateMediaItem = (index: number, field: string, val: string) => {
     setFormData(prev => {
       const items = [...(prev.media?.items || [])];
@@ -376,7 +408,7 @@ export default function AdminPage() {
   };
 
   const removeMediaItem = (index: number) => {
-    if (window.confirm("Delete this gallery photo?")) {
+    if (window.confirm("Delete this regional chapter photo?")) {
       setFormData(prev => ({
         ...prev,
         media: {
@@ -1383,14 +1415,14 @@ export default function AdminPage() {
                 <div className="flex items-center justify-between border-b border-white/10 pb-3">
                   <div>
                     <h2 className="text-base font-extrabold text-white">Media &amp; Gallery Customizer</h2>
-                    <p className="text-xs text-blue-100/60">Customize Hero, Add/Delete City Chapters &amp; CTA</p>
+                    <p className="text-xs text-blue-100/60">Customize Hero, 15 Slideshow Photos, City Chapters &amp; CTA</p>
                   </div>
                   <button 
                     type="button" 
-                    onClick={addMediaItem}
+                    onClick={addGalleryPhoto}
                     className="px-3 py-1.5 bg-cyan-400 text-black font-extrabold rounded-lg text-xs flex items-center gap-1 shadow"
                   >
-                    <Plus className="w-3.5 h-3.5" /> Add Photo
+                    <Plus className="w-3.5 h-3.5" /> Add Slideshow Photo
                   </button>
                 </div>
 
@@ -1427,15 +1459,93 @@ export default function AdminPage() {
                   </div>
                 </div>
 
-                {/* Gallery Photos */}
+                {/* Slideshow & Gallery Photos */}
                 <div className="space-y-4">
-                  <span className="text-xs font-black text-cyan-400 uppercase block">
-                    Section 2: City Community Chapters ({formData.media?.items?.length || 0})
-                  </span>
+                  <div className="flex items-center justify-between">
+                    <span className="text-xs font-black text-cyan-400 uppercase block">
+                      Section 2: Slideshow &amp; Photo Archive ({(formData.media as any)?.gallery?.length || (defaultContent.media as any).gallery.length} Photos)
+                    </span>
+                    <button 
+                      type="button" 
+                      onClick={addGalleryPhoto}
+                      className="text-xs text-cyan-300 hover:text-white flex items-center gap-1 bg-white/10 px-2 py-1 rounded"
+                    >
+                      <Plus className="w-3 h-3" /> Add Photo
+                    </button>
+                  </div>
+
+                  {((formData.media as any)?.gallery || (defaultContent.media as any).gallery).map((photo: any, gIdx: number) => (
+                    <div key={gIdx} className="bg-black/30 border border-white/15 rounded-2xl p-4 space-y-3">
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-2">
+                          {/* eslint-disable-next-line @next/next/no-img-element */}
+                          <img src={photo.image} alt={photo.title} className="w-10 h-8 object-cover rounded border border-white/10" />
+                          <span className="text-xs font-bold text-cyan-300">Photo #{gIdx + 1}: {photo.location || "Edmonton"}</span>
+                        </div>
+                        <button 
+                          type="button" 
+                          onClick={() => removeGalleryPhoto(gIdx)}
+                          className="text-red-400 hover:text-red-300 text-xs p-1"
+                          title="Delete photo"
+                        >
+                          <Trash2 className="w-3.5 h-3.5" />
+                        </button>
+                      </div>
+
+                      <div className="grid grid-cols-2 gap-3">
+                        <input 
+                          type="text" 
+                          value={photo.title}
+                          onChange={(e) => updateGalleryPhoto(gIdx, 'title', e.target.value)}
+                          placeholder="Photo Title"
+                          className="w-full px-3 py-1.5 bg-black/50 border border-white/15 rounded-lg text-xs font-bold"
+                        />
+                        <input 
+                          type="text" 
+                          value={photo.location || ''}
+                          onChange={(e) => updateGalleryPhoto(gIdx, 'location', e.target.value)}
+                          placeholder="Location (e.g. Edmonton HQ)"
+                          className="w-full px-3 py-1.5 bg-black/50 border border-white/15 rounded-lg text-xs"
+                        />
+                      </div>
+
+                      <input 
+                        type="text" 
+                        value={photo.image}
+                        onChange={(e) => updateGalleryPhoto(gIdx, 'image', e.target.value)}
+                        placeholder="Image URL (e.g. /gallery/media_1.jpg)"
+                        className="w-full px-3 py-1.5 bg-black/50 border border-cyan-400/30 rounded-lg text-xs text-cyan-200 font-mono"
+                      />
+
+                      <textarea 
+                        rows={2}
+                        value={photo.caption || ''}
+                        onChange={(e) => updateGalleryPhoto(gIdx, 'caption', e.target.value)}
+                        placeholder="Caption / Description"
+                        className="w-full px-3 py-1.5 bg-black/50 border border-white/15 rounded-lg text-xs text-white/80"
+                      />
+                    </div>
+                  ))}
+                </div>
+
+                {/* Regional City Chapters */}
+                <div className="space-y-4 pt-4 border-t border-white/10">
+                  <div className="flex items-center justify-between">
+                    <span className="text-xs font-black text-cyan-400 uppercase block">
+                      Section 3: Regional City Chapters ({formData.media?.items?.length || 0})
+                    </span>
+                    <button 
+                      type="button" 
+                      onClick={addMediaItem}
+                      className="text-xs text-cyan-300 hover:text-white flex items-center gap-1 bg-white/10 px-2 py-1 rounded"
+                    >
+                      <Plus className="w-3 h-3" /> Add Chapter
+                    </button>
+                  </div>
                   {(formData.media?.items || []).map((item, itIdx) => (
                     <div key={itIdx} className="bg-black/30 border border-white/15 rounded-2xl p-4 space-y-3">
                       <div className="flex items-center justify-between">
-                        <span className="text-xs font-bold text-cyan-300">Item #{itIdx + 1}</span>
+                        <span className="text-xs font-bold text-cyan-300">Chapter #{itIdx + 1}</span>
                         <button 
                           type="button" 
                           onClick={() => removeMediaItem(itIdx)}

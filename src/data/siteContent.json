@@ -259,9 +259,118 @@
     }
   },
   "media": {
-    "badge": "Global Community",
+    "badge": "Global Community • Live In-Office Action",
     "title": "Media & Event Gallery",
-    "subtitle": "Connecting traders across North America with physical office sessions, meetups, and workshops.",
+    "subtitle": "Connecting traders across North America with daily physical office sessions, workshops, and community events in downtown Edmonton.",
+    "slideshowHeading": "Downtown Edmonton Mentorship & Office Life",
+    "slideshowSubtext": "Explore real moments from our physical trading office, live chart breakdown sessions, and community events.",
+    "gallery": [
+      {
+        "id": 1,
+        "image": "/gallery/media_1.jpg",
+        "title": "In-Office Mentorship & Market Analysis",
+        "caption": "Lead Instructor Minochel Barthelemy delivering an institutional market briefing in the Edmonton office.",
+        "location": "Edmonton HQ"
+      },
+      {
+        "id": 2,
+        "image": "/gallery/media_2.jpg",
+        "title": "Live Strategy & Risk Review Session",
+        "caption": "Traders reviewing trade executions and risk allocation in the boardroom.",
+        "location": "Edmonton Office"
+      },
+      {
+        "id": 3,
+        "image": "/gallery/media_3.jpg",
+        "title": "Technical Chart Breakdown",
+        "caption": "Mentees studying supply & demand zones and market liquidity.",
+        "location": "Edmonton HQ"
+      },
+      {
+        "id": 4,
+        "image": "/gallery/media_4.jpg",
+        "title": "1-on-1 Trader Mentorship",
+        "caption": "Personalized coaching and tailored guidance for funded account evaluations.",
+        "location": "Edmonton HQ"
+      },
+      {
+        "id": 5,
+        "image": "/gallery/media_5.jpg",
+        "title": "Trading Psychology & Execution",
+        "caption": "Developing emotional discipline and systematic entry strategies.",
+        "location": "Edmonton HQ"
+      },
+      {
+        "id": 6,
+        "image": "/gallery/media_6.jpg",
+        "title": "Executive Market Briefing",
+        "caption": "Group strategy session analyzing major macroeconomic news releases.",
+        "location": "Boardroom"
+      },
+      {
+        "id": 7,
+        "image": "/gallery/media_7.jpg",
+        "title": "Office Trading Terminals",
+        "caption": "Traders collaborating live during active London & New York market sessions.",
+        "location": "Trading Floor"
+      },
+      {
+        "id": 8,
+        "image": "/gallery/media_8.jpg",
+        "title": "Collaborative Learning Hub",
+        "caption": "Hands-on analysis and real-time trade execution.",
+        "location": "Edmonton HQ"
+      },
+      {
+        "id": 9,
+        "image": "/gallery/media_9.jpg",
+        "title": "Peer Strategy Discussion",
+        "caption": "Traders sharing insights, backtesting data, and trade journals.",
+        "location": "Edmonton HQ"
+      },
+      {
+        "id": 10,
+        "image": "/gallery/media_10.jpg",
+        "title": "Edmonton Community Meetup",
+        "caption": "Our trading team and mentees connecting outside the charts in downtown Edmonton.",
+        "location": "Downtown Edmonton"
+      },
+      {
+        "id": 11,
+        "image": "/gallery/media_11.jpg",
+        "title": "Live Workshop Cohort",
+        "caption": "Comprehensive in-person bootcamp session covering advanced price action.",
+        "location": "Workshop Hall"
+      },
+      {
+        "id": 12,
+        "image": "/gallery/media_12.jpg",
+        "title": "Chart Pattern Diagnostics",
+        "caption": "Deep-dive technical evaluation on gold, forex pairs, and indices.",
+        "location": "Edmonton HQ"
+      },
+      {
+        "id": 13,
+        "image": "/gallery/media_13.jpg",
+        "title": "Real-Time Trade Execution",
+        "caption": "Mentees executing verified trade setups with strict risk controls.",
+        "location": "Edmonton HQ"
+      },
+      {
+        "id": 14,
+        "image": "/gallery/media_14.jpg",
+        "title": "Mentorship Feedback & Assessment",
+        "caption": "Ongoing performance tracking and prop firm challenge preparation.",
+        "location": "Edmonton HQ"
+      },
+      {
+        "id": 15,
+        "image": "/gallery/media_15.jpg",
+        "title": "Community Milestone Celebration",
+        "caption": "Celebrating funded trader milestones and community achievements.",
+        "location": "Edmonton HQ"
+      }
+    ],
     "items": [
       {
         "title": "The Edmonton Team",
