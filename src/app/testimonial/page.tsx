@@ -91,22 +91,18 @@ export default function Testimonial() {
               
               <div className="flex flex-wrap items-center justify-center md:justify-start gap-4">
                 <a 
-                  href="https://share.google/w9KazQzBlGZmZTcuG" 
+                  href="https://share.google/5j5FnhQiRYB3qbo0o" 
                   target="_blank" 
                   rel="noopener noreferrer" 
-                  className="inline-flex items-center gap-2 bg-white/10 border border-white/20 text-white px-5 py-2.5 rounded-xl font-bold hover:bg-white hover:text-black transition-all duration-300 shadow-lg hover:shadow-[0_0_20px_rgba(255,255,255,0.2)] text-sm"
+                  className="inline-flex items-center gap-3 bg-white text-black px-6 py-3 rounded-2xl font-black hover:bg-cyan-400 hover:text-black transition-all duration-300 shadow-[0_0_30px_rgba(255,255,255,0.3)] hover:scale-105 text-sm"
                 >
-                  <svg className="w-5 h-5" viewBox="0 0 24 24"><path fill="currentColor" d="M21.35,11.1H12.18V13.83H18.69C18.36,17.64 15.19,19.27 12.19,19.27C8.36,19.27 5,16.25 5,12C5,7.9 8.2,4.73 12.2,4.73C15.29,4.73 17.1,6.7 17.1,6.7L19,4.72C19,4.72 16.56,2 12.1,2C6.42,2 2.03,6.8 2.03,12C2.03,17.05 6.16,22 12.25,22C17.6,22 21.5,18.33 21.5,12.91C21.5,11.76 21.35,11.1 21.35,11.1V11.1Z" /></svg>
-                  Google Reviews
-                </a>
-                <a 
-                  href="https://web.facebook.com/Boomingfx/reviews" 
-                  target="_blank" 
-                  rel="noopener noreferrer" 
-                  className="inline-flex items-center gap-2 bg-[#1877F2]/10 border border-[#1877F2]/30 text-[#1877F2] px-5 py-2.5 rounded-xl font-bold hover:bg-[#1877F2] hover:text-white transition-all duration-300 shadow-lg hover:shadow-[0_0_20px_rgba(24,119,242,0.4)] text-sm"
-                >
-                  <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path fillRule="evenodd" d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z" clipRule="evenodd" /></svg> 
-                  Facebook Reviews
+                  <svg className="w-5 h-5 text-[#4285F4]" viewBox="0 0 24 24">
+                    <path fill="currentColor" d="M21.35,11.1H12.18V13.83H18.69C18.36,17.64 15.19,19.27 12.19,19.27C8.36,19.27 5,16.25 5,12C5,7.9 8.2,4.73 12.2,4.73C15.29,4.73 17.1,6.7 17.1,6.7L19,4.72C19,4.72 16.56,2 12.1,2C6.42,2 2.03,6.8 2.03,12C2.03,17.05 6.16,22 12.25,22C17.6,22 21.5,18.33 21.5,12.91C21.5,11.76 21.35,11.1 21.35,11.1V11.1Z" />
+                  </svg>
+                  <span className="flex items-center gap-1.5">
+                    View 5.0 Star Google Reviews
+                    <ArrowRight className="w-4 h-4" />
+                  </span>
                 </a>
               </div>
             </div>
