@@ -186,7 +186,7 @@ export default function FAQ() {
             We hope this FAQ helps you on your trading journey with BoomingFX! Remember, patience, discipline, and continuous learning are key to long-term success in the markets.
           </p>
           <p>
-            For any questions, please contact us at <a href="mailto:support@boomingfx.local" className="text-cyan-400 hover:underline">support@boomingfx.local</a>
+            For any questions, please contact us at <a href="mailto:support@boomingfx.org" className="text-cyan-400 hover:underline">support@boomingfx.org</a>
           </p>
         </div>
       )

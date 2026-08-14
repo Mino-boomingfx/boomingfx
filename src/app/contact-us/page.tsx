@@ -59,8 +59,8 @@ export default function ContactUs() {
                   </div>
                   <div>
                     <h3 className="text-lg font-bold text-white mb-1">Email Us</h3>
-                    <a href="mailto:support@boomingfx.local" className="text-cyan-400 font-medium hover:text-cyan-300 hover:underline transition-colors">
-                      support@boomingfx.local
+                    <a href="mailto:support@boomingfx.org" className="text-cyan-400 font-medium hover:text-cyan-300 hover:underline transition-colors">
+                      support@boomingfx.org
                     </a>
                   </div>
                 </div>

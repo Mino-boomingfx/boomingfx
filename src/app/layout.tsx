@@ -42,9 +42,9 @@ export default function RootLayout({
               <div className="lg:col-span-4 flex flex-col items-start">
                 <div className="bg-white p-3 rounded-2xl inline-block mb-6 shadow-lg shadow-white/5 transform hover:scale-105 transition-transform">
                   <img 
-                    src="http://boomingfx.local/wp-content/uploads/2023/01/Untitled-design-1-100x100.png" 
+                    src="/boomingfx_logo.png" 
                     alt="Boomingfx" 
-                    className="h-16 w-auto"
+                    className="h-14 w-auto"
                   />
                 </div>
                 <p className="text-gray-400 text-sm leading-relaxed mb-6 pr-4">
