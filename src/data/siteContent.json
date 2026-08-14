@@ -10,23 +10,25 @@
     "telegramUrl": "https://t.me/boomingfx"
   },
   "hero": {
-    "badge": "Real Mentorship • Not Just Another Course",
+    "badge": "Real Mentorship \u2022 Not Just Another Course",
     "title": "Master The Markets With Elite Traders",
     "subtitle": "Stop gambling and start executing with precision. Master technical analysis, manage risk like an institutional trader, and access our exclusive mentorship community.",
     "ctaText": "Join Mentorship",
     "ctaLink": "/packages",
     "googleReviewsBadge": "5.0 Star Rated on Google",
-    "googleReviewsLink": "https://share.google/5j5FnhQiRYB3qbo0o"
+    "googleReviewsLink": "https://share.google/5j5FnhQiRYB3qbo0o",
+    "ctaBtn": "Start Learning Today"
   },
   "home": {
     "hero": {
-      "badge": "Real Mentorship • Not Just Another Course",
+      "badge": "Real Mentorship \u2022 Not Just Another Course",
       "title": "Master The Markets With Elite Traders",
       "subtitle": "Stop gambling and start executing with precision. Master technical analysis, manage risk like an institutional trader, and access our exclusive mentorship community.",
       "ctaText": "Join Mentorship",
       "ctaLink": "/packages",
       "googleReviewsBadge": "5.0 Star Rated on Google",
-      "googleReviewsLink": "https://share.google/5j5FnhQiRYB3qbo0o"
+      "googleReviewsLink": "https://share.google/5j5FnhQiRYB3qbo0o",
+      "ctaBtn": "Start Learning Today"
     },
     "bento": {
       "badge": "The BoomingFX Advantage",
@@ -72,15 +74,15 @@
     "cards": [
       {
         "title": "Humble Beginnings",
-        "text": "My journey started like many others. I got my first job at 16 years old, working at Ricky's All Day Grill. It taught me the value of hard work early on — a lesson that carried me through my education at NAIT, where I completed the Chemical Technology program. By 22, I landed my first career position as a lab analyst, and by 24, I had advanced to a lab chemist role at Intertek."
+        "text": "My journey started like many others. I got my first job at 16 years old, working at Ricky's All Day Grill. It taught me the value of hard work early on \u2014 a lesson that carried me through my education at NAIT, where I completed the Chemical Technology program. By 22, I landed my first career position as a lab analyst, and by 24, I had advanced to a lab chemist role at Intertek."
       },
       {
         "title": "The Spark",
-        "text": "On paper, my career was progressing. But I felt a growing desire to build something of my own. While working full time, I began investing in the stock market, starting with ETFs. As I learned more, I discovered trading — and everything changed."
+        "text": "On paper, my career was progressing. But I felt a growing desire to build something of my own. While working full time, I began investing in the stock market, starting with ETFs. As I learned more, I discovered trading \u2014 and everything changed."
       },
       {
         "title": "The Grind (2020)",
-        "text": "I quickly realized this wasn't just a side hustle; it was one of the most challenging paths I could've taken, with an average success rate of only 5%. But I was all in. My daily routine for over two years consisted of working 8:00 AM – 4:30 PM, dinner and rest, and studying charts & markets from 7:00 PM – 1:00 AM every single night."
+        "text": "I quickly realized this wasn't just a side hustle; it was one of the most challenging paths I could've taken, with an average success rate of only 5%. But I was all in. My daily routine for over two years consisted of working 8:00 AM \u2013 4:30 PM, dinner and rest, and studying charts & markets from 7:00 PM \u2013 1:00 AM every single night."
       },
       {
         "title": "The Breakthrough",
@@ -92,7 +94,7 @@
       }
     ],
     "realityTitle": "The Reality",
-    "realityText": "I don't sell dreams — I teach reality. Trading is not for everyone. If you're looking for a shortcut or a get-rich-quick fix, this isn't it. We are fully transparent, sharing both wins and losses.",
+    "realityText": "I don't sell dreams \u2014 I teach reality. Trading is not for everyone. If you're looking for a shortcut or a get-rich-quick fix, this isn't it. We are fully transparent, sharing both wins and losses.",
     "quote": "\"All we ask in return is that you take it seriously. Let's get to work.\"",
     "cta": {
       "title": "Trade Smarter. Grow Faster.",
@@ -114,7 +116,7 @@
       },
       {
         "title": "Full Transparency",
-        "description": "In a financial world that can feel opaque, we stand as a beacon of clarity. No hidden complexities, no unforeseen charges — just an honest approach that empowers you to trade with confidence."
+        "description": "In a financial world that can feel opaque, we stand as a beacon of clarity. No hidden complexities, no unforeseen charges \u2014 just an honest approach that empowers you to trade with confidence."
       },
       {
         "title": "Continuous Discovery",
@@ -133,10 +135,10 @@
     }
   },
   "packages": {
-    "badge": "Real Mentorship • Not Just Another Course",
+    "badge": "Real Mentorship \u2022 Not Just Another Course",
     "overviewTitle": "Mentorship Packages",
     "overviewSubtitle": "What You're Stepping Into",
-    "overviewText": "BoomingFX operates out of a professional trading office in downtown Edmonton — structured, disciplined, and built to mirror the environment of an actual trading firm. This isn't a course you watch alone and forget. From day one, you are placed inside a framework designed to develop serious traders.",
+    "overviewText": "BoomingFX operates out of a professional trading office in downtown Edmonton \u2014 structured, disciplined, and built to mirror the environment of an actual trading firm. This isn't a course you watch alone and forget. From day one, you are placed inside a framework designed to develop serious traders.",
     "pillars": [
       {
         "title": "Trading Firm Environment",
@@ -160,9 +162,9 @@
         "badge": "Flexible Plan",
         "price": "$149.99",
         "period": "/ month",
-        "billing": "Billed monthly • Cancel anytime",
+        "billing": "Billed monthly \u2022 Cancel anytime",
         "features": [
-          "Weekly live Zoom mentorship calls (Sunday–Thursday, 8 PM MST)",
+          "Weekly live Zoom mentorship calls (Sunday\u2013Thursday, 8 PM MST)",
           "In-office sessions at Edmonton location (max 15/session)",
           "\"Road to Financial Freedom\" self-paced training (15 hrs, beginner to advanced)",
           "Daily market analysis & weekly summaries",
@@ -179,11 +181,11 @@
         "badge": "Save $150",
         "price": "$749.99",
         "period": "/ 6 months",
-        "billing": "Billed once every 6 months • Save $150 vs monthly",
+        "billing": "Billed once every 6 months \u2022 Save $150 vs monthly",
         "features": [
           "Everything in Monthly Access",
           "Reduced effective rate vs. month-to-month",
-          "Uninterrupted 6-month access — no renewal friction",
+          "Uninterrupted 6-month access \u2014 no renewal friction",
           "Priority Telegram signal chat access",
           "Onboarding setup guide included"
         ],
@@ -193,16 +195,16 @@
         "id": "annual",
         "name": "Annual Access",
         "tagline": "For traders serious about long-term skill development who want the best value and uninterrupted access year-round.",
-        "badge": "Best Value • Save $850",
+        "badge": "Best Value \u2022 Save $850",
         "price": "$949.99",
         "period": "/ year",
-        "billing": "Billed once annually • Nearly 50% off monthly rate",
+        "billing": "Billed once annually \u2022 Nearly 50% off monthly rate",
         "features": [
           "Everything in Monthly Access",
           "Lowest cost per month of any plan",
           "Priority Telegram signal chat access",
           "Onboarding setup guide included",
-          "12 months continuous mentorship — no gaps, no re-enrollment",
+          "12 months continuous mentorship \u2014 no gaps, no re-enrollment",
           "Extra perks & exclusive member benefits"
         ],
         "stripeUrl": "https://buy.stripe.com/7sY6oHeid3BEg2f7g66Zy06"
@@ -259,7 +261,7 @@
     }
   },
   "media": {
-    "badge": "Global Community • Live In-Office Action",
+    "badge": "Global Community \u2022 Live In-Office Action",
     "title": "Media & Event Gallery",
     "subtitle": "Connecting traders across North America with daily physical office sessions, workshops, and community events in downtown Edmonton.",
     "slideshowHeading": "Downtown Edmonton Mentorship & Office Life",
@@ -442,7 +444,7 @@
       {
         "id": 2,
         "question": "IS THIS BEGINNER-FRIENDLY?",
-        "answer": "Yes, 100%! We start you from scratch — no prior trading experience required. Our comprehensive mentorship breaks down technical analysis, fundamental analysis, and risk management into step-by-step actionable lessons."
+        "answer": "Yes, 100%! We start you from scratch \u2014 no prior trading experience required. Our comprehensive mentorship breaks down technical analysis, fundamental analysis, and risk management into step-by-step actionable lessons."
       },
       {
         "id": 3,
@@ -480,7 +482,7 @@
     }
   },
   "refundPolicy": {
-    "badge": "Official Policy • Transparent Terms",
+    "badge": "Official Policy \u2022 Transparent Terms",
     "title": "Refund & Cancellation Policy",
     "subtitle": "At BoomingFX, we prioritize transparency, clarity, and professionalism in all our interactions with members.",
     "effectiveDate": "August 2025",
