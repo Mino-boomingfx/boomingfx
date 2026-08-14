@@ -1,9 +1,12 @@
 "use client";
 import React, { useRef, useEffect } from 'react';
+import { useSiteContent } from '@/context/ContentContext';
 import { Star, ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react';
 
 export default function Testimonial() {
-  const testimonials = Array.from({ length: 12 }, (_, i) => `/testimonial${i + 1}.png`);
+  const { content } = useSiteContent();
+  const { testimonials: tData } = content;
+  const testimonials = tData?.sliderImages || Array.from({ length: 12 }, (_, i) => `/testimonial${i + 1}.png`);
   const sliderRef = useRef<HTMLDivElement>(null);
 
   // Auto-scroll logic
@@ -11,7 +14,6 @@ export default function Testimonial() {
     const slider = sliderRef.current;
     if (!slider) return;
 
-    let scrollAmount = 0;
     const scrollStep = 1; // Pixels to move per frame
     const scrollInterval = setInterval(() => {
       if (slider) {
@@ -85,13 +87,13 @@ export default function Testimonial() {
           <div className="flex flex-col md:flex-row items-center justify-between mb-12">
             <div className="mb-6 md:mb-0 text-center md:text-left">
               <h2 className="text-3xl md:text-4xl font-black text-white tracking-tight flex items-center justify-center md:justify-start gap-3">
-                <Star className="w-8 h-8 text-yellow-400 fill-yellow-400" /> Client Testimonials
+                <Star className="w-8 h-8 text-yellow-400 fill-yellow-400" /> {tData?.title || 'Client Testimonials'}
               </h2>
-              <p className="text-blue-100/70 mt-2 mb-6">100% Recommended: Authentic Feedback from Real Mentees</p>
+              <p className="text-blue-100/70 mt-2 mb-6">{tData?.subtitle || '100% Recommended: Authentic Feedback from Real Mentees'}</p>
               
               <div className="flex flex-wrap items-center justify-center md:justify-start gap-4">
                 <a 
-                  href="https://share.google/5j5FnhQiRYB3qbo0o" 
+                  href={tData?.googleReviewUrl || "https://share.google/5j5FnhQiRYB3qbo0o"} 
                   target="_blank" 
                   rel="noopener noreferrer" 
                   className="inline-flex items-center gap-3 bg-white text-black px-6 py-3 rounded-2xl font-black hover:bg-cyan-400 hover:text-black transition-all duration-300 shadow-[0_0_30px_rgba(255,255,255,0.3)] hover:scale-105 text-sm"

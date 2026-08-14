@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Lato } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/Header";
+import { ContentProvider } from "@/context/ContentContext";
 
 const lato = Lato({ 
   subsets: ["latin"],
@@ -20,12 +21,13 @@ export default function RootLayout({
   return (
     <html lang="en" className="scroll-smooth">
       <body className={`${lato.className} bg-gray-50 text-black antialiased flex flex-col min-h-screen`}>
-        <Header />
+        <ContentProvider>
+          <Header />
 
-        {/* Main Content */}
-        <main className="flex-grow">
-          {children}
-        </main>
+          {/* Main Content */}
+          <main className="flex-grow">
+            {children}
+          </main>
 
         {/* Premium Dark Footer */}
         <footer className="relative bg-black text-white pt-24 pb-12 overflow-hidden border-t-4 border-[#004185]">
@@ -127,6 +129,7 @@ export default function RootLayout({
             </div>
           </div>
         </footer>
+        </ContentProvider>
       </body>
     </html>
   );

@@ -1,0 +1,129 @@
+{
+  "general": {
+    "siteName": "BoomingFX",
+    "supportEmail": "support@boomingfx.org",
+    "officeAddress": "10665 Jasper Ave, 14th floor, First Edmonton Place",
+    "businessHours": "8 AM - 8 PM (Mon-Fri)",
+    "facebookUrl": "https://web.facebook.com/Boomingfx",
+    "instagramUrl": "https://instagram.com/boomingfx",
+    "youtubeUrl": "https://youtube.com/@boomingfx",
+    "telegramUrl": "https://t.me/boomingfx"
+  },
+  "hero": {
+    "badge": "Real Mentorship • Not Just Another Course",
+    "title": "Master The Markets With Elite Traders",
+    "subtitle": "Stop gambling and start executing with precision. Master technical analysis, manage risk like an institutional trader, and access our exclusive mentorship community.",
+    "ctaText": "Join Mentorship",
+    "ctaLink": "/packages",
+    "googleReviewsBadge": "5.0 Star Rated on Google",
+    "googleReviewsLink": "https://share.google/5j5FnhQiRYB3qbo0o"
+  },
+  "packages": {
+    "overviewTitle": "Mentorship Packages",
+    "overviewSubtitle": "What You're Stepping Into",
+    "overviewText": "BoomingFX operates out of a professional trading office in downtown Edmonton — structured, disciplined, and built to mirror the environment of an actual trading firm. This isn't a course you watch alone and forget. From day one, you are placed inside a framework designed to develop serious traders.",
+    "currencyNote": "All prices are listed in USD (United States Dollars). As a trading education program with mentees across the globe, we price in USD because it is the world's reserve currency and the standard across international financial markets. This ensures consistency and transparency for every member, regardless of where they are joining us from.",
+    "plans": [
+      {
+        "id": "monthly",
+        "name": "Monthly Access",
+        "tagline": "For traders who want full access to BoomingFX's mentorship and resources with complete flexibility.",
+        "badge": "Flexible Plan",
+        "price": "$149.99",
+        "period": "/ month",
+        "billing": "Billed monthly • Cancel anytime",
+        "features": [
+          "Weekly live Zoom mentorship calls (Sunday–Thursday, 8 PM MST)",
+          "In-office sessions at Edmonton location (max 15/session)",
+          "\"Road to Financial Freedom\" self-paced training (15 hrs, beginner to advanced)",
+          "Daily market analysis & weekly summaries",
+          "Trade copy signals via Telegram",
+          "1-on-1 coaching sessions",
+          "Networking events & community access"
+        ],
+        "stripeUrl": "https://buy.stripe.com/bJefZhgqlc8acQ357Y6Zy00"
+      },
+      {
+        "id": "semi-annual",
+        "name": "Semi-Annual Access",
+        "tagline": "For traders ready to commit to a structured 6-month learning cycle at a reduced rate.",
+        "badge": "Save $150",
+        "price": "$749.99",
+        "period": "/ 6 months",
+        "billing": "Billed once every 6 months • Save $150 vs monthly",
+        "features": [
+          "Everything in Monthly Access",
+          "Reduced effective rate vs. month-to-month",
+          "Uninterrupted 6-month access — no renewal friction",
+          "Priority Telegram signal chat access",
+          "Onboarding setup guide included"
+        ],
+        "stripeUrl": "https://buy.stripe.com/fZu6oH1vrfkm5nB2ZQ6Zy0c"
+      },
+      {
+        "id": "annual",
+        "name": "Annual Access",
+        "tagline": "For traders serious about long-term skill development who want the best value and uninterrupted access year-round.",
+        "badge": "Best Value • Save $850",
+        "price": "$949.99",
+        "period": "/ year",
+        "billing": "Billed once annually • Nearly 50% off monthly rate",
+        "features": [
+          "Everything in Monthly Access",
+          "Lowest cost per month of any plan",
+          "Priority Telegram signal chat access",
+          "Onboarding setup guide included",
+          "12 months continuous mentorship — no gaps, no re-enrollment",
+          "Extra perks & exclusive member benefits"
+        ],
+        "stripeUrl": "https://buy.stripe.com/7sY6oHeid3BEg2f7g66Zy06"
+      }
+    ]
+  },
+  "testimonials": {
+    "title": "Client Testimonials",
+    "subtitle": "100% Recommended: Authentic Feedback from Real Mentees",
+    "googleReviewUrl": "https://share.google/5j5FnhQiRYB3qbo0o",
+    "sliderImages": [
+      "/testimonial1.png",
+      "/testimonial2.png",
+      "/testimonial3.png",
+      "/testimonial4.png",
+      "/testimonial5.png",
+      "/testimonial6.png",
+      "/testimonial7.png",
+      "/testimonial8.png",
+      "/testimonial9.png",
+      "/testimonial10.png",
+      "/testimonial11.png",
+      "/testimonial12.png"
+    ]
+  },
+  "faqs": [
+    {
+      "id": 1,
+      "question": "HOW MUCH TIME DO I NEED PER DAY TO TRADE?",
+      "answer": "Trading doesn't have to take over your whole day. Many successful members trade part-time around their full-time jobs, school, or other commitments. On average, you may only need 30 to 60 minutes a day to analyze charts, set up trades, and review the market."
+    },
+    {
+      "id": 2,
+      "question": "IS THIS BEGINNER-FRIENDLY?",
+      "answer": "Yes, 100%! We start you from scratch — no prior trading experience required. Our comprehensive mentorship breaks down technical analysis, fundamental analysis, and risk management into step-by-step actionable lessons."
+    },
+    {
+      "id": 3,
+      "question": "HOW MUCH MONEY DO I NEED TO START TRADING?",
+      "answer": "You can start learning and practicing with zero capital using a free demo account. Once you're ready to trade with real funds, you can start with a modest balance, or we can guide you through acquiring $50k-$200k+ in funding via prop firm evaluation challenges."
+    },
+    {
+      "id": 4,
+      "question": "WHAT MAKES BOOMINGFX DIFFERENT FROM OTHER SERVICES?",
+      "answer": "We operate out of a real physical office in downtown Edmonton and don't just sell recorded courses. We offer daily live mentorship, continuous risk management guidance, in-person workshops, and transparent live trade ideas."
+    },
+    {
+      "id": 5,
+      "question": "HOW DO YOUR TRADING SIGNALS WORK?",
+      "answer": "Our expert team analyzes market opportunities daily and delivers verified signals with exact entries, stop-losses, and profit targets directly through Telegram, complete with full technical rationale."
+    }
+  ]
+}

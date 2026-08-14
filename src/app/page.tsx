@@ -1,7 +1,12 @@
+"use client";
 import React from 'react';
+import { useSiteContent } from '@/context/ContentContext';
 import TradingViewTicker from '@/components/TradingViewTicker';
 
 export default function Home() {
+  const { content } = useSiteContent();
+  const { hero } = content;
+
   return (
     <div className="bg-white overflow-hidden selection:bg-[#004185] selection:text-white">
       {/* 
@@ -40,13 +45,13 @@ export default function Home() {
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
               <span className="relative inline-flex rounded-full h-2 w-2 bg-white"></span>
             </span>
-            <span className="text-white text-xs font-bold tracking-widest uppercase">Traders & Investors Community</span>
+            <span className="text-white text-xs font-bold tracking-widest uppercase">{hero.badge}</span>
           </div>
 
           {/* Headline with advanced text formatting */}
           <h1 className="text-5xl md:text-7xl lg:text-8xl font-black text-transparent bg-clip-text bg-gradient-to-r from-white via-white to-white/60 mb-4 tracking-tighter leading-tight drop-shadow-2xl">
-            Welcome to BoomingFx <br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-blue-100 to-white/50">Market Trading Analytics.</span>
+            {hero.title.split('With')[0]} <br />
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-blue-100 to-white/50">{hero.title.includes('With') ? `With ${hero.title.split('With')[1]}` : 'Market Trading Analytics.'}</span>
           </h1>
           
           <h2 className="text-xl md:text-3xl font-bold text-white/90 mb-6 drop-shadow-lg">
@@ -54,24 +59,24 @@ export default function Home() {
           </h2>
 
           <p className="mt-4 text-lg md:text-xl text-white/80 max-w-3xl mx-auto font-medium leading-relaxed drop-shadow-md">
-            BoomingFx brings 7+ years of trading industry expertise to the table, providing you with proven strategies and insights to accelerate your success and minimize losses.
+            {hero.subtitle}
           </p>
           
           {/* CTA Buttons */}
           <div className="mt-12 flex flex-col sm:flex-row gap-6 items-center justify-center w-full">
             <a 
-              href="/packages" 
+              href={hero.ctaLink} 
               className="group relative w-full sm:w-auto overflow-hidden rounded-full bg-white px-10 py-5 text-lg font-black text-[#004185] shadow-[0_0_40px_rgba(255,255,255,0.4)] transition-all hover:scale-105 hover:shadow-[0_0_60px_rgba(255,255,255,0.6)]"
             >
               <span className="absolute inset-0 bg-[#004185]/5 transition-colors group-hover:bg-[#004185]/10"></span>
               <span className="relative flex items-center gap-3">
-                Join Mentorship
+                {hero.ctaText}
                 <svg className="w-5 h-5 transform group-hover:translate-x-2 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
               </span>
             </a>
             
             <a 
-              href="https://share.google/5j5FnhQiRYB3qbo0o" 
+              href={hero.googleReviewsLink} 
               target="_blank"
               rel="noopener noreferrer"
               className="group relative w-full sm:w-auto px-10 py-5 text-lg font-bold text-white transition-all hover:text-white/80 flex items-center justify-center gap-3"
@@ -85,7 +90,7 @@ export default function Home() {
           {/* Google Reviews Trust Badge */}
           <div className="mt-16 flex items-center justify-center">
             <a 
-              href="https://share.google/5j5FnhQiRYB3qbo0o" 
+              href={hero.googleReviewsLink} 
               target="_blank" 
               rel="noopener noreferrer" 
               className="inline-flex items-center gap-3.5 backdrop-blur-md bg-white/10 hover:bg-white/15 py-3.5 px-8 rounded-full border border-white/20 shadow-[0_0_30px_rgba(255,255,255,0.1)] hover:shadow-[0_0_40px_rgba(34,211,238,0.3)] transition-all duration-300 transform hover:scale-105"
@@ -100,7 +105,7 @@ export default function Home() {
                   </svg>
                 ))}
               </div>
-              <span className="font-bold text-white text-sm">5.0 Star Rated on Google</span>
+              <span className="font-bold text-white text-sm">{hero.googleReviewsBadge}</span>
               <span className="text-cyan-300 text-xs font-semibold hidden sm:inline">• View All Reviews ↗</span>
             </a>
           </div>
@@ -141,7 +146,6 @@ export default function Home() {
             {/* Large Card 1 */}
             <div className="group md:col-span-2 relative bg-black rounded-[2rem] p-10 overflow-hidden transform hover:-translate-y-2 transition-all duration-500 shadow-2xl">
               <div className="absolute inset-0 bg-gradient-to-br from-[#004185]/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
-              {/* Decorative elements */}
               <div className="absolute -right-10 -top-10 w-64 h-64 border-[40px] border-[#004185] rounded-full opacity-20 transform group-hover:scale-110 group-hover:rotate-12 transition-all duration-700"></div>
               
               <div className="relative z-10 h-full flex flex-col justify-between">
@@ -255,4 +259,3 @@ export default function Home() {
     </div>
   );
 }
-
