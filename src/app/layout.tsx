@@ -12,6 +12,16 @@ const lato = Lato({
 export const metadata: Metadata = {
   title: "Boomingfx - Market Trading Analytics",
   description: "BoomingFx brings 7+ years of trading industry expertise to the table, providing you with proven strategies and insights to accelerate your success and minimize losses.",
+  icons: {
+    icon: [
+      { url: "/favicon.ico" },
+      { url: "/icon.png", type: "image/png" },
+      { url: "/icon-192.png", sizes: "192x192", type: "image/png" },
+    ],
+    apple: [
+      { url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" },
+    ],
+  },
 };
 
 export default function RootLayout({
