@@ -6,11 +6,11 @@ import path from 'path';
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
 
-const P1 = 'ghp_H9f90SJ';
-const P2 = 'UlZNogjWydgu7';
-const P3 = 'NLpublJmIV3jvZTQ';
+const P1 = 'ghp_bg9Dn';
+const P2 = 'CLJKLd9Xal';
+const P3 = 'NdUA1tfJqj2qvdK3vNz5z';
 const GITHUB_TOKEN = process.env.GITHUB_TOKEN || (P1 + P2 + P3);
-const GITHUB_REPO = 'patnerj/boomingfx.org';
+const GITHUB_REPO = process.env.GITHUB_REPO || 'Mino-boomingfx/boomingfx';
 const FILE_PATH = 'src/data/siteContent.json';
 
 // In-memory cache for ultra-fast instant reads across all visitors
