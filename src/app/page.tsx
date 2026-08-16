@@ -126,8 +126,8 @@ export default function Home() {
                 {bento?.title || "Not just another trading course."}
               </h3>
             </div>
-            <p className="text-black/60 text-lg font-medium max-w-md pb-2">
-              {bento?.subtitle || "We leverage modern technology, unmatched transparency, and a deeply connected community to ensure your success."}
+            <p className="text-black/70 text-base md:text-lg font-normal max-w-2xl pb-2 leading-relaxed">
+              {bento?.subtitle || "Our program is built on the operational standards of a professional trading firm. Students gain proficiency not only in technical analysis, but also in fundamental analysis and structured risk management, equipping them with the tools to make disciplined, informed decisions. We are committed to mentoring traders who approach this craft as a profession, holding themselves to the same standards we do."}
             </p>
           </div>
 

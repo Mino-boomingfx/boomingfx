@@ -8,63 +8,25 @@ function TradingViewTicker() {
     const currentContainer = containerRef.current;
     if (!currentContainer) return;
 
-    currentContainer.innerHTML = '';
+    // Load TradingView Module Script if not already loaded
+    const scriptId = 'tradingview-ticker-tape-script';
+    let script = document.getElementById(scriptId) as HTMLScriptElement | null;
+    if (!script) {
+      script = document.createElement('script');
+      script.id = scriptId;
+      script.type = 'module';
+      script.src = 'https://widgets.tradingview-widget.com/w/en/tv-ticker-tape.js';
+      script.async = true;
+      document.head.appendChild(script);
+    }
 
-    const widgetDiv = document.createElement('div');
-    widgetDiv.className = 'tradingview-widget-container__widget';
-    currentContainer.appendChild(widgetDiv);
-
-    const script = document.createElement('script');
-    script.src = 'https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js';
-    script.type = 'text/javascript';
-    script.async = true;
-    script.innerHTML = JSON.stringify({
-      symbols: [
-        {
-          proName: "FOREXCOM:SPX500USD",
-          title: "S&P 500"
-        },
-        {
-          proName: "FOREXCOM:NSXUSD",
-          title: "US Tech 100"
-        },
-        {
-          proName: "FX_IDC:EURUSD",
-          title: "EUR to USD"
-        },
-        {
-          proName: "FX_IDC:GBPUSD",
-          title: "GBP to USD"
-        },
-        {
-          proName: "FX_IDC:USDJPY",
-          title: "USD to JPY"
-        },
-        {
-          proName: "FX_IDC:USDCAD",
-          title: "USD to CAD"
-        },
-        {
-          proName: "OANDA:XAUUSD",
-          title: "Gold / USD"
-        },
-        {
-          proName: "BITSTAMP:BTCUSD",
-          title: "Bitcoin"
-        },
-        {
-          proName: "BITSTAMP:ETHUSD",
-          title: "Ethereum"
-        }
-      ],
-      showSymbolLogo: true,
-      isTransparent: true,
-      displayMode: "adaptive",
-      colorTheme: "dark",
-      locale: "en"
-    });
-
-    currentContainer.appendChild(script);
+    // Mount official TradingView Web Component Widget
+    currentContainer.innerHTML = `
+      <tv-ticker-tape 
+        symbols="FOREXCOM:SPXUSD,FOREXCOM:NSXUSD,FOREXCOM:DJI,FX:EURUSD,BITSTAMP:BTCUSD,BITSTAMP:ETHUSD,CMCMARKETS:GOLD,OANDA:GBPUSD,FX:USDJPY,OANDA:AUDUSD,OANDA:GBPJPY,OANDA:USDCAD" 
+        item-size="compact"
+      ></tv-ticker-tape>
+    `;
 
     return () => {
       if (currentContainer) {
@@ -74,10 +36,8 @@ function TradingViewTicker() {
   }, []);
 
   return (
-    <div className="w-full bg-[#001428] border-y border-white/10 overflow-hidden py-1">
-      <div className="tradingview-widget-container" ref={containerRef}>
-        <div className="tradingview-widget-container__widget"></div>
-      </div>
+    <div className="w-full bg-[#001428] border-y border-white/10 overflow-hidden min-h-[48px] flex items-center">
+      <div className="w-full" ref={containerRef}></div>
     </div>
   );
 }

@@ -33,7 +33,7 @@
     "bento": {
       "badge": "The BoomingFX Advantage",
       "title": "Not just another trading course.",
-      "subtitle": "We leverage modern technology, unmatched transparency, and a deeply connected community to ensure your success.",
+      "subtitle": "Our program is built on the operational standards of a professional trading firm. Students gain proficiency not only in technical analysis, but also in fundamental analysis and structured risk management, equipping them with the tools to make disciplined, informed decisions. We are committed to mentoring traders who approach this craft as a profession, holding themselves to the same standards we do.",
       "cards": [
         {
           "title": "Edmonton's Largest Community",
@@ -119,24 +119,32 @@
         "description": "In a financial world that can feel opaque, we stand as a beacon of clarity. No hidden complexities, no unforeseen charges — just an honest approach that empowers you to trade with confidence."
       },
       {
-        "title": "Continuous Discovery",
-        "description": "The path of a trader is a journey of continuous discovery. We cultivate a space rich with shared knowledge, where every challenge becomes an opportunity for collective advancement."
+        "title": "Institutional Trading Standards",
+        "description": "Learn how liquidity providers and banks navigate the markets rather than relying on retail indicator noise."
       },
       {
-        "title": "A Commitment to You",
-        "description": "Come, be a part of something truly significant. Join BoomingFX, and discover the power of trading with full transparency, unwavering support, and the collective strength of Edmonton's most dedicated trading community."
+        "title": "Dedicated Downtown Office",
+        "description": "Walk into our physical trading office in Edmonton, connect with lead analysts, and trade live during market sessions."
+      },
+      {
+        "title": "Prop Firm Scaling Program",
+        "description": "Structured preparation and step-by-step risk management protocols to help you pass 5-figure and 6-figure funded challenges."
+      },
+      {
+        "title": "24/7 Community & Mentorship",
+        "description": "Continuous support across Telegram, weekly live Zoom webinars, trade review sessions, and dedicated 1-on-1 coaching."
       }
     ],
     "cta": {
-      "title": "Trade Smarter. Grow Faster.",
-      "subtitle": "Where transparency meets expertise. Get mentorship, signals, and community support to trade with confidence.",
-      "btnText": "Join the Community",
+      "title": "Experience the BoomingFX Difference",
+      "subtitle": "Join hundreds of disciplined traders mastering the financial markets.",
+      "btnText": "Get Started Now",
       "btnLink": "/packages"
     }
   },
   "packages": {
     "badge": "Real Mentorship • Not Just Another Course",
-    "overviewTitle": "Mentorship Packages",
+    "overviewTitle": "The BoomingFX Mentorship Framework",
     "overviewSubtitle": "What You're Stepping Into",
     "overviewText": "BoomingFX operates out of a professional trading office in downtown Edmonton — structured, disciplined, and built to mirror the environment of an actual trading firm. This isn't a course you watch alone and forget. From day one, you are placed inside a framework designed to develop serious traders.",
     "pillars": [
@@ -165,7 +173,6 @@
         "billing": "Billed monthly • Cancel anytime",
         "features": [
           "Weekly live Zoom mentorship calls (Sunday–Thursday, 8 PM MST)",
-          "In-office sessions at Edmonton location (max 15/session)",
           "\"Road to Financial Freedom\" self-paced training (15 hrs, beginner to advanced)",
           "Daily market analysis & weekly summaries",
           "Trade copy signals via Telegram",
@@ -185,7 +192,6 @@
         "features": [
           "Everything in Monthly Access",
           "Reduced effective rate vs. month-to-month",
-          "Uninterrupted 6-month access — no renewal friction",
           "Priority Telegram signal chat access",
           "Onboarding setup guide included"
         ],
@@ -204,7 +210,6 @@
           "Lowest cost per month of any plan",
           "Priority Telegram signal chat access",
           "Onboarding setup guide included",
-          "12 months continuous mentorship — no gaps, no re-enrollment",
           "Extra perks & exclusive member benefits"
         ],
         "stripeUrl": "https://buy.stripe.com/7sY6oHeid3BEg2f7g66Zy06"
