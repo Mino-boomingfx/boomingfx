@@ -3,6 +3,103 @@ import nodemailer from 'nodemailer';
 
 export const dynamic = 'force-dynamic';
 
+function generateEmailTemplate(fullName: string, email: string, message: string, dateStr: string) {
+  return `
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>New BoomingFX Inquiry</title>
+</head>
+<body style="margin: 0; padding: 24px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background-color: #0b192c; color: #1e293b;">
+  <table width="100%" border="0" cellspacing="0" cellpadding="0" style="max-width: 600px; margin: 0 auto; background-color: #ffffff; border-radius: 20px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.25);">
+    
+    <!-- HEADER -->
+    <tr>
+      <td style="background: linear-gradient(135deg, #001f3f 0%, #004185 100%); padding: 40px 35px; text-align: center; border-bottom: 3px solid #00d2ff;">
+        <div style="display: inline-block; background: rgba(0, 210, 255, 0.15); border: 1px solid rgba(0, 210, 255, 0.4); padding: 5px 16px; border-radius: 50px; font-size: 11px; font-weight: 800; letter-spacing: 2px; text-transform: uppercase; color: #38bdf8; margin-bottom: 15px;">
+          Website Inquiry
+        </div>
+        <h1 style="margin: 0; font-size: 26px; font-weight: 900; color: #ffffff; letter-spacing: -0.5px;">
+          Booming<span style="color: #38bdf8;">FX</span> Inbound Lead
+        </h1>
+        <p style="margin: 8px 0 0; font-size: 14px; color: #94a3b8;">
+          Received on ${dateStr}
+        </p>
+      </td>
+    </tr>
+
+    <!-- BODY -->
+    <tr>
+      <td style="padding: 35px 30px;">
+        
+        <!-- SENDER DETAILS CARD -->
+        <table width="100%" border="0" cellspacing="0" cellpadding="0" style="background-color: #f8fafc; border: 1px solid #e2e8f0; border-radius: 12px; margin-bottom: 25px;">
+          <tr>
+            <td style="padding: 20px;">
+              <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                <tr>
+                  <td style="width: 100px; font-size: 13px; font-weight: 700; color: #64748b; padding-bottom: 10px; text-transform: uppercase;">
+                    Client Name:
+                  </td>
+                  <td style="font-size: 16px; font-weight: 700; color: #0f172a; padding-bottom: 10px;">
+                    ${fullName}
+                  </td>
+                </tr>
+                <tr>
+                  <td style="width: 100px; font-size: 13px; font-weight: 700; color: #64748b; text-transform: uppercase;">
+                    Email:
+                  </td>
+                  <td style="font-size: 15px; font-weight: 600;">
+                    <a href="mailto:${email}" style="color: #0284c7; text-decoration: none;">${email}</a>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+        </table>
+
+        <!-- MESSAGE SECTION -->
+        <div style="font-size: 12px; font-weight: 800; color: #004185; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 10px;">
+          Message / Inquiry
+        </div>
+        <div style="background-color: #ffffff; border: 1px solid #cbd5e1; border-left: 5px solid #004185; border-radius: 10px; padding: 22px; font-size: 15px; line-height: 1.7; color: #1e293b;">
+          ${message.replace(/\n/g, '<br/>')}
+        </div>
+
+        <!-- ACTION BUTTON -->
+        <table width="100%" border="0" cellspacing="0" cellpadding="0" style="margin-top: 30px; text-align: center;">
+          <tr>
+            <td align="center">
+              <a href="mailto:${email}?subject=Re: BoomingFX Inquiry - ${fullName}" style="display: inline-block; background: linear-gradient(135deg, #004185 0%, #0284c7 100%); color: #ffffff; text-decoration: none; padding: 15px 36px; border-radius: 12px; font-weight: 800; font-size: 15px; box-shadow: 0 4px 15px rgba(2,132,199,0.35);">
+                Reply Directly to ${fullName.split(' ')[0]} ➔
+              </a>
+            </td>
+          </tr>
+        </table>
+
+      </td>
+    </tr>
+
+    <!-- FOOTER -->
+    <tr>
+      <td style="background-color: #f8fafc; padding: 20px 30px; text-align: center; border-top: 1px solid #e2e8f0;">
+        <p style="margin: 0; font-size: 12px; color: #64748b; line-height: 1.5;">
+          This message was securely submitted through the official <strong>BoomingFX.org</strong> contact portal.
+        </p>
+        <p style="margin: 6px 0 0; font-size: 11px; color: #94a3b8;">
+          10665 Jasper Ave, 14th Floor, First Edmonton Place • Edmonton, AB
+        </p>
+      </td>
+    </tr>
+
+  </table>
+</body>
+</html>
+  `;
+}
+
 export async function POST(req: Request) {
   try {
     const body = await req.json();
@@ -17,8 +114,15 @@ export async function POST(req: Request) {
 
     const fullName = `${firstName} ${lastName || ''}`.trim();
     const recipientEmail = 'support@boomingfx.org';
+    const dateStr = new Date().toLocaleString('en-US', {
+      timeZone: 'America/Edmonton',
+      dateStyle: 'full',
+      timeStyle: 'short',
+    });
 
-    // 1. Direct Hostinger SMTP via Nodemailer
+    const emailHtml = generateEmailTemplate(fullName, email, message, dateStr);
+
+    // 1. Direct Hostinger SMTP via Nodemailer (Official Sender)
     const smtpPassword = process.env.SMTP_PASSWORD || process.env.EMAIL_PASSWORD || process.env.SMTP_PASS;
     if (smtpPassword) {
       try {
@@ -35,21 +139,9 @@ export async function POST(req: Request) {
         await transporter.sendMail({
           from: `"BoomingFX Website" <${recipientEmail}>`,
           to: recipientEmail,
-          replyTo: email,
-          subject: `New Inquiry from ${fullName} - BoomingFX`,
-          html: `
-            <div style="font-family: Arial, sans-serif; padding: 25px; color: #1e293b; background: #f8fafc; border-radius: 12px;">
-              <h2 style="color: #004185; margin-top: 0;">New Contact Form Message</h2>
-              <p style="font-size: 16px;"><strong>Name:</strong> ${fullName}</p>
-              <p style="font-size: 16px;"><strong>Email:</strong> <a href="mailto:${email}" style="color: #004185;">${email}</a></p>
-              <p style="font-size: 16px;"><strong>Message:</strong></p>
-              <div style="background: #ffffff; padding: 18px; border-left: 4px solid #004185; border-radius: 6px; font-size: 15px; line-height: 1.6; box-shadow: 0 1px 3px rgba(0,0,0,0.05);">
-                ${message.replace(/\n/g, '<br/>')}
-              </div>
-              <hr style="border: none; border-top: 1px solid #e2e8f0; margin: 25px 0;" />
-              <p style="font-size: 12px; color: #64748b;">Sent directly from BoomingFX.org website contact form.</p>
-            </div>
-          `,
+          replyTo: `"${fullName}" <${email}>`,
+          subject: `⚡ New Inquiry from ${fullName} - BoomingFX`,
+          html: emailHtml,
         });
 
         return NextResponse.json({ success: true, method: 'smtp' });
@@ -68,21 +160,11 @@ export async function POST(req: Request) {
             'Content-Type': 'application/json',
           },
           body: JSON.stringify({
-            from: 'BoomingFX Contact Form <onboarding@resend.dev>',
+            from: 'BoomingFX Website <onboarding@resend.dev>',
             to: [recipientEmail],
             reply_to: email,
-            subject: `New Inquiry from ${fullName} - BoomingFX`,
-            html: `
-              <div style="font-family: Arial, sans-serif; padding: 20px; color: #333;">
-                <h2 style="color: #004185;">New Contact Form Message</h2>
-                <p><strong>Name:</strong> ${fullName}</p>
-                <p><strong>Email:</strong> <a href="mailto:${email}">${email}</a></p>
-                <p><strong>Message:</strong></p>
-                <div style="background: #f4f6f9; padding: 15px; border-left: 4px solid #004185; border-radius: 4px;">
-                  ${message.replace(/\n/g, '<br/>')}
-                </div>
-              </div>
-            `,
+            subject: `⚡ New Inquiry from ${fullName} - BoomingFX`,
+            html: emailHtml,
           }),
         });
 
@@ -106,8 +188,8 @@ export async function POST(req: Request) {
           name: fullName,
           email: email,
           message: message,
-          _subject: `New BoomingFX Website Inquiry from ${fullName}`,
-          _template: 'table',
+          _subject: `New Inquiry from ${fullName} - BoomingFX`,
+          _template: 'box',
         }),
       });
     } catch (err) {
