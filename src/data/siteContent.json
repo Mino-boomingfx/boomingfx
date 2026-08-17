@@ -536,40 +536,73 @@
     }
   },
   "faqs": {
-    "badge": "Got Questions?",
-    "title": "Frequently Asked Questions",
-    "subtitle": "Welcome to BoomingFX! We understand that starting your trading journey can feel overwhelming, so we've put together answers to the most common questions beginners ask.",
+    "badge": "Beginner's Trading FAQ",
+    "title": "BoomingFX: Beginner's Trading FAQ",
+    "subtitle": "Welcome to BoomingFX! We understand that starting your trading journey can feel overwhelming, so we've put together answers to the most common questions beginners ask. Our goal is to empower you with the knowledge you need to trade confidently and responsibly.",
+    "supportEmail": "support@boomingfx.org",
+    "altEmail": "boomingfx@gmail.com",
+    "closingNote": "At BoomingFX, you're never alone. We offer mentorship, live support, and even a physical office you can visit anytime for 1-on-1 sessions. We're here to guide you in person or online, whatever works best for you. Remember, patience, discipline, and continuous learning are key to long-term success in the markets.",
     "items": [
       {
         "id": 1,
-        "question": "HOW MUCH TIME DO I NEED PER DAY TO TRADE?",
-        "answer": "Trading doesn't have to take over your whole day. Many successful members trade part-time around their full-time jobs, school, or other commitments. On average, you may only need 30 to 60 minutes a day to analyze charts, set up trades, and review the market."
+        "question": "What is trading, and how does it work?",
+        "answer": "Trading is the act of buying and selling financial assets or instruments — such as currencies, stocks, commodities, or cryptocurrencies — with the goal of making a profit from price movements.\n\nHere’s how it works:\n• If you buy an asset at a certain price and the price goes up, you make money.\n• If you sell (also known as short-selling) at a certain price and the price goes down, you make money.\n\nAt BoomingFX, we teach you how to identify those opportunities, understand how the market moves, and use tools to make smarter decisions."
       },
       {
         "id": 2,
-        "question": "IS THIS BEGINNER-FRIENDLY?",
-        "answer": "Yes, 100%! We start you from scratch — no prior trading experience required. Our comprehensive mentorship breaks down technical analysis, fundamental analysis, and risk management into step-by-step actionable lessons."
+        "question": "How much money do I need to start trading?",
+        "answer": "You can start trading with as little as $50–$100, especially in markets like Forex. But to be honest, you won’t see much profit with that amount — it’s more for learning and getting comfortable.\n\nAt BoomingFX, we recommend starting with $500–$1,000 if your goal is to see a more decent return. This gives you more flexibility, better risk management, and a better chance to grow your account responsibly. Just make sure it's money you can afford to lose — never trade with funds meant for essentials like rent or bills."
       },
       {
         "id": 3,
-        "question": "HOW MUCH MONEY DO I NEED TO START TRADING?",
-        "answer": "You can start learning and practicing with zero capital using a free demo account. Once you're ready to trade with real funds, you can start with a modest balance, or we can guide you through acquiring $50k-$200k+ in funding via prop firm evaluation challenges."
+        "question": "Is trading risky? Can I lose money?",
+        "answer": "Yes — trading has risk, and you can lose the money you invest. Prices move fast, and markets aren’t always predictable. But that’s why we teach you how to manage risk properly — using things like stop-losses, smaller trade sizes, and a solid plan. With the right mindset and tools, you can protect yourself and trade smarter."
       },
       {
         "id": 4,
-        "question": "WHAT MAKES BOOMINGFX DIFFERENT FROM OTHER SERVICES?",
-        "answer": "We operate out of a real physical office in downtown Edmonton and don't just sell recorded courses. We offer daily live mentorship, continuous risk management guidance, in-person workshops, and transparent live trade ideas."
+        "question": "What’s the best market to start with?",
+        "answer": "Most beginners start with Forex (currencies) or stock indices like the S&P 500. These markets are active, beginner-friendly, and have lots of learning material. But it really depends on what you’re interested in. You can even test different markets with our free demo account before using real money."
       },
       {
         "id": 5,
-        "question": "HOW DO YOUR TRADING SIGNALS WORK?",
-        "answer": "Our expert team analyzes market opportunities daily and delivers verified signals with exact entries, stop-losses, and profit targets directly through Telegram, complete with full technical rationale."
+        "question": "What’s the difference between fundamental and technical analysis?",
+        "answer": "• Fundamental analysis: Looks at news and big-picture factors like the economy, interest rates, or company earnings.\n• Technical analysis: Focuses on charts, price action patterns, and liquidity to decide when to buy or sell.\n\nMost profitable traders use a mix of both to make high-conviction decisions — and at BoomingFX, we teach you how to combine them seamlessly."
+      },
+      {
+        "id": 6,
+        "question": "What is a demo account, and why should I use one?",
+        "answer": "A demo account lets you practice trading with virtual money in live, real-time market conditions. It’s an essential way to:\n• Learn how to navigate the trading platform and execute orders\n• Test and refine strategies without financial risk\n• Build emotional discipline and confidence before committing real capital"
+      },
+      {
+        "id": 7,
+        "question": "How do I build a trading strategy?",
+        "answer": "A trading strategy is like your personal game plan — it helps you know what to trade, when to enter and exit, and exactly how much to risk.\n\nAt BoomingFX, you won’t have to figure this out alone. We’ll teach you our proven strategy — including how we analyze the markets, how we find high-probability setups, and exactly how much we risk on each trade.\n\nAs part of our strategy, for every $1 we risk, we aim to make back $3. This is called a 1:3 risk-to-reward ratio — and it helps ensure that even with a few losing trades, your winners keep you profitable. You’ll learn how to plan your trades with confidence, manage your risk like a pro, and follow a system built for long-term growth."
+      },
+      {
+        "id": 8,
+        "question": "What is leverage, and should I use it?",
+        "answer": "Leverage means borrowing capital from your broker to trade a larger position size. For example, with 1:100 leverage, a $100 margin controls $10,000 worth of currency. More leverage increases potential profit, but also magnifies potential risk. We teach you how to manage leverage responsibly or avoid over-leveraging until you have consistent risk controls."
+      },
+      {
+        "id": 9,
+        "question": "How important is risk management?",
+        "answer": "Risk management is the single most critical skill you will learn as a trader. It’s not just about making money — it’s about protecting your existing capital so you can stay in the game and compound over time.\n\nEven the best traders don’t win every trade, which is why managing losses is just as important as capturing profits. At BoomingFX, we emphasize risk management from day one using:\n• Stop-loss orders: Automatically closes your trade if the market moves against you to prevent catastrophic drawdowns.\n• Take-profit orders: Locks in target profits when the price reaches your predetermined goal.\n• Position sizing: Risking only 1–2% of your account per trade so no single loss damages your account.\n• Diversification: Spreading risk across uncorrelated market instruments.\n• Emotional discipline: Sticking strictly to your trade plan without letting fear or greed dictate execution."
+      },
+      {
+        "id": 10,
+        "question": "How can I keep learning and getting better?",
+        "answer": "Trading is a high-income skill that requires patience and continuous refinement. Here is how you can consistently improve:\n• Practice regularly on your demo account while refining your edge\n• Keep a detailed trading journal to log entries, exits, and psychological triggers\n• Attend our live weekly webinars and review recorded training modules\n• Stay informed on global macroeconomic news releases\n• Ask questions and collaborate with instructors and fellow mentees in our private Telegram group"
+      },
+      {
+        "id": 11,
+        "question": "What are trading signals, and how do they work?",
+        "answer": "Trading signals are actionable trade ideas and real-time alerts indicating when to buy or sell a financial asset based on institutional market analysis.\n\nEach BoomingFX signal typically includes:\n• The asset to trade (e.g., EUR/USD, NAS100, Gold)\n• The direction (Buy or Sell)\n• A suggested entry price level\n• A clear Stop-Loss (to protect capital)\n• Take-Profit targets (to lock in gains)\n\nAt BoomingFX, our experienced instructors analyze the markets daily and send high-quality, easy-to-follow signals directly to our private community. These signals are built on our 1:3 risk-to-reward models. Crucially, we always provide the complete technical rationale behind each trade so you learn the WHY, not just the WHAT."
       }
     ],
     "cta": {
-      "title": "Ready to Join the Success Stories?",
-      "subtitle": "Where transparency meets expertise. Get mentorship, signals, and community support to trade with confidence.",
-      "btnText": "Enroll Now!",
+      "title": "Ready to Start Your Trading Journey?",
+      "subtitle": "Join Edmonton's premier trading community. Master technical precision and structured risk management with authentic mentorship.",
+      "btnText": "Explore Packages",
       "btnLink": "/packages"
     }
   },
