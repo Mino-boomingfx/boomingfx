@@ -55,11 +55,11 @@ export default function Home() {
 
           {/* Headline with advanced typography */}
           <h1 className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-black text-transparent bg-clip-text bg-gradient-to-b from-white via-white to-blue-100/90 mb-6 tracking-tight leading-[1.08] drop-shadow-2xl max-w-5xl">
-            {hero.title || "Learn to Trade with Discipline, Clarity, and a Community Behind You"}
+            {hero.title || "Learn to Trade with Discipline, Clarity, and a Community Behind You."}
           </h1>
 
           <p className="text-lg md:text-2xl text-blue-100/90 max-w-3xl mx-auto font-normal leading-relaxed drop-shadow-md">
-            {hero.subtitle || "BoomingFX is Edmonton's largest trading education community. We teach proven strategies in Forex, commodities, and crypto — with live mentorship, 24/7 course access, and a physical office you can actually walk into."}
+            {hero.subtitle || "BoomingFX is Edmonton's largest trading education community. We teach proven strategies in Forex, commodities, and crypto with live mentorship, 24/7 course access, and a physical office you can actually walk into."}
           </p>
           
           {/* CTA Buttons */}

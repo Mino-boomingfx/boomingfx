@@ -113,7 +113,13 @@ export async function POST(req: Request) {
     }
 
     const fullName = `${firstName} ${lastName || ''}`.trim();
-    const recipientEmail = 'support@boomingfx.org';
+    const primaryEmail = 'support@boomingfx.org';
+    const altEmail = 'boomingfx@gmail.com';
+    const targetRecipients = [primaryEmail, altEmail];
+    if (process.env.CONTACT_RECIPIENT_EMAIL && !targetRecipients.includes(process.env.CONTACT_RECIPIENT_EMAIL)) {
+      targetRecipients.push(process.env.CONTACT_RECIPIENT_EMAIL);
+    }
+
     const dateStr = new Date().toLocaleString('en-US', {
       timeZone: 'America/Edmonton',
       dateStyle: 'full',
@@ -122,7 +128,9 @@ export async function POST(req: Request) {
 
     const emailHtml = generateEmailTemplate(fullName, email, message, dateStr);
 
-    // 1. Direct Hostinger SMTP via Nodemailer (Official Sender)
+    let dispatched = false;
+
+    // 1. Direct Hostinger SMTP via Nodemailer
     const smtpPassword = process.env.SMTP_PASSWORD || process.env.EMAIL_PASSWORD || process.env.SMTP_PASS;
     if (smtpPassword) {
       try {
@@ -131,22 +139,26 @@ export async function POST(req: Request) {
           port: 465,
           secure: true, // SSL
           auth: {
-            user: recipientEmail,
+            user: primaryEmail,
             pass: smtpPassword,
+          },
+          tls: {
+            rejectUnauthorized: false,
           },
         });
 
         await transporter.sendMail({
-          from: `"BoomingFX Website" <${recipientEmail}>`,
-          to: recipientEmail,
+          from: `"BoomingFX Website" <${primaryEmail}>`,
+          to: targetRecipients.join(', '),
           replyTo: `"${fullName}" <${email}>`,
           subject: `⚡ New Inquiry from ${fullName} - BoomingFX`,
           html: emailHtml,
         });
 
+        dispatched = true;
         return NextResponse.json({ success: true, method: 'smtp' });
       } catch (smtpErr) {
-        console.error('SMTP delivery error:', smtpErr);
+        console.error('Hostinger SMTP delivery error:', smtpErr);
       }
     }
 
@@ -161,7 +173,7 @@ export async function POST(req: Request) {
           },
           body: JSON.stringify({
             from: 'BoomingFX Website <onboarding@resend.dev>',
-            to: [recipientEmail],
+            to: targetRecipients,
             reply_to: email,
             subject: `⚡ New Inquiry from ${fullName} - BoomingFX`,
             html: emailHtml,
@@ -169,6 +181,7 @@ export async function POST(req: Request) {
         });
 
         if (resendRes.ok) {
+          dispatched = true;
           return NextResponse.json({ success: true, method: 'resend' });
         }
       } catch (err) {
@@ -176,27 +189,33 @@ export async function POST(req: Request) {
       }
     }
 
-    // 3. FormSubmit fallback dispatch
+    // 3. Multi-Recipient FormSubmit Fallback (dispatches to both inboxes)
     try {
-      await fetch(`https://formsubmit.co/ajax/${recipientEmail}`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json',
-        },
-        body: JSON.stringify({
-          name: fullName,
-          email: email,
-          message: message,
-          _subject: `New Inquiry from ${fullName} - BoomingFX`,
-          _template: 'box',
-        }),
-      });
+      await Promise.allSettled(
+        targetRecipients.map((rec) =>
+          fetch(`https://formsubmit.co/ajax/${rec}`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'Accept': 'application/json',
+            },
+            body: JSON.stringify({
+              name: fullName,
+              email: email,
+              message: message,
+              _subject: `⚡ New Inquiry from ${fullName} - BoomingFX`,
+              _template: 'box',
+              _captcha: 'false',
+            }),
+          })
+        )
+      );
+      dispatched = true;
     } catch (err) {
-      console.error('FormSubmit error:', err);
+      console.error('FormSubmit fallback error:', err);
     }
 
-    return NextResponse.json({ success: true });
+    return NextResponse.json({ success: true, dispatched });
   } catch (error: any) {
     console.error('Contact API Error:', error);
     return NextResponse.json(
