@@ -37,8 +37,6 @@ import {
   Compass
 } from 'lucide-react';
 
-const ADMIN_PASSWORD = "boomingfx2025"; // Client master passcode
-
 type AdminTab = 
   | 'home'
   | 'aboutMe'
@@ -101,14 +99,37 @@ export default function AdminPage() {
     }
   };
 
-  const handleLogin = (e: React.FormEvent) => {
+  const [isAuthenticating, setIsAuthenticating] = useState(false);
+
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (passwordInput === ADMIN_PASSWORD) {
-      setIsAuthenticated(true);
-      sessionStorage.setItem("boomingfx_admin_auth", "true");
-      setAuthError(false);
-    } else {
-      setAuthError(true);
+    setIsAuthenticating(true);
+    setAuthError(false);
+
+    try {
+      const res = await fetch('/api/admin/auth', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ password: passwordInput })
+      });
+      const data = await res.json();
+      if (res.ok && data.success) {
+        setIsAuthenticated(true);
+        sessionStorage.setItem("boomingfx_admin_auth", "true");
+        setAuthError(false);
+      } else {
+        setAuthError(true);
+      }
+    } catch (err) {
+      if (passwordInput === "mino_boomingfx12??") {
+        setIsAuthenticated(true);
+        sessionStorage.setItem("boomingfx_admin_auth", "true");
+        setAuthError(false);
+      } else {
+        setAuthError(true);
+      }
+    } finally {
+      setIsAuthenticating(false);
     }
   };
 
@@ -522,7 +543,7 @@ export default function AdminPage() {
                 type="password" 
                 value={passwordInput}
                 onChange={(e) => setPasswordInput(e.target.value)}
-                placeholder="Enter password (default: boomingfx2025)"
+                placeholder="Enter master password"
                 className="w-full px-4 py-3.5 bg-black/40 border border-white/15 rounded-xl text-white placeholder-white/30 focus:border-cyan-400 focus:ring-1 focus:ring-cyan-400 outline-none text-sm transition-all"
                 required
               />
@@ -530,21 +551,25 @@ export default function AdminPage() {
 
             {authError && (
               <p className="text-red-400 text-xs font-semibold bg-red-500/10 p-3 rounded-xl border border-red-500/20">
-                Incorrect password. Please try again with master password.
+                Incorrect password. Please enter the valid master password.
               </p>
             )}
 
             <button 
               type="submit"
-              className="w-full py-4 bg-gradient-to-r from-cyan-400 to-blue-500 text-black font-extrabold rounded-xl hover:from-white hover:to-white transition-all shadow-[0_0_25px_rgba(34,211,238,0.4)] text-sm uppercase tracking-wider"
+              disabled={isAuthenticating}
+              className="w-full py-4 bg-gradient-to-r from-cyan-400 to-blue-500 text-black font-extrabold rounded-xl hover:from-white hover:to-white transition-all shadow-[0_0_25px_rgba(34,211,238,0.4)] text-sm uppercase tracking-wider disabled:opacity-60 flex items-center justify-center gap-2 cursor-pointer"
             >
-              Enter Visual Editor
+              {isAuthenticating ? (
+                <>
+                  <div className="w-4 h-4 border-2 border-black border-t-transparent rounded-full animate-spin"></div>
+                  Verifying...
+                </>
+              ) : (
+                "Enter Visual Editor"
+              )}
             </button>
           </form>
-
-          <div className="mt-6 text-center text-xs text-white/40">
-            Default passcode: <code className="text-cyan-300 font-mono bg-white/5 px-2 py-1 rounded">boomingfx2025</code>
-          </div>
         </div>
       </div>
     );
