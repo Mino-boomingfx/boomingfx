@@ -242,7 +242,19 @@ export default function Testimonial() {
                     </div>
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center gap-2">
-                        <h4 className="font-bold text-white text-base truncate">{review.name}</h4>
+                        {review.profileUrl ? (
+                          <a 
+                            href={review.profileUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="font-bold text-white text-base truncate hover:text-cyan-400 transition-colors flex items-center gap-1.5"
+                          >
+                            <span>{review.name}</span>
+                            <ExternalLink className="w-3.5 h-3.5 text-blue-300 opacity-60 hover:opacity-100 shrink-0" />
+                          </a>
+                        ) : (
+                          <h4 className="font-bold text-white text-base truncate">{review.name}</h4>
+                        )}
                         {review.verified && (
                           <span className="text-cyan-400 shrink-0" title="Verified Google Review">
                             <CheckCircle2 className="w-4 h-4" />
