@@ -86,7 +86,7 @@ export default function RefundPolicy() {
               </div>
               <h4 className="font-bold text-white text-sm mb-1">Dedicated Support</h4>
               <p className="text-blue-100/70 text-xs leading-relaxed">
-                Questions or billing assistance? Our support desk is ready to help at support@boomingfx.org.
+                Questions or billing assistance? Our support desk is ready to help at boomingfx@gmail.com.
               </p>
             </div>
           </div>
@@ -166,7 +166,7 @@ export default function RefundPolicy() {
 
             <div className="space-y-4 text-blue-100/90 leading-relaxed text-base">
               <p>
-                {refundPolicy?.p5 || "We encourage all prospective members to carefully review our services, subscription plans, and terms before purchasing. If you have any questions, need clarification, or require assistance with your account, our support team is available to assist you at support@boomingfx.org."}
+                {refundPolicy?.p5 || "We encourage all prospective members to carefully review our services, subscription plans, and terms before purchasing. If you have any questions, need clarification, or require assistance with your account, our support team is available to assist you at boomingfx@gmail.com."}
               </p>
             </div>
           </div>

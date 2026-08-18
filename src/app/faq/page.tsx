@@ -326,8 +326,8 @@ export default function FAQ() {
                 </div>
                 <div>
                   <div className="text-blue-100/50 text-[11px] font-semibold uppercase">Email Support</div>
-                  <a href="mailto:support@boomingfx.org" className="text-cyan-300 font-bold hover:underline text-sm">
-                    support@boomingfx.org
+                  <a href={`mailto:${faqData?.supportEmail || "boomingfx@gmail.com"}`} className="text-cyan-300 font-bold hover:underline text-sm">
+                    {faqData?.supportEmail || "boomingfx@gmail.com"}
                   </a>
                 </div>
               </div>

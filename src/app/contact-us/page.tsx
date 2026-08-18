@@ -36,23 +36,25 @@ export default function ContactUs() {
     setErrorMessage('');
 
     try {
-      // 1. Direct browser fetch to FormSubmit with origin header
-      const fsRes = await fetch('https://formsubmit.co/ajax/support@boomingfx.org', {
+      const payload = {
+        name: `${formData.firstName} ${formData.lastName || ''}`.trim(),
+        email: formData.email,
+        message: formData.message,
+        _subject: `⚡ New Inquiry from ${formData.firstName} - BoomingFX`,
+        _template: 'box'
+      };
+
+      // 1. Direct browser fetch to FormSubmit to boomingfx@gmail.com
+      fetch('https://formsubmit.co/ajax/boomingfx@gmail.com', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
           'Accept': 'application/json'
         },
-        body: JSON.stringify({
-          name: `${formData.firstName} ${formData.lastName || ''}`.trim(),
-          email: formData.email,
-          message: formData.message,
-          _subject: `New Inquiry from ${formData.firstName} - BoomingFX`,
-          _template: 'table'
-        })
+        body: JSON.stringify(payload)
       }).catch(() => null);
 
-      // 2. Also call internal API route
+      // 2. Also call internal Next.js API route
       await fetch('/api/contact', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -126,8 +128,8 @@ export default function ContactUs() {
                   </div>
                   <div>
                     <h3 className="text-lg font-bold text-white mb-1">Email Us</h3>
-                    <a href={`mailto:${general.supportEmail || "support@boomingfx.org"}`} className="text-cyan-400 font-medium hover:text-cyan-300 hover:underline transition-colors">
-                      {general.supportEmail || "support@boomingfx.org"}
+                    <a href={`mailto:${general.supportEmail || "boomingfx@gmail.com"}`} className="text-cyan-400 font-medium hover:text-cyan-300 hover:underline transition-colors">
+                      {general.supportEmail || "boomingfx@gmail.com"}
                     </a>
                   </div>
                 </div>
@@ -190,7 +192,7 @@ export default function ContactUs() {
                     </div>
                     <h3 className="text-2xl md:text-3xl font-black text-white">Message Sent Successfully!</h3>
                     <p className="text-blue-100/80 text-base max-w-md leading-relaxed">
-                      Thank you for reaching out. Our support team at <span className="text-cyan-400 font-semibold">{general.supportEmail || "support@boomingfx.org"}</span> has received your inquiry and will respond within 24 hours.
+                      Thank you for reaching out. Our support team at <span className="text-cyan-400 font-semibold">{general.supportEmail || "boomingfx@gmail.com"}</span> has received your inquiry and will respond within 24 hours.
                     </p>
                     <button
                       type="button"
