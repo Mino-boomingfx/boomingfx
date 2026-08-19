@@ -64,8 +64,8 @@ export default function ContactUs() {
         body: JSON.stringify(formattedPayload)
       }).catch(() => null);
 
-      // 2. Direct browser fetch to backup support@launchapropfirm.com
-      fetch('https://formsubmit.co/ajax/support@launchapropfirm.com', {
+      // 2. Direct browser fetch to backup support@launchapropfirm.com (using token)
+      fetch('https://formsubmit.co/ajax/ef78a741bc0e310399b0c430d7b30d1d', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
