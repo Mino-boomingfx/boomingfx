@@ -213,36 +213,6 @@ export async function POST(req: Request) {
       console.error('Web3Forms dispatch error:', w3Err);
     }
 
-    // 4. Multi-Recipient FormSubmit Dispatch (with exact Origin and Referer headers)
-    try {
-      const results = await Promise.allSettled(
-        targetRecipients.map((rec) =>
-          fetch(`https://formsubmit.co/ajax/${rec}`, {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-              'Accept': 'application/json',
-              'Origin': 'https://boomingfx.org',
-              'Referer': 'https://boomingfx.org/contact-us',
-              'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) BoomingFX/1.0',
-            },
-            body: JSON.stringify({
-              name: fullName,
-              email: email,
-              message: message,
-              _subject: `⚡ New Website Lead: ${fullName}`,
-              _template: 'table',
-              _captcha: 'false',
-            }),
-          }).then((r) => r.json())
-        )
-      );
-      console.log('FormSubmit delivery results:', results);
-      dispatched = true;
-    } catch (err) {
-      console.error('FormSubmit fallback error:', err);
-    }
-
     return NextResponse.json({ success: true, dispatched });
   } catch (error: any) {
     console.error('Contact API Error:', error);
