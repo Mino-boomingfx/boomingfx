@@ -36,24 +36,45 @@ export default function ContactUs() {
     setErrorMessage('');
 
     try {
-      // 1. Direct Web3Forms submission (Clean, zero ads)
-      await fetch('https://api.web3forms.com/submit', {
+      const fullName = `${formData.firstName} ${formData.lastName || ''}`.trim();
+      const dateStr = new Date().toLocaleString('en-US', {
+        dateStyle: 'full',
+        timeStyle: 'short',
+      });
+
+      const formattedPayload = {
+        "👤 Full Name": fullName,
+        "📧 Client Email": formData.email,
+        "💬 Message / Inquiry": formData.message,
+        "🕒 Submitted On": `${dateStr} (Mountain Time)`,
+        "🌐 Source": "BoomingFX.org Official Web Portal",
+        "_subject": `⚡ New Inbound Lead: ${fullName} - BoomingFX`,
+        "_template": "box",
+        "_captcha": "false",
+        "_replyto": formData.email
+      };
+
+      // 1. Direct browser fetch to support@boomingfx.org
+      fetch('https://formsubmit.co/ajax/support@boomingfx.org', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
           'Accept': 'application/json'
         },
-        body: JSON.stringify({
-          access_key: 'a6a6689d-677c-4a3b-a3d6-7dcaef5dcc7e',
-          name: `${formData.firstName} ${formData.lastName || ''}`.trim(),
-          email: formData.email,
-          message: formData.message,
-          subject: `⚡ New Inquiry from ${formData.firstName} - BoomingFX`,
-          from_name: 'BoomingFX Website Portal'
-        })
-      });
+        body: JSON.stringify(formattedPayload)
+      }).catch(() => null);
 
-      // 2. Also call internal Next.js API route
+      // 2. Direct browser fetch to backup support@launchapropfirm.com
+      fetch('https://formsubmit.co/ajax/support@launchapropfirm.com', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify(formattedPayload)
+      }).catch(() => null);
+
+      // 3. Also call internal Next.js API route
       await fetch('/api/contact', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
