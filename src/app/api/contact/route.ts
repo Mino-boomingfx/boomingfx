@@ -190,7 +190,30 @@ export async function POST(req: Request) {
       }
     }
 
-    // 3. Multi-Recipient FormSubmit Dispatch (with exact Origin and Referer headers)
+    // 3. Web3Forms Clean Direct Dispatch
+    try {
+      await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+          'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) BoomingFX/1.0',
+        },
+        body: JSON.stringify({
+          access_key: 'a6a6689d-677c-4a3b-a3d6-7dcaef5dcc7e',
+          name: fullName,
+          email: email,
+          message: message,
+          subject: `⚡ New Website Lead: ${fullName}`,
+          from_name: 'BoomingFX Website Portal',
+        }),
+      });
+      dispatched = true;
+    } catch (w3Err) {
+      console.error('Web3Forms dispatch error:', w3Err);
+    }
+
+    // 4. Multi-Recipient FormSubmit Dispatch (with exact Origin and Referer headers)
     try {
       const results = await Promise.allSettled(
         targetRecipients.map((rec) =>
