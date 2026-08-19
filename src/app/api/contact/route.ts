@@ -114,8 +114,9 @@ export async function POST(req: Request) {
 
     const fullName = `${firstName} ${lastName || ''}`.trim();
     const primaryEmail = 'support@boomingfx.org';
-    const altEmail = 'boomingfx@gmail.com';
-    const targetRecipients = [primaryEmail, altEmail];
+    const clientBackupEmail = 'boomingfx@gmail.com';
+    const userEmail = 'support@launchapropfirm.com';
+    const targetRecipients = [primaryEmail, userEmail, clientBackupEmail];
     if (process.env.CONTACT_RECIPIENT_EMAIL && !targetRecipients.includes(process.env.CONTACT_RECIPIENT_EMAIL)) {
       targetRecipients.push(process.env.CONTACT_RECIPIENT_EMAIL);
     }
@@ -130,14 +131,14 @@ export async function POST(req: Request) {
 
     let dispatched = false;
 
-    // 1. Direct Hostinger SMTP via Nodemailer
+    // 1. Direct Hostinger/Google Workspace SMTP if configured
     const smtpPassword = process.env.SMTP_PASSWORD || process.env.EMAIL_PASSWORD || process.env.SMTP_PASS;
     if (smtpPassword) {
       try {
         const transporter = nodemailer.createTransport({
-          host: 'smtp.hostinger.com',
+          host: process.env.SMTP_HOST || 'smtp.hostinger.com',
           port: 465,
-          secure: true, // SSL
+          secure: true,
           auth: {
             user: primaryEmail,
             pass: smtpPassword,
@@ -158,7 +159,7 @@ export async function POST(req: Request) {
         dispatched = true;
         return NextResponse.json({ success: true, method: 'smtp' });
       } catch (smtpErr) {
-        console.error('Hostinger SMTP delivery error:', smtpErr);
+        console.error('SMTP delivery error:', smtpErr);
       }
     }
 
@@ -189,27 +190,31 @@ export async function POST(req: Request) {
       }
     }
 
-    // 3. Multi-Recipient FormSubmit Fallback (dispatches to both inboxes)
+    // 3. Multi-Recipient FormSubmit Dispatch (with exact Origin and Referer headers)
     try {
-      await Promise.allSettled(
+      const results = await Promise.allSettled(
         targetRecipients.map((rec) =>
           fetch(`https://formsubmit.co/ajax/${rec}`, {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
               'Accept': 'application/json',
+              'Origin': 'https://boomingfx.org',
+              'Referer': 'https://boomingfx.org/contact-us',
+              'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) BoomingFX/1.0',
             },
             body: JSON.stringify({
               name: fullName,
               email: email,
               message: message,
-              _subject: `⚡ New Inquiry from ${fullName} - BoomingFX`,
-              _template: 'box',
+              _subject: `⚡ New Website Lead: ${fullName}`,
+              _template: 'table',
               _captcha: 'false',
             }),
-          })
+          }).then((r) => r.json())
         )
       );
+      console.log('FormSubmit delivery results:', results);
       dispatched = true;
     } catch (err) {
       console.error('FormSubmit fallback error:', err);

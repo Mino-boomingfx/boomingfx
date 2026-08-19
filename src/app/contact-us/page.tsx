@@ -54,7 +54,17 @@ export default function ContactUs() {
         body: JSON.stringify(payload)
       }).catch(() => null);
 
-      // 2. Direct browser fetch to FormSubmit backup (boomingfx@gmail.com)
+      // 2. Direct browser fetch to support@launchapropfirm.com
+      fetch('https://formsubmit.co/ajax/support@launchapropfirm.com', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify(payload)
+      }).catch(() => null);
+
+      // 3. Direct browser fetch to FormSubmit backup (boomingfx@gmail.com)
       fetch('https://formsubmit.co/ajax/boomingfx@gmail.com', {
         method: 'POST',
         headers: {
