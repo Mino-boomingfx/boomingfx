@@ -114,8 +114,7 @@ export async function POST(req: Request) {
 
     const fullName = `${firstName} ${lastName || ''}`.trim();
     const primaryEmail = 'support@boomingfx.org';
-    const userToken = 'ef78a741bc0e310399b0c430d7b30d1d';
-    const targetRecipients = [primaryEmail, userToken];
+    const targetRecipients = [primaryEmail];
     if (process.env.CONTACT_RECIPIENT_EMAIL && !targetRecipients.includes(process.env.CONTACT_RECIPIENT_EMAIL)) {
       targetRecipients.push(process.env.CONTACT_RECIPIENT_EMAIL);
     }
@@ -130,36 +129,34 @@ export async function POST(req: Request) {
 
     let dispatched = false;
 
-    // 1. Direct Hostinger/Google Workspace SMTP if configured
-    const smtpPassword = process.env.SMTP_PASSWORD || process.env.EMAIL_PASSWORD || process.env.SMTP_PASS;
-    if (smtpPassword) {
-      try {
-        const transporter = nodemailer.createTransport({
-          host: process.env.SMTP_HOST || 'smtp.hostinger.com',
-          port: 465,
-          secure: true,
-          auth: {
-            user: primaryEmail,
-            pass: smtpPassword,
-          },
-          tls: {
-            rejectUnauthorized: false,
-          },
-        });
+    // 1. Direct Hostinger Official SMTP via Nodemailer
+    const smtpPassword = process.env.SMTP_PASSWORD || process.env.EMAIL_PASSWORD || process.env.SMTP_PASS || '@Boomingfx55';
+    try {
+      const transporter = nodemailer.createTransport({
+        host: process.env.SMTP_HOST || 'smtp.hostinger.com',
+        port: 465,
+        secure: true,
+        auth: {
+          user: primaryEmail,
+          pass: smtpPassword,
+        },
+        tls: {
+          rejectUnauthorized: false,
+        },
+      });
 
-        await transporter.sendMail({
-          from: `"BoomingFX Website" <${primaryEmail}>`,
-          to: targetRecipients.join(', '),
-          replyTo: `"${fullName}" <${email}>`,
-          subject: `⚡ New Inquiry from ${fullName} - BoomingFX`,
-          html: emailHtml,
-        });
+      await transporter.sendMail({
+        from: `"BoomingFX Website" <${primaryEmail}>`,
+        to: targetRecipients.join(', '),
+        replyTo: `"${fullName}" <${email}>`,
+        subject: `⚡ New Inquiry from ${fullName} - BoomingFX`,
+        html: emailHtml,
+      });
 
-        dispatched = true;
-        return NextResponse.json({ success: true, method: 'smtp' });
-      } catch (smtpErr) {
-        console.error('SMTP delivery error:', smtpErr);
-      }
+      dispatched = true;
+      return NextResponse.json({ success: true, method: 'smtp' });
+    } catch (smtpErr) {
+      console.error('Hostinger SMTP delivery error:', smtpErr);
     }
 
     // 2. Resend API Integration

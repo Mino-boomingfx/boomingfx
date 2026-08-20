@@ -54,32 +54,24 @@ export default function ContactUs() {
         "_replyto": formData.email
       };
 
-      // 1. Direct browser fetch to support@boomingfx.org
-      fetch('https://formsubmit.co/ajax/support@boomingfx.org', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json'
-        },
-        body: JSON.stringify(formattedPayload)
-      }).catch(() => null);
-
-      // 2. Direct browser fetch to backup support@launchapropfirm.com (using token)
-      fetch('https://formsubmit.co/ajax/ef78a741bc0e310399b0c430d7b30d1d', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json'
-        },
-        body: JSON.stringify(formattedPayload)
-      }).catch(() => null);
-
-      // 3. Also call internal Next.js API route
-      await fetch('/api/contact', {
+      // 1. Primary Direct Server Dispatch via Hostinger SMTP (Ultra-luxury HTML with zero ads)
+      const apiPromise = fetch('/api/contact', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData)
-      }).catch(() => null);
+      });
+
+      // 2. Direct browser fallback to support@boomingfx.org
+      const formSubmitPromise = fetch('https://formsubmit.co/ajax/support@boomingfx.org', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify(formattedPayload)
+      });
+
+      await Promise.race([apiPromise, formSubmitPromise]).catch(() => null);
 
       setIsSubmitted(true);
       setFormData({ firstName: '', lastName: '', email: '', message: '' });
