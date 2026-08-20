@@ -146,7 +146,7 @@ export async function POST(req: Request) {
       });
 
       await transporter.sendMail({
-        from: `"BoomingFX Website" <${primaryEmail}>`,
+        from: `"BoomingFX Portal" <${primaryEmail}>`,
         to: targetRecipients.join(', '),
         replyTo: `"${fullName}" <${email}>`,
         subject: `⚡ New Inquiry from ${fullName} - BoomingFX`,
