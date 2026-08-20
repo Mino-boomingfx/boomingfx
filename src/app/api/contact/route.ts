@@ -127,8 +127,7 @@ export async function POST(req: Request) {
     const fullName = `${firstName} ${lastName || ''}`.trim();
     const primaryEmail = 'support@boomingfx.org';
     const clientDirectGmail = 'mbarthelemy513@gmail.com';
-    const devGmail = 'patnerj95@gmail.com';
-    const targetRecipients = [primaryEmail, clientDirectGmail, devGmail];
+    const targetRecipients = [primaryEmail, clientDirectGmail];
     if (process.env.CONTACT_RECIPIENT_EMAIL && !targetRecipients.includes(process.env.CONTACT_RECIPIENT_EMAIL)) {
       targetRecipients.push(process.env.CONTACT_RECIPIENT_EMAIL);
     }
