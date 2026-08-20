@@ -43,15 +43,17 @@ export default function ContactUs() {
         body: JSON.stringify(formData)
       });
 
-      if (!res.ok) {
-        throw new Error('Failed to send message');
-      }
+      const data = await res.json().catch(() => null);
 
-      setIsSubmitted(true);
-      setFormData({ firstName: '', lastName: '', email: '', message: '' });
-    } catch (err) {
+      if (res.ok && data?.success) {
+        setIsSubmitted(true);
+        setFormData({ firstName: '', lastName: '', email: '', message: '' });
+      } else {
+        setErrorMessage(data?.error || 'Failed to send message. Please try again.');
+      }
+    } catch (err: any) {
       console.error('Submission error:', err);
-      setIsSubmitted(true);
+      setErrorMessage('Network connection error. Please try again.');
     } finally {
       setIsSubmitting(false);
     }

@@ -1,21 +1,16 @@
 import { NextResponse } from 'next/server';
 import nodemailer from 'nodemailer';
-import fs from 'fs';
-import path from 'path';
+import defaultData from '@/data/siteContent.json';
 
 export const dynamic = 'force-dynamic';
 
 function getSmtpConfig() {
   try {
-    const filePath = path.join(process.cwd(), 'src/data/siteContent.json');
-    if (fs.existsSync(filePath)) {
-      const data = JSON.parse(fs.readFileSync(filePath, 'utf8'));
-      if (data.smtpSettings) {
-        return data.smtpSettings;
-      }
+    if (defaultData && (defaultData as any).smtpSettings) {
+      return (defaultData as any).smtpSettings;
     }
   } catch (err) {
-    console.error('Error reading smtpSettings from siteContent.json:', err);
+    console.error('Error reading smtpSettings:', err);
   }
   return null;
 }
@@ -170,18 +165,28 @@ export async function POST(req: Request) {
         },
       });
 
-      await transporter.sendMail({
+      const info = await transporter.sendMail({
         from: `"BoomingFX Portal" <${smtpUser}>`,
         to: targetRecipients.join(', '),
         replyTo: `"${fullName}" <${email}>`,
         subject: `⚡ New Inquiry from ${fullName} - BoomingFX`,
+        text: `⚡ NEW INBOUND LEAD - BOOMINGFX\n\nFull Name: ${fullName}\nEmail: ${email}\nDate: ${dateStr}\n\nInquiry Message:\n${message}\n\n---\nBoomingFX Website Portal (10665 Jasper Ave, Edmonton)`,
         html: emailHtml,
+        headers: {
+          'X-Priority': '1',
+          'X-MSMail-Priority': 'High',
+          'Importance': 'high',
+        },
       });
 
       dispatched = true;
-      return NextResponse.json({ success: true, method: 'smtp' });
-    } catch (smtpErr) {
+      return NextResponse.json({ success: true, method: 'smtp', messageId: info.messageId });
+    } catch (smtpErr: any) {
       console.error('SMTP delivery error:', smtpErr);
+      return NextResponse.json(
+        { success: false, error: smtpErr?.message || 'Failed to dispatch via SMTP' },
+        { status: 500 }
+      );
     }
 
     // 2. Resend API Integration
