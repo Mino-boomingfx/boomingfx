@@ -126,11 +126,7 @@ export async function POST(req: Request) {
 
     const fullName = `${firstName} ${lastName || ''}`.trim();
     const primaryEmail = 'support@boomingfx.org';
-    const targetRecipients = [
-      primaryEmail,
-      'mbarthelemy513@gmail.com',
-      'mbarthelemy523@gmail.com'
-    ];
+    const targetRecipients = [primaryEmail];
     if (process.env.CONTACT_RECIPIENT_EMAIL && !targetRecipients.includes(process.env.CONTACT_RECIPIENT_EMAIL)) {
       targetRecipients.push(process.env.CONTACT_RECIPIENT_EMAIL);
     }
