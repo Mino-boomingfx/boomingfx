@@ -36,42 +36,16 @@ export default function ContactUs() {
     setErrorMessage('');
 
     try {
-      const fullName = `${formData.firstName} ${formData.lastName || ''}`.trim();
-      const dateStr = new Date().toLocaleString('en-US', {
-        dateStyle: 'full',
-        timeStyle: 'short',
-      });
-
-      const formattedPayload = {
-        "👤 Full Name": fullName,
-        "📧 Client Email": formData.email,
-        "💬 Message / Inquiry": formData.message,
-        "🕒 Submitted On": `${dateStr} (Mountain Time)`,
-        "🌐 Source": "BoomingFX.org Official Web Portal",
-        "_subject": `⚡ New Inbound Lead: ${fullName} - BoomingFX`,
-        "_template": "box",
-        "_captcha": "false",
-        "_replyto": formData.email
-      };
-
-      // 1. Primary Direct Server Dispatch via Hostinger SMTP (Ultra-luxury HTML with zero ads)
-      const apiPromise = fetch('/api/contact', {
+      // Direct Server Dispatch via Hostinger SMTP (Ultra-luxury HTML with zero ads)
+      const res = await fetch('/api/contact', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData)
       });
 
-      // 2. Direct browser fallback to support@boomingfx.org
-      const formSubmitPromise = fetch('https://formsubmit.co/ajax/support@boomingfx.org', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json'
-        },
-        body: JSON.stringify(formattedPayload)
-      });
-
-      await Promise.race([apiPromise, formSubmitPromise]).catch(() => null);
+      if (!res.ok) {
+        throw new Error('Failed to send message');
+      }
 
       setIsSubmitted(true);
       setFormData({ firstName: '', lastName: '', email: '', message: '' });

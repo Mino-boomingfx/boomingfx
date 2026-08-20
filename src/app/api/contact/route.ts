@@ -186,39 +186,7 @@ export async function POST(req: Request) {
       }
     }
 
-    // 3. Multi-Recipient Structured FormSubmit Dispatch
-    try {
-      const results = await Promise.allSettled(
-        targetRecipients.map((rec) =>
-          fetch(`https://formsubmit.co/ajax/${rec}`, {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-              'Accept': 'application/json',
-              'Origin': 'https://boomingfx.org',
-              'Referer': 'https://boomingfx.org/contact-us',
-              'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) BoomingFX/1.0',
-            },
-            body: JSON.stringify({
-              "👤 Full Name": fullName,
-              "📧 Client Email": email,
-              "💬 Inquiry Message": message,
-              "🕒 Submitted On": `${dateStr} (Mountain Time)`,
-              "🌐 Source": "BoomingFX.org Official Web Portal",
-              "_subject": `⚡ New Inbound Lead: ${fullName} - BoomingFX`,
-              "_template": "box",
-              "_captcha": "false",
-              "_replyto": email,
-            }),
-          }).then((r) => r.json())
-        )
-      );
-      dispatched = true;
-    } catch (err) {
-      console.error('FormSubmit dispatch error:', err);
-    }
-
-    return NextResponse.json({ success: true, dispatched });
+    return NextResponse.json({ success: true, method: 'smtp' });
   } catch (error: any) {
     console.error('Contact API Error:', error);
     return NextResponse.json(
