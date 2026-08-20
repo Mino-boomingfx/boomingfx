@@ -145,10 +145,10 @@ export async function POST(req: Request) {
 
     // 1. Direct Official SMTP via Nodemailer (Dynamic from Admin Panel or Env)
     const savedSmtp = getSmtpConfig();
-    const smtpHost = process.env.SMTP_HOST || savedSmtp?.host || 'smtp.hostinger.com';
-    const smtpPort = Number(process.env.SMTP_PORT || savedSmtp?.port || 465);
-    const smtpUser = process.env.SMTP_USER || savedSmtp?.user || primaryEmail;
-    const smtpPassword = process.env.SMTP_PASSWORD || process.env.EMAIL_PASSWORD || process.env.SMTP_PASS || savedSmtp?.pass || '@Boomingfx55';
+    const smtpHost = savedSmtp?.host || process.env.SMTP_HOST || 'smtp.hostinger.com';
+    const smtpPort = Number(savedSmtp?.port || process.env.SMTP_PORT || 465);
+    const smtpUser = savedSmtp?.user || process.env.SMTP_USER || primaryEmail;
+    const smtpPassword = savedSmtp?.pass || '@Boomingfx55';
     const smtpSecure = savedSmtp?.secure !== undefined ? savedSmtp.secure : smtpPort === 465;
 
     try {
