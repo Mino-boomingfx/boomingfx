@@ -1,7 +1,24 @@
 import { NextResponse } from 'next/server';
 import nodemailer from 'nodemailer';
+import fs from 'fs';
+import path from 'path';
 
 export const dynamic = 'force-dynamic';
+
+function getSmtpConfig() {
+  try {
+    const filePath = path.join(process.cwd(), 'src/data/siteContent.json');
+    if (fs.existsSync(filePath)) {
+      const data = JSON.parse(fs.readFileSync(filePath, 'utf8'));
+      if (data.smtpSettings) {
+        return data.smtpSettings;
+      }
+    }
+  } catch (err) {
+    console.error('Error reading smtpSettings from siteContent.json:', err);
+  }
+  return null;
+}
 
 function generateEmailTemplate(fullName: string, email: string, message: string, dateStr: string) {
   return `
@@ -129,15 +146,21 @@ export async function POST(req: Request) {
 
     let dispatched = false;
 
-    // 1. Direct Hostinger Official SMTP via Nodemailer
-    const smtpPassword = process.env.SMTP_PASSWORD || process.env.EMAIL_PASSWORD || process.env.SMTP_PASS || '@Boomingfx55';
+    // 1. Direct Official SMTP via Nodemailer (Dynamic from Admin Panel or Env)
+    const savedSmtp = getSmtpConfig();
+    const smtpHost = process.env.SMTP_HOST || savedSmtp?.host || 'smtp.hostinger.com';
+    const smtpPort = Number(process.env.SMTP_PORT || savedSmtp?.port || 465);
+    const smtpUser = process.env.SMTP_USER || savedSmtp?.user || primaryEmail;
+    const smtpPassword = process.env.SMTP_PASSWORD || process.env.EMAIL_PASSWORD || process.env.SMTP_PASS || savedSmtp?.pass || '@Boomingfx55';
+    const smtpSecure = savedSmtp?.secure !== undefined ? savedSmtp.secure : smtpPort === 465;
+
     try {
       const transporter = nodemailer.createTransport({
-        host: process.env.SMTP_HOST || 'smtp.hostinger.com',
-        port: 465,
-        secure: true,
+        host: smtpHost,
+        port: smtpPort,
+        secure: smtpSecure,
         auth: {
-          user: primaryEmail,
+          user: smtpUser,
           pass: smtpPassword,
         },
         tls: {
@@ -146,7 +169,7 @@ export async function POST(req: Request) {
       });
 
       await transporter.sendMail({
-        from: `"BoomingFX Portal" <${primaryEmail}>`,
+        from: `"BoomingFX Portal" <${smtpUser}>`,
         to: targetRecipients.join(', '),
         replyTo: `"${fullName}" <${email}>`,
         subject: `⚡ New Inquiry from ${fullName} - BoomingFX`,
@@ -156,7 +179,7 @@ export async function POST(req: Request) {
       dispatched = true;
       return NextResponse.json({ success: true, method: 'smtp' });
     } catch (smtpErr) {
-      console.error('Hostinger SMTP delivery error:', smtpErr);
+      console.error('SMTP delivery error:', smtpErr);
     }
 
     // 2. Resend API Integration

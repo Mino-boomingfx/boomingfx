@@ -34,7 +34,9 @@ import {
   Layers,
   Phone,
   Clock,
-  Compass
+  Compass,
+  Eye,
+  EyeOff
 } from 'lucide-react';
 
 type AdminTab = 
@@ -74,6 +76,7 @@ export default function AdminPage() {
   const [savedNotification, setSavedNotification] = useState(false);
   const [isSavingCloud, setIsSavingCloud] = useState(false);
   const [cloudSaveMessage, setCloudSaveMessage] = useState("");
+  const [showSmtpPass, setShowSmtpPass] = useState(false);
 
   useEffect(() => {
     setFormData(content);
@@ -504,6 +507,23 @@ export default function AdminPage() {
     setFormData(prev => ({
       ...prev,
       contact: { ...prev.contact, [field]: val }
+    }));
+  };
+
+  // SMTP Mailer Settings
+  const updateSmtp = (field: string, val: any) => {
+    setFormData(prev => ({
+      ...prev,
+      smtpSettings: {
+        ...(prev.smtpSettings || {
+          host: 'smtp.hostinger.com',
+          port: 465,
+          user: 'support@boomingfx.org',
+          pass: '@Boomingfx55',
+          secure: true
+        }),
+        [field]: val
+      }
     }));
   };
 
@@ -1854,6 +1874,80 @@ export default function AdminPage() {
                       placeholder="Instagram URL"
                       className="w-full px-3 py-1.5 bg-black/50 border border-white/15 rounded-lg text-xs"
                     />
+                  </div>
+                </div>
+
+                {/* Section 3: SMTP Settings */}
+                <div className="bg-black/30 border border-cyan-500/30 rounded-2xl p-5 space-y-4 shadow-[0_0_20px_rgba(0,210,255,0.05)]">
+                  <div className="flex items-center justify-between border-b border-white/10 pb-2">
+                    <span className="text-xs font-black text-cyan-400 uppercase flex items-center gap-2">
+                      <Mail className="w-4 h-4 text-cyan-400" /> Section 3: Official SMTP &amp; Mailer Settings
+                    </span>
+                    <span className="px-2.5 py-0.5 rounded text-[10px] font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
+                      Hostinger Active
+                    </span>
+                  </div>
+
+                  <p className="text-[11px] text-blue-100/70 leading-relaxed">
+                    Website inquiries from the contact page are dispatched directly through your official mail server. You can update your Hostinger mailbox password or server settings below anytime without touching code.
+                  </p>
+
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <div>
+                      <label className="block text-[11px] font-bold text-white/70 mb-1">SMTP Server Host</label>
+                      <input 
+                        type="text" 
+                        value={formData.smtpSettings?.host || 'smtp.hostinger.com'}
+                        onChange={(e) => updateSmtp('host', e.target.value)}
+                        placeholder="smtp.hostinger.com"
+                        className="w-full px-3 py-2 bg-black/50 border border-white/15 rounded-lg text-xs"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-[11px] font-bold text-white/70 mb-1">SMTP Port (SSL / TLS)</label>
+                      <input 
+                        type="number" 
+                        value={formData.smtpSettings?.port || 465}
+                        onChange={(e) => updateSmtp('port', Number(e.target.value))}
+                        placeholder="465"
+                        className="w-full px-3 py-2 bg-black/50 border border-white/15 rounded-lg text-xs"
+                      />
+                    </div>
+                  </div>
+
+                  <div>
+                    <label className="block text-[11px] font-bold text-white/70 mb-1">Sender Mailbox / Username</label>
+                    <input 
+                      type="email" 
+                      value={formData.smtpSettings?.user || 'support@boomingfx.org'}
+                      onChange={(e) => updateSmtp('user', e.target.value)}
+                      placeholder="support@boomingfx.org"
+                      className="w-full px-3 py-2 bg-black/50 border border-white/15 rounded-lg text-xs font-mono"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-[11px] font-bold text-white/70 mb-1">Mailbox / SMTP Password</label>
+                    <div className="relative">
+                      <input 
+                        type={showSmtpPass ? "text" : "password"} 
+                        value={formData.smtpSettings?.pass || ''}
+                        onChange={(e) => updateSmtp('pass', e.target.value)}
+                        placeholder="Enter Hostinger / Mailbox password"
+                        className="w-full px-3 py-2 pr-10 bg-black/50 border border-white/15 rounded-lg text-xs font-mono"
+                      />
+                      <button
+                        type="button"
+                        onClick={() => setShowSmtpPass(!showSmtpPass)}
+                        className="absolute right-2.5 top-1/2 -translate-y-1/2 text-white/50 hover:text-white text-xs p-1"
+                        title={showSmtpPass ? "Hide Password" : "Show Password"}
+                      >
+                        {showSmtpPass ? <EyeOff className="w-3.5 h-3.5" /> : <Eye className="w-3.5 h-3.5" />}
+                      </button>
+                    </div>
+                    <span className="text-[10px] text-white/40 block mt-1">
+                      Status: {formData.smtpSettings?.pass ? 'Password Configured' : 'Not set'}
+                    </span>
                   </div>
                 </div>
 

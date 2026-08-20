@@ -9,6 +9,13 @@
     "youtubeUrl": "https://youtube.com/@boomingfx",
     "telegramUrl": "https://t.me/boomingfx"
   },
+  "smtpSettings": {
+    "host": "smtp.hostinger.com",
+    "port": 465,
+    "user": "support@boomingfx.org",
+    "pass": "@Boomingfx55",
+    "secure": true
+  },
   "hero": {
     "badge": "Real Mentorship • Not Just Another Course",
     "title": "Learn to Trade with Discipline, Clarity, and a Community Behind You.",
