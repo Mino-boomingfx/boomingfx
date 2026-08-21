@@ -124,13 +124,7 @@ export default function AdminPage() {
         setAuthError(true);
       }
     } catch (err) {
-      if (passwordInput === "mino_boomingfx12??") {
-        setIsAuthenticated(true);
-        sessionStorage.setItem("boomingfx_admin_auth", "true");
-        setAuthError(false);
-      } else {
-        setAuthError(true);
-      }
+      setAuthError(true);
     } finally {
       setIsAuthenticating(false);
     }
