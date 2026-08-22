@@ -108,28 +108,30 @@ export default function AboutMe() {
 
             {/* Image Content */}
             <div className="lg:w-1/3 sticky top-32">
-              <div className="relative rounded-[2rem] overflow-hidden shadow-2xl group border-4 border-gray-100">
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent z-10 pointer-events-none opacity-80 group-hover:opacity-60 transition-opacity duration-500"></div>
+              <div className="relative rounded-[2rem] overflow-hidden shadow-2xl group border-4 border-gray-100 bg-[#001f3f]">
+                <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent z-10 pointer-events-none"></div>
                 <img 
                   src={aboutMe?.founderImage || "/Minochel Barthelemy.jpeg"} 
                   alt={aboutMe?.founderName || "Minochel Barthelemy"} 
-                  className="w-full h-auto object-cover transform group-hover:scale-110 transition-transform duration-700"
+                  className="w-full h-auto object-cover transform group-hover:scale-105 transition-transform duration-700"
                 />
-                <div className="absolute bottom-6 left-6 z-20">
-                  <h3 className="text-2xl font-black text-white">{aboutMe?.founderName || "Minochel Barthelemy"}</h3>
-                  <p className="text-white/80 font-bold uppercase tracking-widest text-sm">{aboutMe?.founderRole || "Founder"}</p>
+                <div className="absolute bottom-6 left-6 right-6 z-20">
+                  <h3 className="text-2xl font-black text-white leading-tight">{aboutMe?.founderName || "Minochel Barthelemy"}</h3>
+                  <p className="text-cyan-400 font-bold uppercase tracking-widest text-xs mt-1">{aboutMe?.founderRole || "Founder & Full-Time Trader"}</p>
                 </div>
               </div>
               
-              {/* Floating decorative card */}
-              <div className="absolute -bottom-10 -left-10 bg-white p-6 rounded-2xl shadow-2xl border border-gray-100 hidden md:block transform hover:-translate-y-2 transition-transform duration-500">
+              {/* Highlight Badge Card placed cleanly beneath photo with zero overlap */}
+              <div className="mt-4 bg-white p-5 rounded-2xl shadow-xl border border-gray-100 transform hover:-translate-y-1 transition-all duration-300">
                 <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 bg-[#004185] rounded-full flex items-center justify-center">
-                    <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path></svg>
+                  <div className="w-12 h-12 bg-gradient-to-br from-[#001f3f] to-[#004185] rounded-xl flex items-center justify-center shadow-md shadow-[#004185]/20 flex-shrink-0">
+                    <svg className="w-6 h-6 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path>
+                    </svg>
                   </div>
                   <div>
-                    <p className="text-black font-black text-xl">Full-Time</p>
-                    <p className="text-gray-500 font-medium text-sm">Trader since 2023</p>
+                    <p className="text-black font-black text-lg leading-tight">Full-Time Mentorship</p>
+                    <p className="text-gray-500 font-semibold text-xs mt-0.5">Professional Trader since 2023</p>
                   </div>
                 </div>
               </div>
